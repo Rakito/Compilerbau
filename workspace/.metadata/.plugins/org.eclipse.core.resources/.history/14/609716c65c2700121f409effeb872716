@@ -1,0 +1,50 @@
+Helpers
+ digit = ['0' .. '9'];
+ letter = ['a' .. 'z'] | ['A' .. 'Z'];
+ any_charater = [0x0 .. 0xfffff];
+ 
+
+Tokens
+ 
+ id = letter ( digit | letter )*;
+ number = digit+;
+ plus = '+';
+ minus = '-';
+ mult = '*';
+ div = '/';
+ mod = '%';
+ dot = '.';
+ query ='?';
+ colon = ':';
+ semicolon = ';';
+ l_par = '(';
+ r_par = ')';
+ l_brace = '{';
+ r_brace = '}';
+ blank = (' ')*;
+ return = ( 13 | 10 );
+ comment = 'ÚÚ' any_charater;
+
+
+Ignored Tokens
+ comment, blank , return;
+
+Productions
+ expr =
+  {plus} factor plus expr |
+  {factor} factor ;
+
+ factor =
+  {term} term |
+  {mult} factor mult term |
+  {div} factor div term |
+  {mod} factor mod term;
+
+
+ term =
+  {number} number |
+  {id} id |
+  {expr} l_par expr r_par;
+  
+ ifex =
+  	[left]:expr query [middle]:expr colon [right]:expr;
