@@ -24,6 +24,7 @@ Tokens
  blank = (' ')*;
  return = ( 13 | 10 );
  comment = 'ÚÚ' any_charater;
+ function_t = 'function';
 
 
 Ignored Tokens
@@ -35,8 +36,12 @@ Productions
 
  expr =
   {factor} factor |
+  {function} function |
   {plus} expr plus factor |
   {minus} expr minus factor;
+  
+ function =
+   [func_name]:id l_par [params]:(id (, id)*) r_par;
 
  factor =
   {term} term |
@@ -50,3 +55,5 @@ Productions
   {id} id |
   {expr} l_par expr r_par;
   
+ function_def =
+  function_t id l_par id r_par l_brace expr r_brace

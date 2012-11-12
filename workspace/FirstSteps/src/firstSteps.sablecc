@@ -40,8 +40,7 @@ Productions
   {plus} expr plus factor |
   {minus} expr minus factor;
   
- function =
-   [func_name]:id l_par [params]:(id (, id)*) r_par;
+ function = {function} [func_name]:id l_par [params]:(id (, id)*) r_par;
 
  factor =
   {term} term |

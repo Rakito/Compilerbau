@@ -43,6 +43,12 @@ public class Interpreter extends DepthFirstAdapter {
 	}
 
 	@Override
+	public void caseAFunction(ATermFactor node) {
+		// TODO Auto-generated method stub
+		super.caseATermFactor(node);
+	}
+	
+	@Override
 	public void caseATermFactor(ATermFactor node) {
 		// TODO Auto-generated method stub
 		super.caseATermFactor(node);
