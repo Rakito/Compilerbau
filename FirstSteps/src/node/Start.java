@@ -7,7 +7,7 @@ import analysis.*;
 @SuppressWarnings("nls")
 public final class Start extends Node
 {
-    private PIfex _pIfex_;
+    private PParas _pParas_;
     private EOF _eof_;
 
     public Start()
@@ -16,10 +16,10 @@ public final class Start extends Node
     }
 
     public Start(
-        @SuppressWarnings("hiding") PIfex _pIfex_,
+        @SuppressWarnings("hiding") PParas _pParas_,
         @SuppressWarnings("hiding") EOF _eof_)
     {
-        setPIfex(_pIfex_);
+        setPParas(_pParas_);
         setEOF(_eof_);
     }
 
@@ -27,7 +27,7 @@ public final class Start extends Node
     public Object clone()
     {
         return new Start(
-            cloneNode(this._pIfex_),
+            cloneNode(this._pParas_),
             cloneNode(this._eof_));
     }
 
@@ -37,16 +37,16 @@ public final class Start extends Node
         ((Analysis) sw).caseStart(this);
     }
 
-    public PIfex getPIfex()
+    public PParas getPParas()
     {
-        return this._pIfex_;
+        return this._pParas_;
     }
 
-    public void setPIfex(PIfex node)
+    public void setPParas(PParas node)
     {
-        if(this._pIfex_ != null)
+        if(this._pParas_ != null)
         {
-            this._pIfex_.parent(null);
+            this._pParas_.parent(null);
         }
 
         if(node != null)
@@ -59,7 +59,7 @@ public final class Start extends Node
             node.parent(this);
         }
 
-        this._pIfex_ = node;
+        this._pParas_ = node;
     }
 
     public EOF getEOF()
@@ -90,9 +90,9 @@ public final class Start extends Node
     @Override
     void removeChild(Node child)
     {
-        if(this._pIfex_ == child)
+        if(this._pParas_ == child)
         {
-            this._pIfex_ = null;
+            this._pParas_ = null;
             return;
         }
 
@@ -108,9 +108,9 @@ public final class Start extends Node
     @Override
     void replaceChild(Node oldChild, Node newChild)
     {
-        if(this._pIfex_ == oldChild)
+        if(this._pParas_ == oldChild)
         {
-            setPIfex((PIfex) newChild);
+            setPParas((PParas) newChild);
             return;
         }
 
@@ -127,7 +127,7 @@ public final class Start extends Node
     public String toString()
     {
         return "" +
-            toString(this._pIfex_) +
+            toString(this._pParas_) +
             toString(this._eof_);
     }
 }

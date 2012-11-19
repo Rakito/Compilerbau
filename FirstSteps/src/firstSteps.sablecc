@@ -15,6 +15,7 @@ Tokens
  div = '/';
  mod = '%';
  dot = '.';
+ comma = ',';
  query ='?';
  colon = ':';
  semicolon = ';';
@@ -22,9 +23,13 @@ Tokens
  r_par = ')';
  l_brace = '{';
  r_brace = '}';
+ l_arrow = '<';
+ r_arrow = '>';
  blank = (' ')*;
  return = ( 13 | 10 );
  comment = 'ÚÚ' any_charater;
+ 
+ 
  
 
   
@@ -34,6 +39,10 @@ Ignored Tokens
  comment, blank , return;
 
 Productions
+ paras =
+   {para} expr |
+   {paras} paras comma expr;
+ 
  ifex =
   	[left]:expr query [middle]:expr colon [right]:expr;
 
@@ -44,7 +53,7 @@ Productions
   {minus} expr minus factor;
   
  function = 
-   {function} [func_name]:id l_par [params]:id r_par l_brace expr r_brace;
+   {function} l_arrow [returns]:paras r_arrow [func_name]:id l_par [params]:paras r_par l_brace expr r_brace;
 
  factor =
   {term} term |

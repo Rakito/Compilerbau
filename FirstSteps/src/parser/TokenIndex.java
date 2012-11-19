@@ -58,50 +58,68 @@ class TokenIndex extends AnalysisAdapter
     }
 
     @Override
-    public void caseTQuery(@SuppressWarnings("unused") TQuery node)
+    public void caseTComma(@SuppressWarnings("unused") TComma node)
     {
         this.index = 8;
     }
 
     @Override
-    public void caseTColon(@SuppressWarnings("unused") TColon node)
+    public void caseTQuery(@SuppressWarnings("unused") TQuery node)
     {
         this.index = 9;
     }
 
     @Override
-    public void caseTSemicolon(@SuppressWarnings("unused") TSemicolon node)
+    public void caseTColon(@SuppressWarnings("unused") TColon node)
     {
         this.index = 10;
     }
 
     @Override
-    public void caseTLPar(@SuppressWarnings("unused") TLPar node)
+    public void caseTSemicolon(@SuppressWarnings("unused") TSemicolon node)
     {
         this.index = 11;
     }
 
     @Override
-    public void caseTRPar(@SuppressWarnings("unused") TRPar node)
+    public void caseTLPar(@SuppressWarnings("unused") TLPar node)
     {
         this.index = 12;
     }
 
     @Override
-    public void caseTLBrace(@SuppressWarnings("unused") TLBrace node)
+    public void caseTRPar(@SuppressWarnings("unused") TRPar node)
     {
         this.index = 13;
     }
 
     @Override
-    public void caseTRBrace(@SuppressWarnings("unused") TRBrace node)
+    public void caseTLBrace(@SuppressWarnings("unused") TLBrace node)
     {
         this.index = 14;
     }
 
     @Override
-    public void caseEOF(@SuppressWarnings("unused") EOF node)
+    public void caseTRBrace(@SuppressWarnings("unused") TRBrace node)
     {
         this.index = 15;
+    }
+
+    @Override
+    public void caseTLArrow(@SuppressWarnings("unused") TLArrow node)
+    {
+        this.index = 16;
+    }
+
+    @Override
+    public void caseTRArrow(@SuppressWarnings("unused") TRArrow node)
+    {
+        this.index = 17;
+    }
+
+    @Override
+    public void caseEOF(@SuppressWarnings("unused") EOF node)
+    {
+        this.index = 18;
     }
 }

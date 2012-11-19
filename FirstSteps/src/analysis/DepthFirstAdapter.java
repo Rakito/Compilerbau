@@ -31,9 +31,59 @@ public class DepthFirstAdapter extends AnalysisAdapter
     public void caseStart(Start node)
     {
         inStart(node);
-        node.getPIfex().apply(this);
+        node.getPParas().apply(this);
         node.getEOF().apply(this);
         outStart(node);
+    }
+
+    public void inAParaParas(AParaParas node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAParaParas(AParaParas node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAParaParas(AParaParas node)
+    {
+        inAParaParas(node);
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
+        }
+        outAParaParas(node);
+    }
+
+    public void inAParasParas(AParasParas node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAParasParas(AParasParas node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAParasParas(AParasParas node)
+    {
+        inAParasParas(node);
+        if(node.getParas() != null)
+        {
+            node.getParas().apply(this);
+        }
+        if(node.getComma() != null)
+        {
+            node.getComma().apply(this);
+        }
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
+        }
+        outAParasParas(node);
     }
 
     public void inAIfex(AIfex node)
@@ -187,6 +237,18 @@ public class DepthFirstAdapter extends AnalysisAdapter
     public void caseAFunctionFunction(AFunctionFunction node)
     {
         inAFunctionFunction(node);
+        if(node.getLArrow() != null)
+        {
+            node.getLArrow().apply(this);
+        }
+        if(node.getReturns() != null)
+        {
+            node.getReturns().apply(this);
+        }
+        if(node.getRArrow() != null)
+        {
+            node.getRArrow().apply(this);
+        }
         if(node.getFuncName() != null)
         {
             node.getFuncName().apply(this);

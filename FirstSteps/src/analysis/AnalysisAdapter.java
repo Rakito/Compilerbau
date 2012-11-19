@@ -75,6 +75,18 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseAParaParas(AParaParas node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAParasParas(AParasParas node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseAIfex(AIfex node)
     {
         defaultCase(node);
@@ -201,6 +213,12 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseTComma(TComma node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseTQuery(TQuery node)
     {
         defaultCase(node);
@@ -238,6 +256,18 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseTRBrace(TRBrace node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTLArrow(TLArrow node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTRArrow(TRArrow node)
     {
         defaultCase(node);
     }
