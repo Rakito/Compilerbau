@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Move 5 elements to &apos;FirstSteps&apos;&#x0A;- Original project: &apos;Combilierbau&apos;&#x0A;- Destination element: &apos;FirstSteps&apos;&#x0A;- Original elements:&#x0A;     firstSteps.sablecc&#x0A;     parser&#x0A;     node&#x0A;     analysis&#x0A;     lexer&#x0A;- Update references to refactored element" description="Move elements" destination="=FirstSteps" element1="firstSteps.sablecc" element2="parser" element3="node" element4="analysis" element5="lexer" files="1" flags="589830" folders="4" id="org.eclipse.jdt.ui.move" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1351701905827" units="0" version="1.0"/>
-</session>

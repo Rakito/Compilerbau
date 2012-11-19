@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="firstSteps.node.AIfex"/>
-<fullyQualifiedTypeName name="firstSteps.interpreter.Interpreter"/>
-<fullyQualifiedTypeName name="java.lang.Integer"/>
-<fullyQualifiedTypeName name="firstSteps.lexer.Lexer"/>
-<fullyQualifiedTypeName name="firstSteps.parser.Parser"/>
-<fullyQualifiedTypeName name="firstSteps.node.Start"/>
-</qualifiedTypeNameHistroy>
