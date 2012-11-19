@@ -14,8 +14,10 @@ public interface Analysis extends Switch
     void caseStart(Start node);
     void caseAIfex(AIfex node);
     void caseAFactorExpr(AFactorExpr node);
+    void caseAFunctionExpr(AFunctionExpr node);
     void caseAPlusExpr(APlusExpr node);
     void caseAMinusExpr(AMinusExpr node);
+    void caseAFunctionFunction(AFunctionFunction node);
     void caseATermFactor(ATermFactor node);
     void caseAMultFactor(AMultFactor node);
     void caseADivFactor(ADivFactor node);

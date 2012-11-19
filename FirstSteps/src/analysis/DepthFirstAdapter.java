@@ -94,6 +94,27 @@ public class DepthFirstAdapter extends AnalysisAdapter
         outAFactorExpr(node);
     }
 
+    public void inAFunctionExpr(AFunctionExpr node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAFunctionExpr(AFunctionExpr node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAFunctionExpr(AFunctionExpr node)
+    {
+        inAFunctionExpr(node);
+        if(node.getFunction() != null)
+        {
+            node.getFunction().apply(this);
+        }
+        outAFunctionExpr(node);
+    }
+
     public void inAPlusExpr(APlusExpr node)
     {
         defaultIn(node);
@@ -150,6 +171,51 @@ public class DepthFirstAdapter extends AnalysisAdapter
             node.getFactor().apply(this);
         }
         outAMinusExpr(node);
+    }
+
+    public void inAFunctionFunction(AFunctionFunction node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAFunctionFunction(AFunctionFunction node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAFunctionFunction(AFunctionFunction node)
+    {
+        inAFunctionFunction(node);
+        if(node.getFuncName() != null)
+        {
+            node.getFuncName().apply(this);
+        }
+        if(node.getLPar() != null)
+        {
+            node.getLPar().apply(this);
+        }
+        if(node.getParams() != null)
+        {
+            node.getParams().apply(this);
+        }
+        if(node.getRPar() != null)
+        {
+            node.getRPar().apply(this);
+        }
+        if(node.getLBrace() != null)
+        {
+            node.getLBrace().apply(this);
+        }
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
+        }
+        if(node.getRBrace() != null)
+        {
+            node.getRBrace().apply(this);
+        }
+        outAFunctionFunction(node);
     }
 
     public void inATermFactor(ATermFactor node)

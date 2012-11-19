@@ -43,51 +43,11 @@ public class Interpreter extends DepthFirstAdapter {
 	}
 
 	@Override
-	public void caseAFunction(ATermFactor node) {
+	public void caseAFunctionExpr(AFunctionExpr node) {
 		// TODO Auto-generated method stub
-		super.caseATermFactor(node);
-	}
-	
-	@Override
-	public void caseATermFactor(ATermFactor node) {
-		// TODO Auto-generated method stub
-		super.caseATermFactor(node);
+		super.caseAFunctionExpr(node);
 	}
 
-	@Override
-	public void caseAMultFactor(AMultFactor node) {
-		// TODO Auto-generated method stub
-		super.caseAMultFactor(node);
-	}
-
-	@Override
-	public void caseADivFactor(ADivFactor node) {
-		// TODO Auto-generated method stub
-		super.caseADivFactor(node);
-	}
-
-	@Override
-	public void caseAModFactor(AModFactor node) {
-		// TODO Auto-generated method stub
-		super.caseAModFactor(node);
-	}
-
-	@Override
-	public void caseANumberTerm(ANumberTerm node) {
-		int value = new Integer(""+node.getNumber());
-	}
-
-	@Override
-	public void caseAIdTerm(AIdTerm node) {
-		// TODO Auto-generated method stub
-		super.caseAIdTerm(node);
-	}
-
-	@Override
-	public void caseAExprTerm(AExprTerm node) {
-		// TODO Auto-generated method stub
-		super.caseAExprTerm(node);
-	}
 	
 
 	

@@ -87,6 +87,12 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseAFunctionExpr(AFunctionExpr node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseAPlusExpr(APlusExpr node)
     {
         defaultCase(node);
@@ -94,6 +100,12 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseAMinusExpr(AMinusExpr node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAFunctionFunction(AFunctionFunction node)
     {
         defaultCase(node);
     }

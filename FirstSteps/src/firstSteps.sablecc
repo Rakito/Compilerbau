@@ -2,6 +2,7 @@ Helpers
  digit = ['0' .. '9'];
  letter = ['a' .. 'z'] | ['A' .. 'Z'];
  any_charater = [0x0 .. 0xfffff];
+
  
 
 Tokens
@@ -24,7 +25,9 @@ Tokens
  blank = (' ')*;
  return = ( 13 | 10 );
  comment = 'ÚÚ' any_charater;
- function_t = 'function';
+ 
+
+  
 
 
 Ignored Tokens
@@ -40,7 +43,8 @@ Productions
   {plus} expr plus factor |
   {minus} expr minus factor;
   
- function = {function} [func_name]:id l_par [params]:(id (, id)*) r_par;
+ function = 
+   {function} [func_name]:id l_par [params]:id r_par l_brace expr r_brace;
 
  factor =
   {term} term |
@@ -54,5 +58,4 @@ Productions
   {id} id |
   {expr} l_par expr r_par;
   
- function_def =
-  function_t id l_par id r_par l_brace expr r_brace
+ 
