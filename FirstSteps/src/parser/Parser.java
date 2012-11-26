@@ -673,7 +673,7 @@ public class Parser
 			{{-1, REDUCE, 12}, },
 			{{-1, ERROR, 3}, {0, SHIFT, 1}, {1, SHIFT, 2}, {12, SHIFT, 3}, {16, SHIFT, 4}, },
 			{{-1, ERROR, 4}, {0, SHIFT, 1}, {1, SHIFT, 2}, {12, SHIFT, 3}, {16, SHIFT, 4}, },
-			{{-1, ERROR, 5}, {8, SHIFT, 12}, {18, ACCEPT, -1}, },
+			{{-1, ERROR, 5}, {8, SHIFT, 12}, {19, ACCEPT, -1}, },
 			{{-1, REDUCE, 0}, {2, SHIFT, 13}, {3, SHIFT, 14}, },
 			{{-1, REDUCE, 4}, },
 			{{-1, REDUCE, 3}, {4, SHIFT, 15}, {5, SHIFT, 16}, {6, SHIFT, 17}, },
