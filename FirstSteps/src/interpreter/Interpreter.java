@@ -8,8 +8,7 @@ public class Interpreter extends DepthFirstAdapter {
 	
 	@Override
 	public void caseAExprTerm(AExprTerm node) {
-		// TODO Auto-generated method stub
-		super.caseAExprTerm(node);
+		System.out.println("( "+node.getExpr()+" )");
 	}
 	
 	@Override
@@ -36,8 +35,7 @@ public class Interpreter extends DepthFirstAdapter {
 
 	@Override
 	public void caseAIdTerm(AIdTerm node) {
-		// TODO Auto-generated method stub
-		super.caseAIdTerm(node);
+		System.out.println(node.getId().getText());
 	}
 
 	@Override
@@ -63,8 +61,7 @@ public class Interpreter extends DepthFirstAdapter {
 
 	@Override
 	public void caseAModFactor(AModFactor node) {
-		// TODO Auto-generated method stub
-		super.caseAModFactor(node);
+		System.out.println(new Integer(node.getFactor())+" / "+node.getTerm().);
 	}
 
 	@Override
@@ -75,8 +72,7 @@ public class Interpreter extends DepthFirstAdapter {
 
 	@Override
 	public void caseANumberTerm(ANumberTerm node) {
-		// TODO Auto-generated method stub
-		super.caseANumberTerm(node);
+		System.out.println(new Integer(node.getNumber().getText())+"");
 	}
 
 	@Override
