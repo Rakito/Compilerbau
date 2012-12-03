@@ -8,7 +8,7 @@ import analysis.*;
 public final class ADivFactor extends PFactor
 {
     private PFactor _factor_;
-    private TDiv _div_;
+    private TSlash _slash_;
     private PTerm _term_;
 
     public ADivFactor()
@@ -18,13 +18,13 @@ public final class ADivFactor extends PFactor
 
     public ADivFactor(
         @SuppressWarnings("hiding") PFactor _factor_,
-        @SuppressWarnings("hiding") TDiv _div_,
+        @SuppressWarnings("hiding") TSlash _slash_,
         @SuppressWarnings("hiding") PTerm _term_)
     {
         // Constructor
         setFactor(_factor_);
 
-        setDiv(_div_);
+        setSlash(_slash_);
 
         setTerm(_term_);
 
@@ -35,7 +35,7 @@ public final class ADivFactor extends PFactor
     {
         return new ADivFactor(
             cloneNode(this._factor_),
-            cloneNode(this._div_),
+            cloneNode(this._slash_),
             cloneNode(this._term_));
     }
 
@@ -70,16 +70,16 @@ public final class ADivFactor extends PFactor
         this._factor_ = node;
     }
 
-    public TDiv getDiv()
+    public TSlash getSlash()
     {
-        return this._div_;
+        return this._slash_;
     }
 
-    public void setDiv(TDiv node)
+    public void setSlash(TSlash node)
     {
-        if(this._div_ != null)
+        if(this._slash_ != null)
         {
-            this._div_.parent(null);
+            this._slash_.parent(null);
         }
 
         if(node != null)
@@ -92,7 +92,7 @@ public final class ADivFactor extends PFactor
             node.parent(this);
         }
 
-        this._div_ = node;
+        this._slash_ = node;
     }
 
     public PTerm getTerm()
@@ -125,7 +125,7 @@ public final class ADivFactor extends PFactor
     {
         return ""
             + toString(this._factor_)
-            + toString(this._div_)
+            + toString(this._slash_)
             + toString(this._term_);
     }
 
@@ -139,9 +139,9 @@ public final class ADivFactor extends PFactor
             return;
         }
 
-        if(this._div_ == child)
+        if(this._slash_ == child)
         {
-            this._div_ = null;
+            this._slash_ = null;
             return;
         }
 
@@ -164,9 +164,9 @@ public final class ADivFactor extends PFactor
             return;
         }
 
-        if(this._div_ == oldChild)
+        if(this._slash_ == oldChild)
         {
-            setDiv((TDiv) newChild);
+            setSlash((TSlash) newChild);
             return;
         }
 

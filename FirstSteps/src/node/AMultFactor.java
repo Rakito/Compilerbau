@@ -8,7 +8,7 @@ import analysis.*;
 public final class AMultFactor extends PFactor
 {
     private PFactor _factor_;
-    private TMult _mult_;
+    private TAsterisk _asterisk_;
     private PTerm _term_;
 
     public AMultFactor()
@@ -18,13 +18,13 @@ public final class AMultFactor extends PFactor
 
     public AMultFactor(
         @SuppressWarnings("hiding") PFactor _factor_,
-        @SuppressWarnings("hiding") TMult _mult_,
+        @SuppressWarnings("hiding") TAsterisk _asterisk_,
         @SuppressWarnings("hiding") PTerm _term_)
     {
         // Constructor
         setFactor(_factor_);
 
-        setMult(_mult_);
+        setAsterisk(_asterisk_);
 
         setTerm(_term_);
 
@@ -35,7 +35,7 @@ public final class AMultFactor extends PFactor
     {
         return new AMultFactor(
             cloneNode(this._factor_),
-            cloneNode(this._mult_),
+            cloneNode(this._asterisk_),
             cloneNode(this._term_));
     }
 
@@ -70,16 +70,16 @@ public final class AMultFactor extends PFactor
         this._factor_ = node;
     }
 
-    public TMult getMult()
+    public TAsterisk getAsterisk()
     {
-        return this._mult_;
+        return this._asterisk_;
     }
 
-    public void setMult(TMult node)
+    public void setAsterisk(TAsterisk node)
     {
-        if(this._mult_ != null)
+        if(this._asterisk_ != null)
         {
-            this._mult_.parent(null);
+            this._asterisk_.parent(null);
         }
 
         if(node != null)
@@ -92,7 +92,7 @@ public final class AMultFactor extends PFactor
             node.parent(this);
         }
 
-        this._mult_ = node;
+        this._asterisk_ = node;
     }
 
     public PTerm getTerm()
@@ -125,7 +125,7 @@ public final class AMultFactor extends PFactor
     {
         return ""
             + toString(this._factor_)
-            + toString(this._mult_)
+            + toString(this._asterisk_)
             + toString(this._term_);
     }
 
@@ -139,9 +139,9 @@ public final class AMultFactor extends PFactor
             return;
         }
 
-        if(this._mult_ == child)
+        if(this._asterisk_ == child)
         {
-            this._mult_ = null;
+            this._asterisk_ = null;
             return;
         }
 
@@ -164,9 +164,9 @@ public final class AMultFactor extends PFactor
             return;
         }
 
-        if(this._mult_ == oldChild)
+        if(this._asterisk_ == oldChild)
         {
-            setMult((TMult) newChild);
+            setAsterisk((TAsterisk) newChild);
             return;
         }
 

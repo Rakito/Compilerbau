@@ -10,15 +10,16 @@ Tokens
  id = letter ( digit | letter )*;
  number = digit+;
  plus = '+';
- minus = '-';
- mult = '*';
- div = '/';
- mod = '%';
+ hyphen = '-';
+ asterisk = '*';
+ percent = '%';
  dot = '.';
  comma = ',';
  query ='?';
  colon = ':';
  semicolon = ';';
+ l_box = '[';
+ r_box = ']';
  l_par = '(';
  r_par = ')';
  l_brace = '{';
@@ -26,13 +27,33 @@ Tokens
  l_arrow = '<';
  r_arrow = '>';
  blank = (' ')*;
+ dash = '-';
+ ampersand = '&';
+ slash = '/';
+ question = '?';
+ exclamation = '!';
+ at = '@';
+ tilde = '~';
+ section = '¤';
+ underscore = '_';
+ pipe = '|';
+ hash = '#';
+ caret = '^';
+ degree = '¡';
+ blackslash ='\';
+ 
  return = ( 13 | 10 );
  comment = 'ÚÚ' any_charater;
  
- 
- 
-
-  
+ define = 'define';
+ func = 'func';
+ begin = 'begin';
+ end = 'end';
+ cons = 'cons';
+ where = 'where';
+ break = 'break';
+ true = 'TRUE';
+ false ='FALSE';
 
 
 Ignored Tokens
@@ -49,17 +70,22 @@ Productions
  expr =
   {factor} factor |
   {function} function |
+  {constructor} const |
   {plus} expr plus factor |
-  {minus} expr minus factor;
+  {minus} expr hyphen factor;
   
  function = 
-   {function} l_arrow [returns]:paras r_arrow [func_name]:id l_par [params]:paras r_par l_brace expr r_brace;
+   {function} func l_arrow [returns]:paras r_arrow [func_name]:id l_par [params]:paras r_par l_brace expr r_brace;
 
+ const = 
+   {cons} cons [cons_name]:id l_par [params]:paras r_par |
+   {nil} cons [cons_name]:id l_par r_par;
+ 
  factor =
   {term} term |
-  {mult} factor mult term |
-  {div} factor div term |
-  {mod} factor mod term;
+  {mult} factor asterisk term |
+  {div} factor slash term |
+  {mod} factor percent term;
 
 
  term =

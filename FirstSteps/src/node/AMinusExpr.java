@@ -8,7 +8,7 @@ import analysis.*;
 public final class AMinusExpr extends PExpr
 {
     private PExpr _expr_;
-    private TMinus _minus_;
+    private THyphen _hyphen_;
     private PFactor _factor_;
 
     public AMinusExpr()
@@ -18,13 +18,13 @@ public final class AMinusExpr extends PExpr
 
     public AMinusExpr(
         @SuppressWarnings("hiding") PExpr _expr_,
-        @SuppressWarnings("hiding") TMinus _minus_,
+        @SuppressWarnings("hiding") THyphen _hyphen_,
         @SuppressWarnings("hiding") PFactor _factor_)
     {
         // Constructor
         setExpr(_expr_);
 
-        setMinus(_minus_);
+        setHyphen(_hyphen_);
 
         setFactor(_factor_);
 
@@ -35,7 +35,7 @@ public final class AMinusExpr extends PExpr
     {
         return new AMinusExpr(
             cloneNode(this._expr_),
-            cloneNode(this._minus_),
+            cloneNode(this._hyphen_),
             cloneNode(this._factor_));
     }
 
@@ -70,16 +70,16 @@ public final class AMinusExpr extends PExpr
         this._expr_ = node;
     }
 
-    public TMinus getMinus()
+    public THyphen getHyphen()
     {
-        return this._minus_;
+        return this._hyphen_;
     }
 
-    public void setMinus(TMinus node)
+    public void setHyphen(THyphen node)
     {
-        if(this._minus_ != null)
+        if(this._hyphen_ != null)
         {
-            this._minus_.parent(null);
+            this._hyphen_.parent(null);
         }
 
         if(node != null)
@@ -92,7 +92,7 @@ public final class AMinusExpr extends PExpr
             node.parent(this);
         }
 
-        this._minus_ = node;
+        this._hyphen_ = node;
     }
 
     public PFactor getFactor()
@@ -125,7 +125,7 @@ public final class AMinusExpr extends PExpr
     {
         return ""
             + toString(this._expr_)
-            + toString(this._minus_)
+            + toString(this._hyphen_)
             + toString(this._factor_);
     }
 
@@ -139,9 +139,9 @@ public final class AMinusExpr extends PExpr
             return;
         }
 
-        if(this._minus_ == child)
+        if(this._hyphen_ == child)
         {
-            this._minus_ = null;
+            this._hyphen_ = null;
             return;
         }
 
@@ -164,9 +164,9 @@ public final class AMinusExpr extends PExpr
             return;
         }
 
-        if(this._minus_ == oldChild)
+        if(this._hyphen_ == oldChild)
         {
-            setMinus((TMinus) newChild);
+            setHyphen((THyphen) newChild);
             return;
         }
 

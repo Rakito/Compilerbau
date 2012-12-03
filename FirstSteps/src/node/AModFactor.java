@@ -8,7 +8,7 @@ import analysis.*;
 public final class AModFactor extends PFactor
 {
     private PFactor _factor_;
-    private TMod _mod_;
+    private TPercent _percent_;
     private PTerm _term_;
 
     public AModFactor()
@@ -18,13 +18,13 @@ public final class AModFactor extends PFactor
 
     public AModFactor(
         @SuppressWarnings("hiding") PFactor _factor_,
-        @SuppressWarnings("hiding") TMod _mod_,
+        @SuppressWarnings("hiding") TPercent _percent_,
         @SuppressWarnings("hiding") PTerm _term_)
     {
         // Constructor
         setFactor(_factor_);
 
-        setMod(_mod_);
+        setPercent(_percent_);
 
         setTerm(_term_);
 
@@ -35,7 +35,7 @@ public final class AModFactor extends PFactor
     {
         return new AModFactor(
             cloneNode(this._factor_),
-            cloneNode(this._mod_),
+            cloneNode(this._percent_),
             cloneNode(this._term_));
     }
 
@@ -70,16 +70,16 @@ public final class AModFactor extends PFactor
         this._factor_ = node;
     }
 
-    public TMod getMod()
+    public TPercent getPercent()
     {
-        return this._mod_;
+        return this._percent_;
     }
 
-    public void setMod(TMod node)
+    public void setPercent(TPercent node)
     {
-        if(this._mod_ != null)
+        if(this._percent_ != null)
         {
-            this._mod_.parent(null);
+            this._percent_.parent(null);
         }
 
         if(node != null)
@@ -92,7 +92,7 @@ public final class AModFactor extends PFactor
             node.parent(this);
         }
 
-        this._mod_ = node;
+        this._percent_ = node;
     }
 
     public PTerm getTerm()
@@ -125,7 +125,7 @@ public final class AModFactor extends PFactor
     {
         return ""
             + toString(this._factor_)
-            + toString(this._mod_)
+            + toString(this._percent_)
             + toString(this._term_);
     }
 
@@ -139,9 +139,9 @@ public final class AModFactor extends PFactor
             return;
         }
 
-        if(this._mod_ == child)
+        if(this._percent_ == child)
         {
-            this._mod_ = null;
+            this._percent_ = null;
             return;
         }
 
@@ -164,9 +164,9 @@ public final class AModFactor extends PFactor
             return;
         }
 
-        if(this._mod_ == oldChild)
+        if(this._percent_ == oldChild)
         {
-            setMod((TMod) newChild);
+            setPercent((TPercent) newChild);
             return;
         }
 

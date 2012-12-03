@@ -165,6 +165,27 @@ public class DepthFirstAdapter extends AnalysisAdapter
         outAFunctionExpr(node);
     }
 
+    public void inAConstructorExpr(AConstructorExpr node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAConstructorExpr(AConstructorExpr node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAConstructorExpr(AConstructorExpr node)
+    {
+        inAConstructorExpr(node);
+        if(node.getConst() != null)
+        {
+            node.getConst().apply(this);
+        }
+        outAConstructorExpr(node);
+    }
+
     public void inAPlusExpr(APlusExpr node)
     {
         defaultIn(node);
@@ -212,9 +233,9 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getExpr().apply(this);
         }
-        if(node.getMinus() != null)
+        if(node.getHyphen() != null)
         {
-            node.getMinus().apply(this);
+            node.getHyphen().apply(this);
         }
         if(node.getFactor() != null)
         {
@@ -237,6 +258,10 @@ public class DepthFirstAdapter extends AnalysisAdapter
     public void caseAFunctionFunction(AFunctionFunction node)
     {
         inAFunctionFunction(node);
+        if(node.getFunc() != null)
+        {
+            node.getFunc().apply(this);
+        }
         if(node.getLArrow() != null)
         {
             node.getLArrow().apply(this);
@@ -280,6 +305,76 @@ public class DepthFirstAdapter extends AnalysisAdapter
         outAFunctionFunction(node);
     }
 
+    public void inAConsConst(AConsConst node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAConsConst(AConsConst node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAConsConst(AConsConst node)
+    {
+        inAConsConst(node);
+        if(node.getCons() != null)
+        {
+            node.getCons().apply(this);
+        }
+        if(node.getConsName() != null)
+        {
+            node.getConsName().apply(this);
+        }
+        if(node.getLPar() != null)
+        {
+            node.getLPar().apply(this);
+        }
+        if(node.getParams() != null)
+        {
+            node.getParams().apply(this);
+        }
+        if(node.getRPar() != null)
+        {
+            node.getRPar().apply(this);
+        }
+        outAConsConst(node);
+    }
+
+    public void inANilConst(ANilConst node)
+    {
+        defaultIn(node);
+    }
+
+    public void outANilConst(ANilConst node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseANilConst(ANilConst node)
+    {
+        inANilConst(node);
+        if(node.getCons() != null)
+        {
+            node.getCons().apply(this);
+        }
+        if(node.getConsName() != null)
+        {
+            node.getConsName().apply(this);
+        }
+        if(node.getLPar() != null)
+        {
+            node.getLPar().apply(this);
+        }
+        if(node.getRPar() != null)
+        {
+            node.getRPar().apply(this);
+        }
+        outANilConst(node);
+    }
+
     public void inATermFactor(ATermFactor node)
     {
         defaultIn(node);
@@ -319,9 +414,9 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getFactor().apply(this);
         }
-        if(node.getMult() != null)
+        if(node.getAsterisk() != null)
         {
-            node.getMult().apply(this);
+            node.getAsterisk().apply(this);
         }
         if(node.getTerm() != null)
         {
@@ -348,9 +443,9 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getFactor().apply(this);
         }
-        if(node.getDiv() != null)
+        if(node.getSlash() != null)
         {
-            node.getDiv().apply(this);
+            node.getSlash().apply(this);
         }
         if(node.getTerm() != null)
         {
@@ -377,9 +472,9 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getFactor().apply(this);
         }
-        if(node.getMod() != null)
+        if(node.getPercent() != null)
         {
-            node.getMod().apply(this);
+            node.getPercent().apply(this);
         }
         if(node.getTerm() != null)
         {

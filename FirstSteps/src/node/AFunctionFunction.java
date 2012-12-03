@@ -7,6 +7,7 @@ import analysis.*;
 @SuppressWarnings("nls")
 public final class AFunctionFunction extends PFunction
 {
+    private TFunc _func_;
     private TLArrow _lArrow_;
     private PParas _returns_;
     private TRArrow _rArrow_;
@@ -24,6 +25,7 @@ public final class AFunctionFunction extends PFunction
     }
 
     public AFunctionFunction(
+        @SuppressWarnings("hiding") TFunc _func_,
         @SuppressWarnings("hiding") TLArrow _lArrow_,
         @SuppressWarnings("hiding") PParas _returns_,
         @SuppressWarnings("hiding") TRArrow _rArrow_,
@@ -36,6 +38,8 @@ public final class AFunctionFunction extends PFunction
         @SuppressWarnings("hiding") TRBrace _rBrace_)
     {
         // Constructor
+        setFunc(_func_);
+
         setLArrow(_lArrow_);
 
         setReturns(_returns_);
@@ -62,6 +66,7 @@ public final class AFunctionFunction extends PFunction
     public Object clone()
     {
         return new AFunctionFunction(
+            cloneNode(this._func_),
             cloneNode(this._lArrow_),
             cloneNode(this._returns_),
             cloneNode(this._rArrow_),
@@ -78,6 +83,31 @@ public final class AFunctionFunction extends PFunction
     public void apply(Switch sw)
     {
         ((Analysis) sw).caseAFunctionFunction(this);
+    }
+
+    public TFunc getFunc()
+    {
+        return this._func_;
+    }
+
+    public void setFunc(TFunc node)
+    {
+        if(this._func_ != null)
+        {
+            this._func_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._func_ = node;
     }
 
     public TLArrow getLArrow()
@@ -334,6 +364,7 @@ public final class AFunctionFunction extends PFunction
     public String toString()
     {
         return ""
+            + toString(this._func_)
             + toString(this._lArrow_)
             + toString(this._returns_)
             + toString(this._rArrow_)
@@ -350,6 +381,12 @@ public final class AFunctionFunction extends PFunction
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
+        if(this._func_ == child)
+        {
+            this._func_ = null;
+            return;
+        }
+
         if(this._lArrow_ == child)
         {
             this._lArrow_ = null;
@@ -417,6 +454,12 @@ public final class AFunctionFunction extends PFunction
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
+        if(this._func_ == oldChild)
+        {
+            setFunc((TFunc) newChild);
+            return;
+        }
+
         if(this._lArrow_ == oldChild)
         {
             setLArrow((TLArrow) newChild);
