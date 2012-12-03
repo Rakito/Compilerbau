@@ -1,1 +1,1 @@
-func <int>halloWelt(1+1){17+4} , 1 + 1 , hallo 
+cons tado() , func <int>halloWelt(1+1){17+4} , 1 + 1 , hallo

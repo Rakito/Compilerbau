@@ -183,6 +183,60 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseTDefine(TDefine node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTFunc(TFunc node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTBegin(TBegin node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTEnd(TEnd node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTCons(TCons node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTWhere(TWhere node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTBreak(TBreak node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTTrue(TTrue node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTFalse(TFalse node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseTId(TId node)
     {
         defaultCase(node);
@@ -394,60 +448,6 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseTComment(TComment node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTDefine(TDefine node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTFunc(TFunc node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTBegin(TBegin node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTEnd(TEnd node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTCons(TCons node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTWhere(TWhere node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTBreak(TBreak node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTTrue(TTrue node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTFalse(TFalse node)
     {
         defaultCase(node);
     }

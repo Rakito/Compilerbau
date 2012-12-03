@@ -31,6 +31,15 @@ public interface Analysis extends Switch
     void caseAIdTerm(AIdTerm node);
     void caseAExprTerm(AExprTerm node);
 
+    void caseTDefine(TDefine node);
+    void caseTFunc(TFunc node);
+    void caseTBegin(TBegin node);
+    void caseTEnd(TEnd node);
+    void caseTCons(TCons node);
+    void caseTWhere(TWhere node);
+    void caseTBreak(TBreak node);
+    void caseTTrue(TTrue node);
+    void caseTFalse(TFalse node);
     void caseTId(TId node);
     void caseTNumber(TNumber node);
     void caseTPlus(TPlus node);
@@ -67,14 +76,5 @@ public interface Analysis extends Switch
     void caseTBlackslash(TBlackslash node);
     void caseTReturn(TReturn node);
     void caseTComment(TComment node);
-    void caseTDefine(TDefine node);
-    void caseTFunc(TFunc node);
-    void caseTBegin(TBegin node);
-    void caseTEnd(TEnd node);
-    void caseTCons(TCons node);
-    void caseTWhere(TWhere node);
-    void caseTBreak(TBreak node);
-    void caseTTrue(TTrue node);
-    void caseTFalse(TFalse node);
     void caseEOF(EOF node);
 }

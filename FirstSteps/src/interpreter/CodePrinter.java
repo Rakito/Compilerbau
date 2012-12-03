@@ -3,6 +3,8 @@ package interpreter;
 import java.util.LinkedList;
 import java.util.List;
 
+import node.AConsConst;
+import node.AConstructorExpr;
 import node.ADivFactor;
 import node.AExprTerm;
 import node.AFactorExpr;
@@ -13,11 +15,13 @@ import node.AIfex;
 import node.AMinusExpr;
 import node.AModFactor;
 import node.AMultFactor;
+import node.ANilConst;
 import node.ANumberTerm;
 import node.AParaParas;
 import node.AParasParas;
 import node.APlusExpr;
 import node.ATermFactor;
+import node.PConst;
 import node.PExpr;
 import node.PFactor;
 import node.PFunction;
@@ -116,7 +120,29 @@ public class CodePrinter {
 		doMe(node.getTerm());
 	}
 
+	void doMe(AConsConst node) {
+		code.add(node.getConsName().getText().toUpperCase()+"( ");
+		doMe(node.getParams());
+		code.add(" )");
+	}
+
+	void doMe(AConstructorExpr node) {
+		doMe(node.getConst());
+	}
+
+	void doMe(ANilConst node) {
+		code.add("NIL");
+	}
+
 	// P
+
+	void doMe(PConst node) {
+		if (node instanceof AConsConst) {
+			doMe((AConsConst) node);
+		} else if (node instanceof ANilConst) {
+			doMe((ANilConst) node);
+		}
+	}
 
 	void doMe(PExpr node) {
 		if (node instanceof APlusExpr) {
