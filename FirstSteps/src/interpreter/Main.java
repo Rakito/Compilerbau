@@ -40,9 +40,8 @@ public class Main {
 			ast.apply(interp);
 
 			System.out.println("JETZT KOMMT DER CODEPRINTER!");
-			for (String string : interp.cp.code) {
-				System.out.print(string);
-			}
+
+			System.out.print(interp.cp.code.toString());
 
 		} catch (Exception e) {
 			System.out.println("Verkackt!");

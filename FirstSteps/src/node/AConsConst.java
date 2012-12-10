@@ -15,6 +15,7 @@ public final class AConsConst extends PConst
 
     public AConsConst()
     {
+    	System.out.println("CONSTRUICTOR");
         // Constructor
     }
 
