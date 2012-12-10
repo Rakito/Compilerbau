@@ -32,8 +32,41 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     {
         inStart(node);
         node.getEOF().apply(this);
-        node.getPParas().apply(this);
+        node.getPDef().apply(this);
         outStart(node);
+    }
+
+    public void inADefineDef(ADefineDef node)
+    {
+        defaultIn(node);
+    }
+
+    public void outADefineDef(ADefineDef node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseADefineDef(ADefineDef node)
+    {
+        inADefineDef(node);
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
+        }
+        if(node.getEquals() != null)
+        {
+            node.getEquals().apply(this);
+        }
+        if(node.getId() != null)
+        {
+            node.getId().apply(this);
+        }
+        if(node.getDefine() != null)
+        {
+            node.getDefine().apply(this);
+        }
+        outADefineDef(node);
     }
 
     public void inAParaParas(AParaParas node)
@@ -121,6 +154,35 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
             node.getLeft().apply(this);
         }
         outAIfex(node);
+    }
+
+    public void inAImpl(AImpl node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAImpl(AImpl node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAImpl(AImpl node)
+    {
+        inAImpl(node);
+        if(node.getRBrace() != null)
+        {
+            node.getRBrace().apply(this);
+        }
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
+        }
+        if(node.getLBrace() != null)
+        {
+            node.getLBrace().apply(this);
+        }
+        outAImpl(node);
     }
 
     public void inAFactorExpr(AFactorExpr node)
@@ -258,17 +320,9 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     public void caseAFunctionFunction(AFunctionFunction node)
     {
         inAFunctionFunction(node);
-        if(node.getRBrace() != null)
+        if(node.getImpl() != null)
         {
-            node.getRBrace().apply(this);
-        }
-        if(node.getExpr() != null)
-        {
-            node.getExpr().apply(this);
-        }
-        if(node.getLBrace() != null)
-        {
-            node.getLBrace().apply(this);
+            node.getImpl().apply(this);
         }
         if(node.getRPar() != null)
         {
@@ -319,6 +373,10 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     public void caseANilConst(ANilConst node)
     {
         inANilConst(node);
+        if(node.getImpl() != null)
+        {
+            node.getImpl().apply(this);
+        }
         if(node.getRPar() != null)
         {
             node.getRPar().apply(this);
@@ -352,6 +410,10 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     public void caseAConsConst(AConsConst node)
     {
         inAConsConst(node);
+        if(node.getImpl() != null)
+        {
+            node.getImpl().apply(this);
+        }
         if(node.getRPar() != null)
         {
             node.getRPar().apply(this);

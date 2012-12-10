@@ -15,9 +15,7 @@ public final class AFunctionFunction extends PFunction
     private TLPar _lPar_;
     private PParas _params_;
     private TRPar _rPar_;
-    private TLBrace _lBrace_;
-    private PExpr _expr_;
-    private TRBrace _rBrace_;
+    private PImpl _impl_;
 
     public AFunctionFunction()
     {
@@ -33,9 +31,7 @@ public final class AFunctionFunction extends PFunction
         @SuppressWarnings("hiding") TLPar _lPar_,
         @SuppressWarnings("hiding") PParas _params_,
         @SuppressWarnings("hiding") TRPar _rPar_,
-        @SuppressWarnings("hiding") TLBrace _lBrace_,
-        @SuppressWarnings("hiding") PExpr _expr_,
-        @SuppressWarnings("hiding") TRBrace _rBrace_)
+        @SuppressWarnings("hiding") PImpl _impl_)
     {
         // Constructor
         setFunc(_func_);
@@ -54,11 +50,7 @@ public final class AFunctionFunction extends PFunction
 
         setRPar(_rPar_);
 
-        setLBrace(_lBrace_);
-
-        setExpr(_expr_);
-
-        setRBrace(_rBrace_);
+        setImpl(_impl_);
 
     }
 
@@ -74,9 +66,7 @@ public final class AFunctionFunction extends PFunction
             cloneNode(this._lPar_),
             cloneNode(this._params_),
             cloneNode(this._rPar_),
-            cloneNode(this._lBrace_),
-            cloneNode(this._expr_),
-            cloneNode(this._rBrace_));
+            cloneNode(this._impl_));
     }
 
     @Override
@@ -285,16 +275,16 @@ public final class AFunctionFunction extends PFunction
         this._rPar_ = node;
     }
 
-    public TLBrace getLBrace()
+    public PImpl getImpl()
     {
-        return this._lBrace_;
+        return this._impl_;
     }
 
-    public void setLBrace(TLBrace node)
+    public void setImpl(PImpl node)
     {
-        if(this._lBrace_ != null)
+        if(this._impl_ != null)
         {
-            this._lBrace_.parent(null);
+            this._impl_.parent(null);
         }
 
         if(node != null)
@@ -307,57 +297,7 @@ public final class AFunctionFunction extends PFunction
             node.parent(this);
         }
 
-        this._lBrace_ = node;
-    }
-
-    public PExpr getExpr()
-    {
-        return this._expr_;
-    }
-
-    public void setExpr(PExpr node)
-    {
-        if(this._expr_ != null)
-        {
-            this._expr_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._expr_ = node;
-    }
-
-    public TRBrace getRBrace()
-    {
-        return this._rBrace_;
-    }
-
-    public void setRBrace(TRBrace node)
-    {
-        if(this._rBrace_ != null)
-        {
-            this._rBrace_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._rBrace_ = node;
+        this._impl_ = node;
     }
 
     @Override
@@ -372,9 +312,7 @@ public final class AFunctionFunction extends PFunction
             + toString(this._lPar_)
             + toString(this._params_)
             + toString(this._rPar_)
-            + toString(this._lBrace_)
-            + toString(this._expr_)
-            + toString(this._rBrace_);
+            + toString(this._impl_);
     }
 
     @Override
@@ -429,21 +367,9 @@ public final class AFunctionFunction extends PFunction
             return;
         }
 
-        if(this._lBrace_ == child)
+        if(this._impl_ == child)
         {
-            this._lBrace_ = null;
-            return;
-        }
-
-        if(this._expr_ == child)
-        {
-            this._expr_ = null;
-            return;
-        }
-
-        if(this._rBrace_ == child)
-        {
-            this._rBrace_ = null;
+            this._impl_ = null;
             return;
         }
 
@@ -502,21 +428,9 @@ public final class AFunctionFunction extends PFunction
             return;
         }
 
-        if(this._lBrace_ == oldChild)
+        if(this._impl_ == oldChild)
         {
-            setLBrace((TLBrace) newChild);
-            return;
-        }
-
-        if(this._expr_ == oldChild)
-        {
-            setExpr((PExpr) newChild);
-            return;
-        }
-
-        if(this._rBrace_ == oldChild)
-        {
-            setRBrace((TRBrace) newChild);
+            setImpl((PImpl) newChild);
             return;
         }
 

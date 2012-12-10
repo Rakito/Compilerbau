@@ -12,9 +12,11 @@ public interface Analysis extends Switch
     void setOut(Node node, Object o);
 
     void caseStart(Start node);
+    void caseADefineDef(ADefineDef node);
     void caseAParaParas(AParaParas node);
     void caseAParasParas(AParasParas node);
     void caseAIfex(AIfex node);
+    void caseAImpl(AImpl node);
     void caseAFactorExpr(AFactorExpr node);
     void caseAFunctionExpr(AFunctionExpr node);
     void caseAConstructorExpr(AConstructorExpr node);
@@ -75,6 +77,7 @@ public interface Analysis extends Switch
     void caseTCaret(TCaret node);
     void caseTDegree(TDegree node);
     void caseTBlackslash(TBlackslash node);
+    void caseTEquals(TEquals node);
     void caseTReturn(TReturn node);
     void caseTComment(TComment node);
     void caseEOF(EOF node);

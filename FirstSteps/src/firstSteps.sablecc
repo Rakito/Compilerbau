@@ -64,6 +64,9 @@ Ignored Tokens
  comment, blank ;
 
 Productions
+ def =
+   {define} T.define id equals expr;
+   
  paras =
    {para} expr |
    {paras} paras comma expr;
@@ -78,7 +81,6 @@ Productions
   {factor} factor |
   {function} function |
   {constructor} const |
-  {define} define id equals expr |
   {plus} expr plus factor |
   {minus} expr hyphen factor;
   

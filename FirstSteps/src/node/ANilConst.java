@@ -11,6 +11,7 @@ public final class ANilConst extends PConst
     private TId _consName_;
     private TLPar _lPar_;
     private TRPar _rPar_;
+    private PImpl _impl_;
 
     public ANilConst()
     {
@@ -21,7 +22,8 @@ public final class ANilConst extends PConst
         @SuppressWarnings("hiding") TCons _cons_,
         @SuppressWarnings("hiding") TId _consName_,
         @SuppressWarnings("hiding") TLPar _lPar_,
-        @SuppressWarnings("hiding") TRPar _rPar_)
+        @SuppressWarnings("hiding") TRPar _rPar_,
+        @SuppressWarnings("hiding") PImpl _impl_)
     {
         // Constructor
         setCons(_cons_);
@@ -32,6 +34,8 @@ public final class ANilConst extends PConst
 
         setRPar(_rPar_);
 
+        setImpl(_impl_);
+
     }
 
     @Override
@@ -41,7 +45,8 @@ public final class ANilConst extends PConst
             cloneNode(this._cons_),
             cloneNode(this._consName_),
             cloneNode(this._lPar_),
-            cloneNode(this._rPar_));
+            cloneNode(this._rPar_),
+            cloneNode(this._impl_));
     }
 
     @Override
@@ -150,6 +155,31 @@ public final class ANilConst extends PConst
         this._rPar_ = node;
     }
 
+    public PImpl getImpl()
+    {
+        return this._impl_;
+    }
+
+    public void setImpl(PImpl node)
+    {
+        if(this._impl_ != null)
+        {
+            this._impl_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._impl_ = node;
+    }
+
     @Override
     public String toString()
     {
@@ -157,7 +187,8 @@ public final class ANilConst extends PConst
             + toString(this._cons_)
             + toString(this._consName_)
             + toString(this._lPar_)
-            + toString(this._rPar_);
+            + toString(this._rPar_)
+            + toString(this._impl_);
     }
 
     @Override
@@ -185,6 +216,12 @@ public final class ANilConst extends PConst
         if(this._rPar_ == child)
         {
             this._rPar_ = null;
+            return;
+        }
+
+        if(this._impl_ == child)
+        {
+            this._impl_ = null;
             return;
         }
 
@@ -216,6 +253,12 @@ public final class ANilConst extends PConst
         if(this._rPar_ == oldChild)
         {
             setRPar((TRPar) newChild);
+            return;
+        }
+
+        if(this._impl_ == oldChild)
+        {
+            setImpl((PImpl) newChild);
             return;
         }
 

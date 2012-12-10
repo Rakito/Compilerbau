@@ -12,6 +12,7 @@ public final class AConsConst extends PConst
     private TLPar _lPar_;
     private PParas _params_;
     private TRPar _rPar_;
+    private PImpl _impl_;
 
     public AConsConst()
     {
@@ -23,7 +24,8 @@ public final class AConsConst extends PConst
         @SuppressWarnings("hiding") TId _consName_,
         @SuppressWarnings("hiding") TLPar _lPar_,
         @SuppressWarnings("hiding") PParas _params_,
-        @SuppressWarnings("hiding") TRPar _rPar_)
+        @SuppressWarnings("hiding") TRPar _rPar_,
+        @SuppressWarnings("hiding") PImpl _impl_)
     {
         // Constructor
         setCons(_cons_);
@@ -36,6 +38,8 @@ public final class AConsConst extends PConst
 
         setRPar(_rPar_);
 
+        setImpl(_impl_);
+
     }
 
     @Override
@@ -46,7 +50,8 @@ public final class AConsConst extends PConst
             cloneNode(this._consName_),
             cloneNode(this._lPar_),
             cloneNode(this._params_),
-            cloneNode(this._rPar_));
+            cloneNode(this._rPar_),
+            cloneNode(this._impl_));
     }
 
     @Override
@@ -180,6 +185,31 @@ public final class AConsConst extends PConst
         this._rPar_ = node;
     }
 
+    public PImpl getImpl()
+    {
+        return this._impl_;
+    }
+
+    public void setImpl(PImpl node)
+    {
+        if(this._impl_ != null)
+        {
+            this._impl_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._impl_ = node;
+    }
+
     @Override
     public String toString()
     {
@@ -188,7 +218,8 @@ public final class AConsConst extends PConst
             + toString(this._consName_)
             + toString(this._lPar_)
             + toString(this._params_)
-            + toString(this._rPar_);
+            + toString(this._rPar_)
+            + toString(this._impl_);
     }
 
     @Override
@@ -222,6 +253,12 @@ public final class AConsConst extends PConst
         if(this._rPar_ == child)
         {
             this._rPar_ = null;
+            return;
+        }
+
+        if(this._impl_ == child)
+        {
+            this._impl_ = null;
             return;
         }
 
@@ -259,6 +296,12 @@ public final class AConsConst extends PConst
         if(this._rPar_ == oldChild)
         {
             setRPar((TRPar) newChild);
+            return;
+        }
+
+        if(this._impl_ == oldChild)
+        {
+            setImpl((PImpl) newChild);
             return;
         }
 

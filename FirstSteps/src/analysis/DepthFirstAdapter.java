@@ -31,9 +31,42 @@ public class DepthFirstAdapter extends AnalysisAdapter
     public void caseStart(Start node)
     {
         inStart(node);
-        node.getPParas().apply(this);
+        node.getPDef().apply(this);
         node.getEOF().apply(this);
         outStart(node);
+    }
+
+    public void inADefineDef(ADefineDef node)
+    {
+        defaultIn(node);
+    }
+
+    public void outADefineDef(ADefineDef node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseADefineDef(ADefineDef node)
+    {
+        inADefineDef(node);
+        if(node.getDefine() != null)
+        {
+            node.getDefine().apply(this);
+        }
+        if(node.getId() != null)
+        {
+            node.getId().apply(this);
+        }
+        if(node.getEquals() != null)
+        {
+            node.getEquals().apply(this);
+        }
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
+        }
+        outADefineDef(node);
     }
 
     public void inAParaParas(AParaParas node)
@@ -121,6 +154,35 @@ public class DepthFirstAdapter extends AnalysisAdapter
             node.getRight().apply(this);
         }
         outAIfex(node);
+    }
+
+    public void inAImpl(AImpl node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAImpl(AImpl node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAImpl(AImpl node)
+    {
+        inAImpl(node);
+        if(node.getLBrace() != null)
+        {
+            node.getLBrace().apply(this);
+        }
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
+        }
+        if(node.getRBrace() != null)
+        {
+            node.getRBrace().apply(this);
+        }
+        outAImpl(node);
     }
 
     public void inAFactorExpr(AFactorExpr node)
@@ -290,17 +352,9 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getRPar().apply(this);
         }
-        if(node.getLBrace() != null)
+        if(node.getImpl() != null)
         {
-            node.getLBrace().apply(this);
-        }
-        if(node.getExpr() != null)
-        {
-            node.getExpr().apply(this);
-        }
-        if(node.getRBrace() != null)
-        {
-            node.getRBrace().apply(this);
+            node.getImpl().apply(this);
         }
         outAFunctionFunction(node);
     }
@@ -334,6 +388,10 @@ public class DepthFirstAdapter extends AnalysisAdapter
         if(node.getRPar() != null)
         {
             node.getRPar().apply(this);
+        }
+        if(node.getImpl() != null)
+        {
+            node.getImpl().apply(this);
         }
         outANilConst(node);
     }
@@ -371,6 +429,10 @@ public class DepthFirstAdapter extends AnalysisAdapter
         if(node.getRPar() != null)
         {
             node.getRPar().apply(this);
+        }
+        if(node.getImpl() != null)
+        {
+            node.getImpl().apply(this);
         }
         outAConsConst(node);
     }

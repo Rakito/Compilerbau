@@ -5,6 +5,7 @@ import java.util.List;
 
 import node.AConsConst;
 import node.AConstructorExpr;
+import node.ADefineDef;
 import node.ADivFactor;
 import node.AExprTerm;
 import node.AFactorExpr;
@@ -12,6 +13,7 @@ import node.AFunctionExpr;
 import node.AFunctionFunction;
 import node.AIdTerm;
 import node.AIfex;
+import node.AImpl;
 import node.AMinusExpr;
 import node.AModFactor;
 import node.AMultFactor;
@@ -22,10 +24,12 @@ import node.AParasParas;
 import node.APlusExpr;
 import node.ATermFactor;
 import node.PConst;
+import node.PDef;
 import node.PExpr;
 import node.PFactor;
 import node.PFunction;
 import node.PIfex;
+import node.PImpl;
 import node.PParas;
 import node.PTerm;
 import node.TComment;
@@ -37,6 +41,19 @@ public class CodePrinter {
 	List<String> code = new LinkedList<String>();
 
 	// A
+
+	void doMe(ADefineDef node) {
+		doMe(node.getId());
+		code.add(" = ");
+		doMe(node.getExpr());
+
+	}
+
+	void doMe(AImpl node) {
+		code.add("{ ");
+		node.getExpr();
+		code.add(" }");
+	}
 
 	void doMe(ADivFactor node) {
 		doMe(node.getFactor());
@@ -66,9 +83,8 @@ public class CodePrinter {
 		code.add("( ");
 		doMe(node.getParams());
 		code.add(" )");
-		code.add("{ ");
-		doMe(node.getExpr());
-		code.add(" }");
+		doMe(node.getImpl());
+
 	}
 
 	void doMe(AIdTerm node) {
@@ -121,7 +137,7 @@ public class CodePrinter {
 	}
 
 	void doMe(AConsConst node) {
-		code.add(node.getConsName().getText().toUpperCase()+"( ");
+		code.add(node.getConsName().getText().toUpperCase() + "( ");
 		doMe(node.getParams());
 		code.add(" )");
 	}
@@ -135,6 +151,14 @@ public class CodePrinter {
 	}
 
 	// P
+
+	void doMe(PImpl node) {
+		doMe((AImpl) node);
+	};
+
+	void doMe(PDef node) {
+		doMe((ADefineDef) node);
+	};
 
 	void doMe(PConst node) {
 		if (node instanceof AConsConst) {

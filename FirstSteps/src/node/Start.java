@@ -7,7 +7,7 @@ import analysis.*;
 @SuppressWarnings("nls")
 public final class Start extends Node
 {
-    private PParas _pParas_;
+    private PDef _pDef_;
     private EOF _eof_;
 
     public Start()
@@ -16,10 +16,10 @@ public final class Start extends Node
     }
 
     public Start(
-        @SuppressWarnings("hiding") PParas _pParas_,
+        @SuppressWarnings("hiding") PDef _pDef_,
         @SuppressWarnings("hiding") EOF _eof_)
     {
-        setPParas(_pParas_);
+        setPDef(_pDef_);
         setEOF(_eof_);
     }
 
@@ -27,7 +27,7 @@ public final class Start extends Node
     public Object clone()
     {
         return new Start(
-            cloneNode(this._pParas_),
+            cloneNode(this._pDef_),
             cloneNode(this._eof_));
     }
 
@@ -37,16 +37,16 @@ public final class Start extends Node
         ((Analysis) sw).caseStart(this);
     }
 
-    public PParas getPParas()
+    public PDef getPDef()
     {
-        return this._pParas_;
+        return this._pDef_;
     }
 
-    public void setPParas(PParas node)
+    public void setPDef(PDef node)
     {
-        if(this._pParas_ != null)
+        if(this._pDef_ != null)
         {
-            this._pParas_.parent(null);
+            this._pDef_.parent(null);
         }
 
         if(node != null)
@@ -59,7 +59,7 @@ public final class Start extends Node
             node.parent(this);
         }
 
-        this._pParas_ = node;
+        this._pDef_ = node;
     }
 
     public EOF getEOF()
@@ -90,9 +90,9 @@ public final class Start extends Node
     @Override
     void removeChild(Node child)
     {
-        if(this._pParas_ == child)
+        if(this._pDef_ == child)
         {
-            this._pParas_ = null;
+            this._pDef_ = null;
             return;
         }
 
@@ -108,9 +108,9 @@ public final class Start extends Node
     @Override
     void replaceChild(Node oldChild, Node newChild)
     {
-        if(this._pParas_ == oldChild)
+        if(this._pDef_ == oldChild)
         {
-            setPParas((PParas) newChild);
+            setPDef((PDef) newChild);
             return;
         }
 
@@ -127,7 +127,7 @@ public final class Start extends Node
     public String toString()
     {
         return "" +
-            toString(this._pParas_) +
+            toString(this._pDef_) +
             toString(this._eof_);
     }
 }
