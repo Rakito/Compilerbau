@@ -230,13 +230,13 @@ public class Parser
 			push(goTo(3), list, false);
 		    }
 		    break;
-                    case 9: /* reduce AConsConst */
+                    case 9: /* reduce ANilConst */
 		    {
 			ArrayList<Object> list = new9();
 			push(goTo(4), list, false);
 		    }
 		    break;
-                    case 10: /* reduce ANilConst */
+                    case 10: /* reduce AConsConst */
 		    {
 			ArrayList<Object> list = new10();
 			push(goTo(4), list, false);
@@ -544,7 +544,36 @@ public class Parser
 
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new9() /* reduce AConsConst */
+    ArrayList<Object> new9() /* reduce ANilConst */
+    {
+        @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
+
+        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList4 = pop();
+        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList3 = pop();
+        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList2 = pop();
+        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
+        PConst pconstNode1;
+        {
+            // Block
+        TCons tconsNode2;
+        TId tidNode3;
+        TLPar tlparNode4;
+        TRPar trparNode5;
+        tconsNode2 = (TCons)nodeArrayList1.get(0);
+        tidNode3 = (TId)nodeArrayList2.get(0);
+        tlparNode4 = (TLPar)nodeArrayList3.get(0);
+        trparNode5 = (TRPar)nodeArrayList4.get(0);
+
+        pconstNode1 = new ANilConst(tconsNode2, tidNode3, tlparNode4, trparNode5);
+        }
+	nodeList.add(pconstNode1);
+        return nodeList;
+    }
+
+
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    ArrayList<Object> new10() /* reduce AConsConst */
     {
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
@@ -568,35 +597,6 @@ public class Parser
         trparNode6 = (TRPar)nodeArrayList5.get(0);
 
         pconstNode1 = new AConsConst(tconsNode2, tidNode3, tlparNode4, pparasNode5, trparNode6);
-        }
-	nodeList.add(pconstNode1);
-        return nodeList;
-    }
-
-
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new10() /* reduce ANilConst */
-    {
-        @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
-
-        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList4 = pop();
-        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList3 = pop();
-        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList2 = pop();
-        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PConst pconstNode1;
-        {
-            // Block
-        TCons tconsNode2;
-        TId tidNode3;
-        TLPar tlparNode4;
-        TRPar trparNode5;
-        tconsNode2 = (TCons)nodeArrayList1.get(0);
-        tidNode3 = (TId)nodeArrayList2.get(0);
-        tlparNode4 = (TLPar)nodeArrayList3.get(0);
-        trparNode5 = (TRPar)nodeArrayList4.get(0);
-
-        pconstNode1 = new ANilConst(tconsNode2, tidNode3, tlparNode4, trparNode5);
         }
 	nodeList.add(pconstNode1);
         return nodeList;
@@ -770,46 +770,46 @@ public class Parser
 
     private static int[][][] actionTable;
 /*      {
-			{{-1, ERROR, 0}, {1, SHIFT, 1}, {4, SHIFT, 2}, {9, SHIFT, 3}, {10, SHIFT, 4}, {22, SHIFT, 5}, },
-			{{-1, ERROR, 1}, {26, SHIFT, 12}, },
-			{{-1, ERROR, 2}, {9, SHIFT, 13}, },
+			{{-1, ERROR, 0}, {1, SHIFT, 1}, {4, SHIFT, 2}, {10, SHIFT, 3}, {11, SHIFT, 4}, {23, SHIFT, 5}, },
+			{{-1, ERROR, 1}, {27, SHIFT, 12}, },
+			{{-1, ERROR, 2}, {10, SHIFT, 13}, },
 			{{-1, REDUCE, 16}, },
 			{{-1, REDUCE, 15}, },
-			{{-1, ERROR, 5}, {1, SHIFT, 1}, {4, SHIFT, 2}, {9, SHIFT, 3}, {10, SHIFT, 4}, {22, SHIFT, 5}, },
-			{{-1, ERROR, 6}, {16, SHIFT, 15}, {43, ACCEPT, -1}, },
-			{{-1, REDUCE, 0}, {11, SHIFT, 16}, {12, SHIFT, 17}, },
+			{{-1, ERROR, 5}, {1, SHIFT, 1}, {4, SHIFT, 2}, {10, SHIFT, 3}, {11, SHIFT, 4}, {23, SHIFT, 5}, },
+			{{-1, ERROR, 6}, {17, SHIFT, 15}, {44, ACCEPT, -1}, },
+			{{-1, REDUCE, 0}, {12, SHIFT, 16}, {13, SHIFT, 17}, },
 			{{-1, REDUCE, 4}, },
 			{{-1, REDUCE, 5}, },
-			{{-1, REDUCE, 3}, {13, SHIFT, 18}, {14, SHIFT, 19}, {30, SHIFT, 20}, },
+			{{-1, REDUCE, 3}, {14, SHIFT, 18}, {15, SHIFT, 19}, {31, SHIFT, 20}, },
 			{{-1, REDUCE, 11}, },
-			{{-1, ERROR, 12}, {1, SHIFT, 1}, {4, SHIFT, 2}, {9, SHIFT, 3}, {10, SHIFT, 4}, {22, SHIFT, 5}, },
-			{{-1, ERROR, 13}, {22, SHIFT, 22}, },
-			{{-1, ERROR, 14}, {11, SHIFT, 16}, {12, SHIFT, 17}, {23, SHIFT, 23}, },
-			{{-1, ERROR, 15}, {1, SHIFT, 1}, {4, SHIFT, 2}, {9, SHIFT, 3}, {10, SHIFT, 4}, {22, SHIFT, 5}, },
-			{{-1, ERROR, 16}, {9, SHIFT, 3}, {10, SHIFT, 4}, {22, SHIFT, 5}, },
-			{{-1, ERROR, 17}, {9, SHIFT, 3}, {10, SHIFT, 4}, {22, SHIFT, 5}, },
-			{{-1, ERROR, 18}, {9, SHIFT, 3}, {10, SHIFT, 4}, {22, SHIFT, 5}, },
-			{{-1, ERROR, 19}, {9, SHIFT, 3}, {10, SHIFT, 4}, {22, SHIFT, 5}, },
-			{{-1, ERROR, 20}, {9, SHIFT, 3}, {10, SHIFT, 4}, {22, SHIFT, 5}, },
-			{{-1, ERROR, 21}, {16, SHIFT, 15}, {27, SHIFT, 30}, },
-			{{-1, ERROR, 22}, {1, SHIFT, 1}, {4, SHIFT, 2}, {9, SHIFT, 3}, {10, SHIFT, 4}, {22, SHIFT, 5}, {23, SHIFT, 31}, },
+			{{-1, ERROR, 12}, {1, SHIFT, 1}, {4, SHIFT, 2}, {10, SHIFT, 3}, {11, SHIFT, 4}, {23, SHIFT, 5}, },
+			{{-1, ERROR, 13}, {23, SHIFT, 22}, },
+			{{-1, ERROR, 14}, {12, SHIFT, 16}, {13, SHIFT, 17}, {24, SHIFT, 23}, },
+			{{-1, ERROR, 15}, {1, SHIFT, 1}, {4, SHIFT, 2}, {10, SHIFT, 3}, {11, SHIFT, 4}, {23, SHIFT, 5}, },
+			{{-1, ERROR, 16}, {10, SHIFT, 3}, {11, SHIFT, 4}, {23, SHIFT, 5}, },
+			{{-1, ERROR, 17}, {10, SHIFT, 3}, {11, SHIFT, 4}, {23, SHIFT, 5}, },
+			{{-1, ERROR, 18}, {10, SHIFT, 3}, {11, SHIFT, 4}, {23, SHIFT, 5}, },
+			{{-1, ERROR, 19}, {10, SHIFT, 3}, {11, SHIFT, 4}, {23, SHIFT, 5}, },
+			{{-1, ERROR, 20}, {10, SHIFT, 3}, {11, SHIFT, 4}, {23, SHIFT, 5}, },
+			{{-1, ERROR, 21}, {17, SHIFT, 15}, {28, SHIFT, 30}, },
+			{{-1, ERROR, 22}, {1, SHIFT, 1}, {4, SHIFT, 2}, {10, SHIFT, 3}, {11, SHIFT, 4}, {23, SHIFT, 5}, {24, SHIFT, 31}, },
 			{{-1, REDUCE, 17}, },
-			{{-1, REDUCE, 1}, {11, SHIFT, 16}, {12, SHIFT, 17}, },
-			{{-1, REDUCE, 6}, {13, SHIFT, 18}, {14, SHIFT, 19}, {30, SHIFT, 20}, },
-			{{-1, REDUCE, 7}, {13, SHIFT, 18}, {14, SHIFT, 19}, {30, SHIFT, 20}, },
+			{{-1, REDUCE, 1}, {12, SHIFT, 16}, {13, SHIFT, 17}, },
+			{{-1, REDUCE, 6}, {14, SHIFT, 18}, {15, SHIFT, 19}, {31, SHIFT, 20}, },
+			{{-1, REDUCE, 7}, {14, SHIFT, 18}, {15, SHIFT, 19}, {31, SHIFT, 20}, },
 			{{-1, REDUCE, 12}, },
 			{{-1, REDUCE, 14}, },
 			{{-1, REDUCE, 13}, },
-			{{-1, ERROR, 30}, {9, SHIFT, 33}, },
-			{{-1, REDUCE, 10}, },
-			{{-1, ERROR, 32}, {16, SHIFT, 15}, {23, SHIFT, 34}, },
-			{{-1, ERROR, 33}, {22, SHIFT, 35}, },
+			{{-1, ERROR, 30}, {10, SHIFT, 33}, },
 			{{-1, REDUCE, 9}, },
-			{{-1, ERROR, 35}, {1, SHIFT, 1}, {4, SHIFT, 2}, {9, SHIFT, 3}, {10, SHIFT, 4}, {22, SHIFT, 5}, },
-			{{-1, ERROR, 36}, {16, SHIFT, 15}, {23, SHIFT, 37}, },
-			{{-1, ERROR, 37}, {24, SHIFT, 38}, },
-			{{-1, ERROR, 38}, {1, SHIFT, 1}, {4, SHIFT, 2}, {9, SHIFT, 3}, {10, SHIFT, 4}, {22, SHIFT, 5}, },
-			{{-1, ERROR, 39}, {11, SHIFT, 16}, {12, SHIFT, 17}, {25, SHIFT, 40}, },
+			{{-1, ERROR, 32}, {17, SHIFT, 15}, {24, SHIFT, 34}, },
+			{{-1, ERROR, 33}, {23, SHIFT, 35}, },
+			{{-1, REDUCE, 10}, },
+			{{-1, ERROR, 35}, {1, SHIFT, 1}, {4, SHIFT, 2}, {10, SHIFT, 3}, {11, SHIFT, 4}, {23, SHIFT, 5}, },
+			{{-1, ERROR, 36}, {17, SHIFT, 15}, {24, SHIFT, 37}, },
+			{{-1, ERROR, 37}, {25, SHIFT, 38}, },
+			{{-1, ERROR, 38}, {1, SHIFT, 1}, {4, SHIFT, 2}, {10, SHIFT, 3}, {11, SHIFT, 4}, {23, SHIFT, 5}, },
+			{{-1, ERROR, 39}, {12, SHIFT, 16}, {13, SHIFT, 17}, {26, SHIFT, 40}, },
 			{{-1, REDUCE, 8}, },
         };*/
     private static int[][][] gotoTable;

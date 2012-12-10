@@ -16,7 +16,7 @@ Tokens
  break = 'break';
  true = 'TRUE';
  false ='FALSE';
- return = 'return';
+ returnt = 'return';
  
  id = letter ( digit | letter )*;
  number = digit+;

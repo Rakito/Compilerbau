@@ -14,7 +14,6 @@ public final class ANilConst extends PConst
 
     public ANilConst()
     {
-    	System.out.println("OLAF!!!");
         // Constructor
     }
 

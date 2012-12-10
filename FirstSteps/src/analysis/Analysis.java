@@ -21,8 +21,8 @@ public interface Analysis extends Switch
     void caseAPlusExpr(APlusExpr node);
     void caseAMinusExpr(AMinusExpr node);
     void caseAFunctionFunction(AFunctionFunction node);
-    void caseAConsConst(AConsConst node);
     void caseANilConst(ANilConst node);
+    void caseAConsConst(AConsConst node);
     void caseATermFactor(ATermFactor node);
     void caseAMultFactor(AMultFactor node);
     void caseADivFactor(ADivFactor node);
@@ -40,6 +40,7 @@ public interface Analysis extends Switch
     void caseTBreak(TBreak node);
     void caseTTrue(TTrue node);
     void caseTFalse(TFalse node);
+    void caseTReturnt(TReturnt node);
     void caseTId(TId node);
     void caseTNumber(TNumber node);
     void caseTPlus(TPlus node);

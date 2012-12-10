@@ -129,13 +129,13 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAConsConst(AConsConst node)
+    public void caseANilConst(ANilConst node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseANilConst(ANilConst node)
+    public void caseAConsConst(AConsConst node)
     {
         defaultCase(node);
     }
@@ -232,6 +232,12 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseTFalse(TFalse node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTReturnt(TReturnt node)
     {
         defaultCase(node);
     }

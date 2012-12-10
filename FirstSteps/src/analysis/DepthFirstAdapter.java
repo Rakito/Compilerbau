@@ -305,6 +305,39 @@ public class DepthFirstAdapter extends AnalysisAdapter
         outAFunctionFunction(node);
     }
 
+    public void inANilConst(ANilConst node)
+    {
+        defaultIn(node);
+    }
+
+    public void outANilConst(ANilConst node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseANilConst(ANilConst node)
+    {
+        inANilConst(node);
+        if(node.getCons() != null)
+        {
+            node.getCons().apply(this);
+        }
+        if(node.getConsName() != null)
+        {
+            node.getConsName().apply(this);
+        }
+        if(node.getLPar() != null)
+        {
+            node.getLPar().apply(this);
+        }
+        if(node.getRPar() != null)
+        {
+            node.getRPar().apply(this);
+        }
+        outANilConst(node);
+    }
+
     public void inAConsConst(AConsConst node)
     {
         defaultIn(node);
@@ -340,39 +373,6 @@ public class DepthFirstAdapter extends AnalysisAdapter
             node.getRPar().apply(this);
         }
         outAConsConst(node);
-    }
-
-    public void inANilConst(ANilConst node)
-    {
-        defaultIn(node);
-    }
-
-    public void outANilConst(ANilConst node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseANilConst(ANilConst node)
-    {
-        inANilConst(node);
-        if(node.getCons() != null)
-        {
-            node.getCons().apply(this);
-        }
-        if(node.getConsName() != null)
-        {
-            node.getConsName().apply(this);
-        }
-        if(node.getLPar() != null)
-        {
-            node.getLPar().apply(this);
-        }
-        if(node.getRPar() != null)
-        {
-            node.getRPar().apply(this);
-        }
-        outANilConst(node);
     }
 
     public void inATermFactor(ATermFactor node)

@@ -1,5 +1,8 @@
 package interpreter;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import node.AConsConst;
 import node.AConstructorExpr;
 import node.ADivFactor;
@@ -31,20 +34,20 @@ import node.TNumber;
 
 public class CodePrinter {
 
-	public StringBuilder code = new StringBuilder();
+	List<String> code = new LinkedList<String>();
 
 	// A
 
 	void doMe(ADivFactor node) {
 		doMe(node.getFactor());
-		code.append(" / ");
+		code.add(" / ");
 		doMe(node.getTerm());
 	}
 
 	void doMe(AExprTerm node) {
-		code.append("( ");
+		code.add("( ");
 		doMe(node.getExpr());
-		code.append(" )");
+		code.add(" )");
 	}
 
 	void doMe(AFactorExpr node) {
@@ -56,38 +59,38 @@ public class CodePrinter {
 	}
 
 	void doMe(AFunctionFunction node) {
-		code.append("< ");
+		code.add("< ");
 		doMe(node.getReturns());
-		code.append(" >");
+		code.add(" >");
 		doMe(node.getFuncName());
-		code.append("( ");
+		code.add("( ");
 		doMe(node.getParams());
-		code.append(" )");
-		code.append("{ ");
+		code.add(" )");
+		code.add("{ ");
 		doMe(node.getExpr());
-		code.append(" }");
+		code.add(" }");
 	}
 
 	void doMe(AIdTerm node) {
-		code.append(node.getId().getText());
+		code.add(node.getId().getText());
 
 	}
 
 	void doMe(AMinusExpr node) {
 		doMe(node.getExpr());
-		code.append(" - ");
+		code.add(" - ");
 		doMe(node.getFactor());
 	}
 
 	void doMe(AModFactor node) {
 		doMe(node.getFactor());
-		code.append(" % ");
+		code.add(" % ");
 		doMe(node.getTerm());
 	}
 
 	void doMe(AMultFactor node) {
 		doMe(node.getFactor());
-		code.append(" * ");
+		code.add(" * ");
 		doMe(node.getTerm());
 	}
 
@@ -102,13 +105,13 @@ public class CodePrinter {
 
 	void doMe(AParasParas node) {
 		doMe(node.getExpr());
-		code.append(", ");
+		code.add(", ");
 		doMe(node.getParas());
 	}
 
 	void doMe(APlusExpr node) {
 		doMe(node.getExpr());
-		code.append(" + ");
+		code.add(" + ");
 		doMe(node.getFactor());
 
 	}
@@ -118,9 +121,9 @@ public class CodePrinter {
 	}
 
 	void doMe(AConsConst node) {
-		code.append("CONS " + node.getConsName().getText().toUpperCase()+"( ");
+		code.add(node.getConsName().getText().toUpperCase()+"( ");
 		doMe(node.getParams());
-		code.append(" )");
+		code.add(" )");
 	}
 
 	void doMe(AConstructorExpr node) {
@@ -128,7 +131,7 @@ public class CodePrinter {
 	}
 
 	void doMe(ANilConst node) {
-		code.append("NIL");
+		code.add("NIL");
 	}
 
 	// P
@@ -198,15 +201,15 @@ public class CodePrinter {
 	// T
 
 	void doMe(TComment node) {
-		code.append("// " + node.getText());
+		code.add("// " + node.getText());
 	}
 
 	void doMe(TId node) {
-		code.append(node.getText());
+		code.add(node.getText());
 	}
 
 	void doMe(TNumber node, int number) {
 		number = new Integer(node.getText());
-		code.append(node.getText());
+		code.add(node.getText());
 	}
 }
