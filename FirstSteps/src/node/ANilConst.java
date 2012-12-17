@@ -11,7 +11,9 @@ public final class ANilConst extends PConst
     private TId _consName_;
     private TLPar _lPar_;
     private TRPar _rPar_;
+    private TLBrace _lBrace_;
     private PImpl _impl_;
+    private TRBrace _rBrace_;
 
     public ANilConst()
     {
@@ -23,7 +25,9 @@ public final class ANilConst extends PConst
         @SuppressWarnings("hiding") TId _consName_,
         @SuppressWarnings("hiding") TLPar _lPar_,
         @SuppressWarnings("hiding") TRPar _rPar_,
-        @SuppressWarnings("hiding") PImpl _impl_)
+        @SuppressWarnings("hiding") TLBrace _lBrace_,
+        @SuppressWarnings("hiding") PImpl _impl_,
+        @SuppressWarnings("hiding") TRBrace _rBrace_)
     {
         // Constructor
         setCons(_cons_);
@@ -34,7 +38,11 @@ public final class ANilConst extends PConst
 
         setRPar(_rPar_);
 
+        setLBrace(_lBrace_);
+
         setImpl(_impl_);
+
+        setRBrace(_rBrace_);
 
     }
 
@@ -46,7 +54,9 @@ public final class ANilConst extends PConst
             cloneNode(this._consName_),
             cloneNode(this._lPar_),
             cloneNode(this._rPar_),
-            cloneNode(this._impl_));
+            cloneNode(this._lBrace_),
+            cloneNode(this._impl_),
+            cloneNode(this._rBrace_));
     }
 
     @Override
@@ -155,6 +165,31 @@ public final class ANilConst extends PConst
         this._rPar_ = node;
     }
 
+    public TLBrace getLBrace()
+    {
+        return this._lBrace_;
+    }
+
+    public void setLBrace(TLBrace node)
+    {
+        if(this._lBrace_ != null)
+        {
+            this._lBrace_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._lBrace_ = node;
+    }
+
     public PImpl getImpl()
     {
         return this._impl_;
@@ -180,6 +215,31 @@ public final class ANilConst extends PConst
         this._impl_ = node;
     }
 
+    public TRBrace getRBrace()
+    {
+        return this._rBrace_;
+    }
+
+    public void setRBrace(TRBrace node)
+    {
+        if(this._rBrace_ != null)
+        {
+            this._rBrace_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._rBrace_ = node;
+    }
+
     @Override
     public String toString()
     {
@@ -188,7 +248,9 @@ public final class ANilConst extends PConst
             + toString(this._consName_)
             + toString(this._lPar_)
             + toString(this._rPar_)
-            + toString(this._impl_);
+            + toString(this._lBrace_)
+            + toString(this._impl_)
+            + toString(this._rBrace_);
     }
 
     @Override
@@ -219,9 +281,21 @@ public final class ANilConst extends PConst
             return;
         }
 
+        if(this._lBrace_ == child)
+        {
+            this._lBrace_ = null;
+            return;
+        }
+
         if(this._impl_ == child)
         {
             this._impl_ = null;
+            return;
+        }
+
+        if(this._rBrace_ == child)
+        {
+            this._rBrace_ = null;
             return;
         }
 
@@ -256,9 +330,21 @@ public final class ANilConst extends PConst
             return;
         }
 
+        if(this._lBrace_ == oldChild)
+        {
+            setLBrace((TLBrace) newChild);
+            return;
+        }
+
         if(this._impl_ == oldChild)
         {
             setImpl((PImpl) newChild);
+            return;
+        }
+
+        if(this._rBrace_ == oldChild)
+        {
+            setRBrace((TRBrace) newChild);
             return;
         }
 

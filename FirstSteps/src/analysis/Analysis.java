@@ -12,19 +12,22 @@ public interface Analysis extends Switch
     void setOut(Node node, Object o);
 
     void caseStart(Start node);
-    void caseADefineDef(ADefineDef node);
     void caseAParaParas(AParaParas node);
     void caseAParasParas(AParasParas node);
-    void caseAIfex(AIfex node);
-    void caseAImpl(AImpl node);
     void caseAFactorExpr(AFactorExpr node);
     void caseAFunctionExpr(AFunctionExpr node);
     void caseAConstructorExpr(AConstructorExpr node);
     void caseAPlusExpr(APlusExpr node);
     void caseAMinusExpr(AMinusExpr node);
+    void caseADefineDef(ADefineDef node);
+    void caseAIfex(AIfex node);
     void caseAFunctionFunction(AFunctionFunction node);
     void caseANilConst(ANilConst node);
     void caseAConsConst(AConsConst node);
+    void caseAExprImpl(AExprImpl node);
+    void caseADefImpl(ADefImpl node);
+    void caseAIfexImpl(AIfexImpl node);
+    void caseAImplsImpl(AImplsImpl node);
     void caseATermFactor(ATermFactor node);
     void caseAMultFactor(AMultFactor node);
     void caseADivFactor(ADivFactor node);

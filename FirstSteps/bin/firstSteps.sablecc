@@ -64,19 +64,13 @@ Ignored Tokens
  comment, blank ;
 
 Productions
- def =
-   {define} T.define id equals expr;
+
    
  paras =
    {para} expr |
    {paras} paras comma expr;
  
- ifex =
-  	[left]:expr query [middle]:expr colon [right]:expr;
- 
- impl =
- 	l_brace expr r_brace;
- 
+
  expr =
   {factor} factor |
   {function} function |
@@ -84,12 +78,24 @@ Productions
   {plus} expr plus factor |
   {minus} expr hyphen factor;
   
+ def =
+   {define} T.define id equals expr;
+   
+ ifex =
+  	[left]:expr query [middle]:expr colon [right]:expr;
+  
  function = 
-   {function} T.func l_arrow [returns]:paras r_arrow [func_name]:id l_par [params]:paras r_par impl;
+   {function} T.func l_arrow [returns]:paras r_arrow [func_name]:id l_par [params]:paras r_par l_brace impl r_brace;
 
  const = 
-   {nil} T.cons [cons_name]:id l_par r_par impl |
-   {cons} T.cons [cons_name]:id l_par [params]:paras r_par impl;
+   {nil} T.cons [cons_name]:id l_par r_par l_brace impl r_brace |
+   {cons} T.cons [cons_name]:id l_par [params]:paras r_par l_brace impl r_brace;
+   
+ impl =
+   {expr} expr |
+   {def} def |
+   {ifex} ifex |
+   {impls} [l]:impl return [r]:impl;
    
  
  factor =
