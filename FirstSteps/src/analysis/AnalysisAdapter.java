@@ -75,31 +75,49 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAParaParas(AParaParas node)
+    public void caseADefineDefine(ADefineDefine node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseAParasParas(AParasParas node)
+    public void caseAFunctionDefine(AFunctionDefine node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseAFactorExpr(AFactorExpr node)
+    public void caseAConsDefine(AConsDefine node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseANilDefine(ANilDefine node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAExprImpl(AExprImpl node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAImplexprImpl(AImplexprImpl node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseATermExpr(ATermExpr node)
     {
         defaultCase(node);
     }
 
     @Override
     public void caseAFunctionExpr(AFunctionExpr node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAConstructorExpr(AConstructorExpr node)
     {
         defaultCase(node);
     }
@@ -117,79 +135,43 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseADefineDef(ADefineDef node)
+    public void caseAMultExpr(AMultExpr node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseAIfex(AIfex node)
+    public void caseADivExpr(ADivExpr node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseAFunctionFunction(AFunctionFunction node)
+    public void caseAModExpr(AModExpr node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseANilConst(ANilConst node)
+    public void caseAIfExpr(AIfExpr node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseAConsConst(AConsConst node)
+    public void caseAConcatExpr(AConcatExpr node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseAExprImpl(AExprImpl node)
+    public void caseAFuncCallFunction(AFuncCallFunction node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseADefImpl(ADefImpl node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAIfexImpl(AIfexImpl node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAImplsImpl(AImplsImpl node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseATermFactor(ATermFactor node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAMultFactor(AMultFactor node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseADivFactor(ADivFactor node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAModFactor(AModFactor node)
+    public void caseAIdTerm(AIdTerm node)
     {
         defaultCase(node);
     }
@@ -201,7 +183,7 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAIdTerm(AIdTerm node)
+    public void caseANullTerm(ANullTerm node)
     {
         defaultCase(node);
     }
@@ -268,6 +250,12 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseTReturnt(TReturnt node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTNull(TNull node)
     {
         defaultCase(node);
     }
@@ -478,6 +466,12 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseTEquals(TEquals node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTQuote(TQuote node)
     {
         defaultCase(node);
     }
