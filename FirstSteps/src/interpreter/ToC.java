@@ -13,6 +13,15 @@ import analysis.DepthFirstAdapter;
 public class ToC extends DepthFirstAdapter {
 
 	/* (non-Javadoc)
+	 * @see analysis.AnalysisAdapter#caseEOF(node.EOF)
+	 */
+	@Override
+	public void caseEOF(EOF node) {
+		// TODO Auto-generated method stub
+		super.caseEOF(node);
+	}
+
+	/* (non-Javadoc)
 	 * @see analysis.DepthFirstAdapter#caseStart(node.Start)
 	 */
 	@Override

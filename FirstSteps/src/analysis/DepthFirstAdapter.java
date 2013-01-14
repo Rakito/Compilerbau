@@ -31,9 +31,76 @@ public class DepthFirstAdapter extends AnalysisAdapter
     public void caseStart(Start node)
     {
         inStart(node);
-        node.getPDefine().apply(this);
+        node.getPProgram().apply(this);
         node.getEOF().apply(this);
         outStart(node);
+    }
+
+    public void inAEofProgram(AEofProgram node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAEofProgram(AEofProgram node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAEofProgram(AEofProgram node)
+    {
+        inAEofProgram(node);
+        if(node.getEnd() != null)
+        {
+            node.getEnd().apply(this);
+        }
+        outAEofProgram(node);
+    }
+
+    public void inADefineProgram(ADefineProgram node)
+    {
+        defaultIn(node);
+    }
+
+    public void outADefineProgram(ADefineProgram node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseADefineProgram(ADefineProgram node)
+    {
+        inADefineProgram(node);
+        if(node.getFunction() != null)
+        {
+            node.getFunction().apply(this);
+        }
+        outADefineProgram(node);
+    }
+
+    public void inAFunctionProgram(AFunctionProgram node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAFunctionProgram(AFunctionProgram node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAFunctionProgram(AFunctionProgram node)
+    {
+        inAFunctionProgram(node);
+        if(node.getDefine() != null)
+        {
+            node.getDefine().apply(this);
+        }
+        if(node.getProgram() != null)
+        {
+            node.getProgram().apply(this);
+        }
+        outAFunctionProgram(node);
     }
 
     public void inADefineDefine(ADefineDefine node)
@@ -222,9 +289,9 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getImpl().apply(this);
         }
-        if(node.getReturn() != null)
+        if(node.getReturnt() != null)
         {
-            node.getReturn().apply(this);
+            node.getReturnt().apply(this);
         }
         if(node.getReturnex() != null)
         {
@@ -267,9 +334,9 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getImplex().apply(this);
         }
-        if(node.getReturn() != null)
+        if(node.getReturnt() != null)
         {
-            node.getReturn().apply(this);
+            node.getReturnt().apply(this);
         }
         if(node.getReturnex() != null)
         {
@@ -280,6 +347,31 @@ public class DepthFirstAdapter extends AnalysisAdapter
             node.getRBrace().apply(this);
         }
         outAImplexprImpl(node);
+    }
+
+    public void inAEndExpr(AEndExpr node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAEndExpr(AEndExpr node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAEndExpr(AEndExpr node)
+    {
+        inAEndExpr(node);
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
+        }
+        if(node.getHash() != null)
+        {
+            node.getHash().apply(this);
+        }
+        outAEndExpr(node);
     }
 
     public void inATermExpr(ATermExpr node)

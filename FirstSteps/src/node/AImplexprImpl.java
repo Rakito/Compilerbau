@@ -11,7 +11,7 @@ public final class AImplexprImpl extends PImpl
     private PImpl _impl_;
     private TComma _comma_;
     private PExpr _implex_;
-    private TReturn _return_;
+    private TReturnt _returnt_;
     private PExpr _returnex_;
     private TRBrace _rBrace_;
 
@@ -25,7 +25,7 @@ public final class AImplexprImpl extends PImpl
         @SuppressWarnings("hiding") PImpl _impl_,
         @SuppressWarnings("hiding") TComma _comma_,
         @SuppressWarnings("hiding") PExpr _implex_,
-        @SuppressWarnings("hiding") TReturn _return_,
+        @SuppressWarnings("hiding") TReturnt _returnt_,
         @SuppressWarnings("hiding") PExpr _returnex_,
         @SuppressWarnings("hiding") TRBrace _rBrace_)
     {
@@ -38,7 +38,7 @@ public final class AImplexprImpl extends PImpl
 
         setImplex(_implex_);
 
-        setReturn(_return_);
+        setReturnt(_returnt_);
 
         setReturnex(_returnex_);
 
@@ -54,7 +54,7 @@ public final class AImplexprImpl extends PImpl
             cloneNode(this._impl_),
             cloneNode(this._comma_),
             cloneNode(this._implex_),
-            cloneNode(this._return_),
+            cloneNode(this._returnt_),
             cloneNode(this._returnex_),
             cloneNode(this._rBrace_));
     }
@@ -165,16 +165,16 @@ public final class AImplexprImpl extends PImpl
         this._implex_ = node;
     }
 
-    public TReturn getReturn()
+    public TReturnt getReturnt()
     {
-        return this._return_;
+        return this._returnt_;
     }
 
-    public void setReturn(TReturn node)
+    public void setReturnt(TReturnt node)
     {
-        if(this._return_ != null)
+        if(this._returnt_ != null)
         {
-            this._return_.parent(null);
+            this._returnt_.parent(null);
         }
 
         if(node != null)
@@ -187,7 +187,7 @@ public final class AImplexprImpl extends PImpl
             node.parent(this);
         }
 
-        this._return_ = node;
+        this._returnt_ = node;
     }
 
     public PExpr getReturnex()
@@ -248,7 +248,7 @@ public final class AImplexprImpl extends PImpl
             + toString(this._impl_)
             + toString(this._comma_)
             + toString(this._implex_)
-            + toString(this._return_)
+            + toString(this._returnt_)
             + toString(this._returnex_)
             + toString(this._rBrace_);
     }
@@ -281,9 +281,9 @@ public final class AImplexprImpl extends PImpl
             return;
         }
 
-        if(this._return_ == child)
+        if(this._returnt_ == child)
         {
-            this._return_ = null;
+            this._returnt_ = null;
             return;
         }
 
@@ -330,9 +330,9 @@ public final class AImplexprImpl extends PImpl
             return;
         }
 
-        if(this._return_ == oldChild)
+        if(this._returnt_ == oldChild)
         {
-            setReturn((TReturn) newChild);
+            setReturnt((TReturnt) newChild);
             return;
         }
 

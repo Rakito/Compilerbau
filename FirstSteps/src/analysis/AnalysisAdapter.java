@@ -75,6 +75,24 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseAEofProgram(AEofProgram node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseADefineProgram(ADefineProgram node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAFunctionProgram(AFunctionProgram node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseADefineDefine(ADefineDefine node)
     {
         defaultCase(node);
@@ -106,6 +124,12 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseAImplexprImpl(AImplexprImpl node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAEndExpr(AEndExpr node)
     {
         defaultCase(node);
     }
@@ -483,7 +507,19 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseTTab(TTab node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseTComment(TComment node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTEndoffile(TEndoffile node)
     {
         defaultCase(node);
     }

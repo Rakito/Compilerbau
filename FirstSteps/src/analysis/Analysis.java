@@ -12,12 +12,16 @@ public interface Analysis extends Switch
     void setOut(Node node, Object o);
 
     void caseStart(Start node);
+    void caseAEofProgram(AEofProgram node);
+    void caseADefineProgram(ADefineProgram node);
+    void caseAFunctionProgram(AFunctionProgram node);
     void caseADefineDefine(ADefineDefine node);
     void caseAFunctionDefine(AFunctionDefine node);
     void caseAConsDefine(AConsDefine node);
     void caseANilDefine(ANilDefine node);
     void caseAExprImpl(AExprImpl node);
     void caseAImplexprImpl(AImplexprImpl node);
+    void caseAEndExpr(AEndExpr node);
     void caseATermExpr(ATermExpr node);
     void caseAFunctionExpr(AFunctionExpr node);
     void caseAPlusExpr(APlusExpr node);
@@ -81,6 +85,8 @@ public interface Analysis extends Switch
     void caseTEquals(TEquals node);
     void caseTQuote(TQuote node);
     void caseTReturn(TReturn node);
+    void caseTTab(TTab node);
     void caseTComment(TComment node);
+    void caseTEndoffile(TEndoffile node);
     void caseEOF(EOF node);
 }

@@ -9,7 +9,7 @@ public final class AExprImpl extends PImpl
 {
     private TLBrace _lBrace_;
     private PExpr _impl_;
-    private TReturn _return_;
+    private TReturnt _returnt_;
     private PExpr _returnex_;
     private TRBrace _rBrace_;
 
@@ -21,7 +21,7 @@ public final class AExprImpl extends PImpl
     public AExprImpl(
         @SuppressWarnings("hiding") TLBrace _lBrace_,
         @SuppressWarnings("hiding") PExpr _impl_,
-        @SuppressWarnings("hiding") TReturn _return_,
+        @SuppressWarnings("hiding") TReturnt _returnt_,
         @SuppressWarnings("hiding") PExpr _returnex_,
         @SuppressWarnings("hiding") TRBrace _rBrace_)
     {
@@ -30,7 +30,7 @@ public final class AExprImpl extends PImpl
 
         setImpl(_impl_);
 
-        setReturn(_return_);
+        setReturnt(_returnt_);
 
         setReturnex(_returnex_);
 
@@ -44,7 +44,7 @@ public final class AExprImpl extends PImpl
         return new AExprImpl(
             cloneNode(this._lBrace_),
             cloneNode(this._impl_),
-            cloneNode(this._return_),
+            cloneNode(this._returnt_),
             cloneNode(this._returnex_),
             cloneNode(this._rBrace_));
     }
@@ -105,16 +105,16 @@ public final class AExprImpl extends PImpl
         this._impl_ = node;
     }
 
-    public TReturn getReturn()
+    public TReturnt getReturnt()
     {
-        return this._return_;
+        return this._returnt_;
     }
 
-    public void setReturn(TReturn node)
+    public void setReturnt(TReturnt node)
     {
-        if(this._return_ != null)
+        if(this._returnt_ != null)
         {
-            this._return_.parent(null);
+            this._returnt_.parent(null);
         }
 
         if(node != null)
@@ -127,7 +127,7 @@ public final class AExprImpl extends PImpl
             node.parent(this);
         }
 
-        this._return_ = node;
+        this._returnt_ = node;
     }
 
     public PExpr getReturnex()
@@ -186,7 +186,7 @@ public final class AExprImpl extends PImpl
         return ""
             + toString(this._lBrace_)
             + toString(this._impl_)
-            + toString(this._return_)
+            + toString(this._returnt_)
             + toString(this._returnex_)
             + toString(this._rBrace_);
     }
@@ -207,9 +207,9 @@ public final class AExprImpl extends PImpl
             return;
         }
 
-        if(this._return_ == child)
+        if(this._returnt_ == child)
         {
-            this._return_ = null;
+            this._returnt_ = null;
             return;
         }
 
@@ -244,9 +244,9 @@ public final class AExprImpl extends PImpl
             return;
         }
 
-        if(this._return_ == oldChild)
+        if(this._returnt_ == oldChild)
         {
-            setReturn((TReturn) newChild);
+            setReturnt((TReturnt) newChild);
             return;
         }
 

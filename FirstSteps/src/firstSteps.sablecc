@@ -57,17 +57,23 @@ Tokens
  quote = '"';
  
  return = ( 13 | 10 );
+ tab = 9 ;
  comment = 'ÚÚ' any_charater;
  
-
+ endoffile = 4 ;
 
 
 Ignored Tokens
- comment, blank ;
+ comment, blank, tab, return ;
  
  
 
 Productions
+
+ program = 
+  {eof} T.end |
+  {define} function |
+  {function} P.define program ;
 
  define = 
   {define} T.define id equals term |
@@ -76,10 +82,11 @@ Productions
   {nil} T.cons id l_par r_par impl ;
   
  impl =
-  {expr} l_brace [impl]:expr T.return [returnex]:expr r_brace |
-  {implexpr} l_brace impl comma [implex]:expr T.return [returnex]:expr r_brace ;
+  {expr} l_brace [impl]:expr T.returnt [returnex]:expr r_brace |
+  {implexpr} l_brace impl comma [implex]:expr T.returnt [returnex]:expr r_brace ;
 
  expr = 
+  {end} expr hash |
   {term} term |
   {function} function |
   {plus} expr plus term |
