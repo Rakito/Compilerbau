@@ -36,12 +36,12 @@ public class Main {
 			System.out.println("Der Parser parst");
 
 			/* Get our Interpreter going. */
-			Interpreter interp = new Interpreter();
+			ToC interp = new ToC();
 			ast.apply(interp);
 
 			System.out.println("JETZT KOMMT DER CODEPRINTER!");
 
-			System.out.print(interp.cp.code.toString());
+//			System.out.print(interp.cp.code.toString());
 
 		} catch (Exception e) {
 			System.out.println("Verkackt!");
