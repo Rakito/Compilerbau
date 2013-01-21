@@ -9,9 +9,11 @@ public final class AIfExpr extends PExpr
 {
     private PExpr _if_;
     private TQuery _query_;
-    private PTerm _then_;
+    private TLBrace _thenin_;
+    private PImpl _then_;
     private TColon _colon_;
-    private PTerm _else_;
+    private TLBrace _elsein_;
+    private PImpl _else_;
 
     public AIfExpr()
     {
@@ -21,18 +23,24 @@ public final class AIfExpr extends PExpr
     public AIfExpr(
         @SuppressWarnings("hiding") PExpr _if_,
         @SuppressWarnings("hiding") TQuery _query_,
-        @SuppressWarnings("hiding") PTerm _then_,
+        @SuppressWarnings("hiding") TLBrace _thenin_,
+        @SuppressWarnings("hiding") PImpl _then_,
         @SuppressWarnings("hiding") TColon _colon_,
-        @SuppressWarnings("hiding") PTerm _else_)
+        @SuppressWarnings("hiding") TLBrace _elsein_,
+        @SuppressWarnings("hiding") PImpl _else_)
     {
         // Constructor
         setIf(_if_);
 
         setQuery(_query_);
 
+        setThenin(_thenin_);
+
         setThen(_then_);
 
         setColon(_colon_);
+
+        setElsein(_elsein_);
 
         setElse(_else_);
 
@@ -44,8 +52,10 @@ public final class AIfExpr extends PExpr
         return new AIfExpr(
             cloneNode(this._if_),
             cloneNode(this._query_),
+            cloneNode(this._thenin_),
             cloneNode(this._then_),
             cloneNode(this._colon_),
+            cloneNode(this._elsein_),
             cloneNode(this._else_));
     }
 
@@ -105,12 +115,37 @@ public final class AIfExpr extends PExpr
         this._query_ = node;
     }
 
-    public PTerm getThen()
+    public TLBrace getThenin()
+    {
+        return this._thenin_;
+    }
+
+    public void setThenin(TLBrace node)
+    {
+        if(this._thenin_ != null)
+        {
+            this._thenin_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._thenin_ = node;
+    }
+
+    public PImpl getThen()
     {
         return this._then_;
     }
 
-    public void setThen(PTerm node)
+    public void setThen(PImpl node)
     {
         if(this._then_ != null)
         {
@@ -155,12 +190,37 @@ public final class AIfExpr extends PExpr
         this._colon_ = node;
     }
 
-    public PTerm getElse()
+    public TLBrace getElsein()
+    {
+        return this._elsein_;
+    }
+
+    public void setElsein(TLBrace node)
+    {
+        if(this._elsein_ != null)
+        {
+            this._elsein_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._elsein_ = node;
+    }
+
+    public PImpl getElse()
     {
         return this._else_;
     }
 
-    public void setElse(PTerm node)
+    public void setElse(PImpl node)
     {
         if(this._else_ != null)
         {
@@ -186,8 +246,10 @@ public final class AIfExpr extends PExpr
         return ""
             + toString(this._if_)
             + toString(this._query_)
+            + toString(this._thenin_)
             + toString(this._then_)
             + toString(this._colon_)
+            + toString(this._elsein_)
             + toString(this._else_);
     }
 
@@ -207,6 +269,12 @@ public final class AIfExpr extends PExpr
             return;
         }
 
+        if(this._thenin_ == child)
+        {
+            this._thenin_ = null;
+            return;
+        }
+
         if(this._then_ == child)
         {
             this._then_ = null;
@@ -216,6 +284,12 @@ public final class AIfExpr extends PExpr
         if(this._colon_ == child)
         {
             this._colon_ = null;
+            return;
+        }
+
+        if(this._elsein_ == child)
+        {
+            this._elsein_ = null;
             return;
         }
 
@@ -244,9 +318,15 @@ public final class AIfExpr extends PExpr
             return;
         }
 
+        if(this._thenin_ == oldChild)
+        {
+            setThenin((TLBrace) newChild);
+            return;
+        }
+
         if(this._then_ == oldChild)
         {
-            setThen((PTerm) newChild);
+            setThen((PImpl) newChild);
             return;
         }
 
@@ -256,9 +336,15 @@ public final class AIfExpr extends PExpr
             return;
         }
 
+        if(this._elsein_ == oldChild)
+        {
+            setElsein((TLBrace) newChild);
+            return;
+        }
+
         if(this._else_ == oldChild)
         {
-            setElse((PTerm) newChild);
+            setElse((PImpl) newChild);
             return;
         }
 

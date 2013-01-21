@@ -57,27 +57,6 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         outAEofProgram(node);
     }
 
-    public void inADefineProgram(ADefineProgram node)
-    {
-        defaultIn(node);
-    }
-
-    public void outADefineProgram(ADefineProgram node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseADefineProgram(ADefineProgram node)
-    {
-        inADefineProgram(node);
-        if(node.getFunction() != null)
-        {
-            node.getFunction().apply(this);
-        }
-        outADefineProgram(node);
-    }
-
     public void inAFunctionProgram(AFunctionProgram node)
     {
         defaultIn(node);
@@ -92,6 +71,27 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     public void caseAFunctionProgram(AFunctionProgram node)
     {
         inAFunctionProgram(node);
+        if(node.getFunction() != null)
+        {
+            node.getFunction().apply(this);
+        }
+        outAFunctionProgram(node);
+    }
+
+    public void inADefineProgram(ADefineProgram node)
+    {
+        defaultIn(node);
+    }
+
+    public void outADefineProgram(ADefineProgram node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseADefineProgram(ADefineProgram node)
+    {
+        inADefineProgram(node);
         if(node.getProgram() != null)
         {
             node.getProgram().apply(this);
@@ -100,7 +100,7 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getDefine().apply(this);
         }
-        outAFunctionProgram(node);
+        outADefineProgram(node);
     }
 
     public void inADefineDefine(ADefineDefine node)
@@ -153,6 +153,10 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         if(node.getImpl() != null)
         {
             node.getImpl().apply(this);
+        }
+        if(node.getLBrace() != null)
+        {
+            node.getLBrace().apply(this);
         }
         if(node.getRPar() != null)
         {
@@ -207,6 +211,10 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getImpl().apply(this);
         }
+        if(node.getLBrace() != null)
+        {
+            node.getLBrace().apply(this);
+        }
         if(node.getRPar() != null)
         {
             node.getRPar().apply(this);
@@ -248,6 +256,10 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getImpl().apply(this);
         }
+        if(node.getLBrace() != null)
+        {
+            node.getLBrace().apply(this);
+        }
         if(node.getRPar() != null)
         {
             node.getRPar().apply(this);
@@ -267,6 +279,56 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         outANilDefine(node);
     }
 
+    public void inAEndImpl(AEndImpl node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAEndImpl(AEndImpl node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAEndImpl(AEndImpl node)
+    {
+        inAEndImpl(node);
+        if(node.getRBrace() != null)
+        {
+            node.getRBrace().apply(this);
+        }
+        outAEndImpl(node);
+    }
+
+    public void inAReturnImpl(AReturnImpl node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAReturnImpl(AReturnImpl node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAReturnImpl(AReturnImpl node)
+    {
+        inAReturnImpl(node);
+        if(node.getRBrace() != null)
+        {
+            node.getRBrace().apply(this);
+        }
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
+        }
+        if(node.getReturnt() != null)
+        {
+            node.getReturnt().apply(this);
+        }
+        outAReturnImpl(node);
+    }
+
     public void inAExprImpl(AExprImpl node)
     {
         defaultIn(node);
@@ -281,72 +343,40 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     public void caseAExprImpl(AExprImpl node)
     {
         inAExprImpl(node);
-        if(node.getRBrace() != null)
-        {
-            node.getRBrace().apply(this);
-        }
-        if(node.getReturnex() != null)
-        {
-            node.getReturnex().apply(this);
-        }
-        if(node.getReturnt() != null)
-        {
-            node.getReturnt().apply(this);
-        }
         if(node.getImpl() != null)
         {
             node.getImpl().apply(this);
         }
-        if(node.getLBrace() != null)
+        if(node.getExpr() != null)
         {
-            node.getLBrace().apply(this);
+            node.getExpr().apply(this);
         }
         outAExprImpl(node);
     }
 
-    public void inAImplexprImpl(AImplexprImpl node)
+    public void inADefineImpl(ADefineImpl node)
     {
         defaultIn(node);
     }
 
-    public void outAImplexprImpl(AImplexprImpl node)
+    public void outADefineImpl(ADefineImpl node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseAImplexprImpl(AImplexprImpl node)
+    public void caseADefineImpl(ADefineImpl node)
     {
-        inAImplexprImpl(node);
-        if(node.getRBrace() != null)
-        {
-            node.getRBrace().apply(this);
-        }
-        if(node.getReturnex() != null)
-        {
-            node.getReturnex().apply(this);
-        }
-        if(node.getReturnt() != null)
-        {
-            node.getReturnt().apply(this);
-        }
-        if(node.getImplex() != null)
-        {
-            node.getImplex().apply(this);
-        }
-        if(node.getComma() != null)
-        {
-            node.getComma().apply(this);
-        }
+        inADefineImpl(node);
         if(node.getImpl() != null)
         {
             node.getImpl().apply(this);
         }
-        if(node.getLBrace() != null)
+        if(node.getDefine() != null)
         {
-            node.getLBrace().apply(this);
+            node.getDefine().apply(this);
         }
-        outAImplexprImpl(node);
+        outADefineImpl(node);
     }
 
     public void inAEndExpr(AEndExpr node)
@@ -579,6 +609,10 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getElse().apply(this);
         }
+        if(node.getElsein() != null)
+        {
+            node.getElsein().apply(this);
+        }
         if(node.getColon() != null)
         {
             node.getColon().apply(this);
@@ -586,6 +620,10 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         if(node.getThen() != null)
         {
             node.getThen().apply(this);
+        }
+        if(node.getThenin() != null)
+        {
+            node.getThenin().apply(this);
         }
         if(node.getQuery() != null)
         {
@@ -645,9 +683,9 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getRPar().apply(this);
         }
-        if(node.getTerm() != null)
+        if(node.getExpr() != null)
         {
-            node.getTerm().apply(this);
+            node.getExpr().apply(this);
         }
         if(node.getLPar() != null)
         {
@@ -656,6 +694,10 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         if(node.getId() != null)
         {
             node.getId().apply(this);
+        }
+        if(node.getCall() != null)
+        {
+            node.getCall().apply(this);
         }
         outAFuncCallFunction(node);
     }
@@ -721,6 +763,27 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
             node.getNull().apply(this);
         }
         outANullTerm(node);
+    }
+
+    public void inABoolTerm(ABoolTerm node)
+    {
+        defaultIn(node);
+    }
+
+    public void outABoolTerm(ABoolTerm node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseABoolTerm(ABoolTerm node)
+    {
+        inABoolTerm(node);
+        if(node.getBool() != null)
+        {
+            node.getBool().apply(this);
+        }
+        outABoolTerm(node);
     }
 
     public void inAExprTerm(AExprTerm node)

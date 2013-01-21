@@ -39,7 +39,7 @@ public class Main {
 			ToC interp = new ToC();
 			ast.apply(interp);
 
-			System.out.println("JETZT KOMMT DER CODEPRINTER!");
+//			System.out.println("JETZT KOMMT DER CODEPRINTER!");
 
 //			System.out.print(interp.cp.code.toString());
 

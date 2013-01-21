@@ -2,7 +2,8 @@ Helpers
  digit = ['0' .. '9'];
  letter = ['a' .. 'z'] | ['A' .. 'Z'];
  any_charater = [0x0 .. 0xfffff];
-
+ true = 'TRUE';
+ false ='FALSE';
  
 
 Tokens
@@ -14,10 +15,13 @@ Tokens
  cons = 'cons';
  where = 'where';
  break = 'break';
- true = 'TRUE';
- false ='FALSE';
+ 
  returnt = 'return';
  null = 'null';
+ cstart = 'nativC>';
+ cend = '<nativC';
+ call = 'call';
+ bool = true | false;
  
  id = letter ( digit | letter )*;
  number = digit+;
@@ -72,18 +76,22 @@ Productions
 
  program = 
   {eof} T.end |
-  {define} function |
-  {function} P.define program ;
+  {function} function |
+  {define} P.define program ;
 
  define = 
   {define} T.define id equals term |
-  {function} T.func l_arrow [return]:id r_arrow [name]:id l_par term r_par impl |
-  {cons} T.cons id l_par term r_par impl |
-  {nil} T.cons id l_par r_par impl ;
+  {function} T.func l_arrow [return]:id r_arrow [name]:id l_par term r_par l_brace impl |
+  {cons} T.cons id l_par term r_par l_brace impl |
+  {nil} T.cons id l_par r_par l_brace impl ;
+  
   
  impl =
-  {expr} l_brace [impl]:expr T.returnt [returnex]:expr r_brace |
-  {implexpr} l_brace impl comma [implex]:expr T.returnt [returnex]:expr r_brace ;
+  {end} r_brace |
+  {return} T.returnt expr r_brace |
+  {expr} expr impl |
+  {define} P.define impl ;
+  
 
  expr = 
   {end} expr hash |
@@ -94,16 +102,17 @@ Productions
   {mult} expr asterisk term |
   {div} expr slash term |
   {mod} expr percent term |
-  {if} [if]:expr query [then]:term colon [else]:term |
+  {if} [if]:expr query [thenin]:l_brace [then]:impl colon [elsein]:l_brace [else]:impl |
   {concat} [left]:expr comma [right]:term ;
   
  function = 
-  {func_call} id l_par term r_par ;
+  {func_call} T.call id l_par expr r_par ;
 
  term = 
   {id} id |
   {number} number |
   {null} T.null |
+  {bool} T.bool |
   {expr} l_par expr r_par ;
    
    

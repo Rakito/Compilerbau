@@ -8,173 +8,402 @@ import analysis.DepthFirstAdapter;
 
 /**
  * @author Benjamin Arnold, Felix Hoeborn
- *
+ * 
  */
 public class ToC extends DepthFirstAdapter {
 
-	/* (non-Javadoc)
-	 * @see analysis.AnalysisAdapter#caseEOF(node.EOF)
+	
+
+	
+
+	/**
+	 * @param program
 	 */
-	@Override
-	public void caseEOF(EOF node) {
-		// TODO Auto-generated method stub
-		super.caseEOF(node);
+	private void casePProgram(PProgram program) {
+		if (program instanceof ADefineProgram) {
+			caseADefineProgram((ADefineProgram) program);
+		} else if (program instanceof AEofProgram) {
+			caseAEofProgram((AEofProgram) program);
+		} else if (program instanceof AFunctionProgram) {
+			caseAFunctionProgram((AFunctionProgram) program);
+		} else {
+
+		}
+
 	}
 
-	/* (non-Javadoc)
-	 * @see analysis.DepthFirstAdapter#caseStart(node.Start)
+	/**
+	 * @param define
 	 */
-	@Override
-	public void caseStart(Start node) {
-		// TODO Auto-generated method stub
-		super.caseStart(node);
+	private void casePDefine(PDefine define) {
+		if (define instanceof AConsDefine) {
+			caseAConsDefine((AConsDefine) define);
+		} else if (define instanceof ADefineDefine) {
+			caseADefineDefine((ADefineDefine) define);
+		} else if (define instanceof AFunctionDefine) {
+			caseAFunctionDefine((AFunctionDefine) define);
+		} else if (define instanceof ANilDefine) {
+			caseANilDefine((ANilDefine) define);
+		} else {
+
+		}
 	}
 
+	/**
+	 * @param function
+	 */
+	private void casePFunction(PFunction function) {
+		if (function instanceof AFuncCallFunction) {
+			caseAFuncCallFunction((AFuncCallFunction) function);
+		} else {
+
+		}
+	}
+
+	/**
+	 * @param expr
+	 */
+	private void casePExpr(PExpr expr) {
+		if (expr instanceof AConcatExpr) {
+			caseAConcatExpr((AConcatExpr) expr);
+		} else if (expr instanceof ADivExpr) {
+			caseADivExpr((ADivExpr) expr);
+		} else if (expr instanceof AEndExpr) {
+			caseAEndExpr((AEndExpr) expr);
+		} else if (expr instanceof AFunctionExpr) {
+			caseAFunctionExpr((AFunctionExpr) expr);
+		} else if (expr instanceof AIfExpr) {
+			caseAIfExpr((AIfExpr) expr);
+		} else if (expr instanceof AMinusExpr) {
+			caseAMinusExpr((AMinusExpr) expr);
+		} else if (expr instanceof AModExpr) {
+			caseAModExpr((AModExpr) expr);
+		} else if (expr instanceof AMultExpr) {
+			caseAMultExpr((AMultExpr) expr);
+		} else if (expr instanceof APlusExpr) {
+			caseAPlusExpr((APlusExpr) expr);
+		} else if (expr instanceof ATermExpr) {
+			caseATermExpr((ATermExpr) expr);
+		} else {
+
+		}
+	}
+
+	/**
+	 * @param term
+	 */
+	private void casePTerm(PTerm term) {
+		if (term instanceof AExprTerm) {
+			caseAExprTerm((AExprTerm) term);
+		} else if (term instanceof AIdTerm) {
+			caseAIdTerm((AIdTerm) term);
+		} else if (term instanceof ANullTerm) {
+			caseANullTerm((ANullTerm) term);
+		} else if (term instanceof ANumberTerm) {
+			caseANumberTerm((ANumberTerm) term);
+		} else if (term instanceof ABoolTerm) {
+			caseABoolTerm((ABoolTerm)term);
+		} else {
+
+		}
+	}
+
+	/**
+	 * @param impl
+	 */
+	private void casePImpl(PImpl impl) {
+		if (impl instanceof AEndImpl) {
+			caseAEndImpl((AEndImpl) impl);
+		} else if (impl instanceof ADefineImpl) {
+			caseADefineImpl((ADefineImpl) impl);
+		} else if (impl instanceof AExprImpl) {
+			caseAExprImpl((AExprImpl) impl);
+		} else if (impl instanceof AReturnImpl) {
+			caseAReturnImpl((AReturnImpl) impl);
+		} else {
+
+		}
+	}
+
+//////Production//////
+	
 	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseABoolTerm(node.ABoolTerm)
+	 */
+	@Override
+	public void caseABoolTerm(ABoolTerm node) {
+		System.out.print(node.getBool().getText());;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see analysis.DepthFirstAdapter#caseADefineProgram(node.ADefineProgram)
+	 */
+	@Override
+	public void caseADefineProgram(ADefineProgram node) {
+		casePDefine(node.getDefine());
+		casePProgram(node.getProgram());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * analysis.DepthFirstAdapter#caseAFunctionProgram(node.AFunctionProgram)
+	 */
+	@Override
+	public void caseAFunctionProgram(AFunctionProgram node) {
+		casePFunction(node.getFunction());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.DepthFirstAdapter#caseADefineDefine(node.ADefineDefine)
 	 */
 	@Override
 	public void caseADefineDefine(ADefineDefine node) {
-		// TODO Auto-generated method stub
-		super.caseADefineDefine(node);
+		System.out.print(node.getId().getText() + " = ");
+		casePTerm(node.getTerm());
+		System.out.println(";");
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.DepthFirstAdapter#caseAFunctionDefine(node.AFunctionDefine)
 	 */
 	@Override
 	public void caseAFunctionDefine(AFunctionDefine node) {
-		// TODO Auto-generated method stub
-		super.caseAFunctionDefine(node);
+		System.out.print(node.getReturn().getText() + " "
+				+ node.getName().getText() + "(");
+		casePTerm(node.getTerm());
+		System.out.println("){");
+		casePImpl(node.getImpl());
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.DepthFirstAdapter#caseAConsDefine(node.AConsDefine)
 	 */
 	@Override
 	public void caseAConsDefine(AConsDefine node) {
-		// TODO Auto-generated method stub
-		super.caseAConsDefine(node);
+		System.out.print(node.getId().getText() + "(");
+		casePTerm(node.getTerm());
+		System.out.println("){");
+		casePImpl(node.getImpl());
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.DepthFirstAdapter#caseANilDefine(node.ANilDefine)
 	 */
 	@Override
 	public void caseANilDefine(ANilDefine node) {
-		// TODO Auto-generated method stub
-		super.caseANilDefine(node);
+		System.out.println(node.getId().getText() + "(){");
+		casePImpl(node.getImpl());
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see analysis.DepthFirstAdapter#caseAEndImpl(node.AEndImpl)
+	 */
+	@Override
+	public void caseAEndImpl(AEndImpl node) {
+		System.out.println("}");
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see analysis.DepthFirstAdapter#caseAReturnImpl(node.AReturnImpl)
+	 */
+	@Override
+	public void caseAReturnImpl(AReturnImpl node) {
+		System.out.print("return ");
+		casePExpr(node.getExpr());
+		System.out.println(" ;\n}");
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.DepthFirstAdapter#caseAExprImpl(node.AExprImpl)
 	 */
 	@Override
 	public void caseAExprImpl(AExprImpl node) {
-		// TODO Auto-generated method stub
-		super.caseAExprImpl(node);
+		casePExpr(node.getExpr());
+		System.out.println(";");
+		casePImpl(node.getImpl());
 	}
 
-	/* (non-Javadoc)
-	 * @see analysis.DepthFirstAdapter#caseAImplexprImpl(node.AImplexprImpl)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see analysis.DepthFirstAdapter#caseADefineImpl(node.ADefineImpl)
 	 */
 	@Override
-	public void caseAImplexprImpl(AImplexprImpl node) {
-		// TODO Auto-generated method stub
-		super.caseAImplexprImpl(node);
+	public void caseADefineImpl(ADefineImpl node) {
+		casePDefine(node.getDefine());
+		System.out.println(";");
+		casePImpl(node.getImpl());
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see analysis.DepthFirstAdapter#caseAEndExpr(node.AEndExpr)
+	 */
+	@Override
+	public void caseAEndExpr(AEndExpr node) {
+		casePExpr(node.getExpr());
+		System.out.println(";");
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.DepthFirstAdapter#caseATermExpr(node.ATermExpr)
 	 */
 	@Override
 	public void caseATermExpr(ATermExpr node) {
-		// TODO Auto-generated method stub
-		super.caseATermExpr(node);
+		casePTerm(node.getTerm());
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.DepthFirstAdapter#caseAFunctionExpr(node.AFunctionExpr)
 	 */
 	@Override
 	public void caseAFunctionExpr(AFunctionExpr node) {
-		// TODO Auto-generated method stub
-		super.caseAFunctionExpr(node);
+		casePFunction(node.getFunction());
+		System.out.println(";");
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.DepthFirstAdapter#caseAPlusExpr(node.APlusExpr)
 	 */
 	@Override
 	public void caseAPlusExpr(APlusExpr node) {
-		// TODO Auto-generated method stub
-		super.caseAPlusExpr(node);
+		System.out.print("( ");
+		casePExpr(node.getExpr());
+		System.out.print(" + ");
+		casePTerm(node.getTerm());
+		System.out.print(" )");
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.DepthFirstAdapter#caseAMinusExpr(node.AMinusExpr)
 	 */
 	@Override
 	public void caseAMinusExpr(AMinusExpr node) {
-		// TODO Auto-generated method stub
-		super.caseAMinusExpr(node);
+		System.out.print("( ");
+		casePExpr(node.getExpr());
+		System.out.print(" - ");
+		casePTerm(node.getTerm());
+		System.out.print(" )");
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.DepthFirstAdapter#caseAMultExpr(node.AMultExpr)
 	 */
 	@Override
 	public void caseAMultExpr(AMultExpr node) {
-		// TODO Auto-generated method stub
-		super.caseAMultExpr(node);
+		System.out.print("( ");
+		casePExpr(node.getExpr());
+		System.out.print(" * ");
+		casePTerm(node.getTerm());
+		System.out.print(" )");
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.DepthFirstAdapter#caseADivExpr(node.ADivExpr)
 	 */
 	@Override
 	public void caseADivExpr(ADivExpr node) {
-		// TODO Auto-generated method stub
-		super.caseADivExpr(node);
+		System.out.print("( ");
+		casePExpr(node.getExpr());
+		System.out.print(" / ");
+		casePTerm(node.getTerm());
+		System.out.print(" )");
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.DepthFirstAdapter#caseAModExpr(node.AModExpr)
 	 */
 	@Override
 	public void caseAModExpr(AModExpr node) {
-		// TODO Auto-generated method stub
-		super.caseAModExpr(node);
+		System.out.print("( ");
+		casePExpr(node.getExpr());
+		System.out.print(" % ");
+		casePTerm(node.getTerm());
+		System.out.print(" )");
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.DepthFirstAdapter#caseAIfExpr(node.AIfExpr)
 	 */
 	@Override
 	public void caseAIfExpr(AIfExpr node) {
-		// TODO Auto-generated method stub
-		super.caseAIfExpr(node);
+		System.out.print("if( ");
+		casePExpr(node.getIf());
+		System.out.println(" ){");
+		casePImpl(node.getThen());
+		System.out.println("\n else { ");
+		casePImpl(node.getElse());
+		System.out.println("");
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.DepthFirstAdapter#caseAConcatExpr(node.AConcatExpr)
 	 */
 	@Override
 	public void caseAConcatExpr(AConcatExpr node) {
-		// TODO Auto-generated method stub
-		super.caseAConcatExpr(node);
+		System.out.print("( ");
+		casePExpr(node.getLeft());
+		System.out.print(" , ");
+		casePTerm(node.getRight());
+		System.out.print(" )");
 	}
 
-	/* (non-Javadoc)
-	 * @see analysis.DepthFirstAdapter#caseAFuncCallFunction(node.AFuncCallFunction)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * analysis.DepthFirstAdapter#caseAFuncCallFunction(node.AFuncCallFunction)
 	 */
 	@Override
 	public void caseAFuncCallFunction(AFuncCallFunction node) {
-		// TODO Auto-generated method stub
-		super.caseAFuncCallFunction(node);
+		System.out.print(node.getId().getText()+"( ");
+		casePExpr(node.getExpr());
+		System.out.println(" );");
 	}
 
-	/* (non-Javadoc)
+//////Token//////
+	
+	
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.DepthFirstAdapter#caseAIdTerm(node.AIdTerm)
 	 */
 	@Override
@@ -183,7 +412,9 @@ public class ToC extends DepthFirstAdapter {
 		super.caseAIdTerm(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.DepthFirstAdapter#caseANumberTerm(node.ANumberTerm)
 	 */
 	@Override
@@ -192,7 +423,9 @@ public class ToC extends DepthFirstAdapter {
 		super.caseANumberTerm(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.DepthFirstAdapter#caseANullTerm(node.ANullTerm)
 	 */
 	@Override
@@ -201,7 +434,9 @@ public class ToC extends DepthFirstAdapter {
 		super.caseANullTerm(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.DepthFirstAdapter#caseAExprTerm(node.AExprTerm)
 	 */
 	@Override
@@ -210,449 +445,625 @@ public class ToC extends DepthFirstAdapter {
 		super.caseAExprTerm(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see analysis.AnalysisAdapter#caseTCstart(node.TCstart)
+	 */
+	@Override
+	public void caseTCstart(TCstart node) {
+		// TODO Auto-generated method stub
+		super.caseTCstart(node);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see analysis.AnalysisAdapter#caseTCend(node.TCend)
+	 */
+	@Override
+	public void caseTCend(TCend node) {
+		// TODO Auto-generated method stub
+		super.caseTCend(node);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see analysis.AnalysisAdapter#caseTCall(node.TCall)
+	 */
+	@Override
+	public void caseTCall(TCall node) {
+		// TODO Auto-generated method stub
+		super.caseTCall(node);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see analysis.DepthFirstAdapter#caseAEofProgram(node.AEofProgram)
+	 */
+	@Override
+	public void caseAEofProgram(AEofProgram node) {
+		System.out.println("Hier endet der Code");
+		super.caseAEofProgram(node);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTDefine(node.TDefine)
 	 */
 	@Override
 	public void caseTDefine(TDefine node) {
-		// TODO Auto-generated method stub
+
 		super.caseTDefine(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTFunc(node.TFunc)
 	 */
 	@Override
 	public void caseTFunc(TFunc node) {
-		// TODO Auto-generated method stub
+		System.out.print("func ");
 		super.caseTFunc(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTBegin(node.TBegin)
 	 */
 	@Override
 	public void caseTBegin(TBegin node) {
-		// TODO Auto-generated method stub
+		System.out.println("begin");
 		super.caseTBegin(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTEnd(node.TEnd)
 	 */
 	@Override
 	public void caseTEnd(TEnd node) {
-		// TODO Auto-generated method stub
+		System.out.println("end");
 		super.caseTEnd(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTCons(node.TCons)
 	 */
 	@Override
 	public void caseTCons(TCons node) {
-		// TODO Auto-generated method stub
+		System.out.print("cons ");
 		super.caseTCons(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTWhere(node.TWhere)
 	 */
 	@Override
 	public void caseTWhere(TWhere node) {
-		// TODO Auto-generated method stub
+		System.out.print(" where ");
 		super.caseTWhere(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTBreak(node.TBreak)
 	 */
 	@Override
 	public void caseTBreak(TBreak node) {
-		// TODO Auto-generated method stub
+		System.out.println("break");
 		super.caseTBreak(node);
 	}
 
-	/* (non-Javadoc)
-	 * @see analysis.AnalysisAdapter#caseTTrue(node.TTrue)
-	 */
-	@Override
-	public void caseTTrue(TTrue node) {
-		// TODO Auto-generated method stub
-		super.caseTTrue(node);
-	}
+	
 
-	/* (non-Javadoc)
-	 * @see analysis.AnalysisAdapter#caseTFalse(node.TFalse)
-	 */
-	@Override
-	public void caseTFalse(TFalse node) {
-		// TODO Auto-generated method stub
-		super.caseTFalse(node);
-	}
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTReturnt(node.TReturnt)
 	 */
 	@Override
 	public void caseTReturnt(TReturnt node) {
-		// TODO Auto-generated method stub
+		System.out.print("return ");
 		super.caseTReturnt(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTNull(node.TNull)
 	 */
 	@Override
 	public void caseTNull(TNull node) {
-		// TODO Auto-generated method stub
+		System.out.print("null");
 		super.caseTNull(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTId(node.TId)
 	 */
 	@Override
 	public void caseTId(TId node) {
-		// TODO Auto-generated method stub
+		System.out.print(node.getText());
 		super.caseTId(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTNumber(node.TNumber)
 	 */
 	@Override
 	public void caseTNumber(TNumber node) {
-		// TODO Auto-generated method stub
+		System.out.print(node.getText());
 		super.caseTNumber(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTPlus(node.TPlus)
 	 */
 	@Override
 	public void caseTPlus(TPlus node) {
-		// TODO Auto-generated method stub
+		System.out.print(" + ");
 		super.caseTPlus(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTHyphen(node.THyphen)
 	 */
 	@Override
 	public void caseTHyphen(THyphen node) {
-		// TODO Auto-generated method stub
+		System.out.print(" - ");
 		super.caseTHyphen(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTAsterisk(node.TAsterisk)
 	 */
 	@Override
 	public void caseTAsterisk(TAsterisk node) {
-		// TODO Auto-generated method stub
+		System.out.print("*");
 		super.caseTAsterisk(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTPercent(node.TPercent)
 	 */
 	@Override
 	public void caseTPercent(TPercent node) {
-		// TODO Auto-generated method stub
+		System.out.print("%");
 		super.caseTPercent(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTDot(node.TDot)
 	 */
 	@Override
 	public void caseTDot(TDot node) {
-		// TODO Auto-generated method stub
+		System.out.print(".");
 		super.caseTDot(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTComma(node.TComma)
 	 */
 	@Override
 	public void caseTComma(TComma node) {
-		// TODO Auto-generated method stub
+		System.out.print(", ");
 		super.caseTComma(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTQuery(node.TQuery)
 	 */
 	@Override
 	public void caseTQuery(TQuery node) {
-		// TODO Auto-generated method stub
+		System.out.print(" ? ");
 		super.caseTQuery(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTColon(node.TColon)
 	 */
 	@Override
 	public void caseTColon(TColon node) {
-		// TODO Auto-generated method stub
+		System.out.print(" : ");
 		super.caseTColon(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTSemicolon(node.TSemicolon)
 	 */
 	@Override
 	public void caseTSemicolon(TSemicolon node) {
-		// TODO Auto-generated method stub
+		System.out.println(";");
 		super.caseTSemicolon(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTLBox(node.TLBox)
 	 */
 	@Override
 	public void caseTLBox(TLBox node) {
-		// TODO Auto-generated method stub
+		System.out.print("[");
 		super.caseTLBox(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTRBox(node.TRBox)
 	 */
 	@Override
 	public void caseTRBox(TRBox node) {
-		// TODO Auto-generated method stub
+		System.out.print("]");
 		super.caseTRBox(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTLPar(node.TLPar)
 	 */
 	@Override
 	public void caseTLPar(TLPar node) {
-		// TODO Auto-generated method stub
+		System.out.print("(");
 		super.caseTLPar(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTRPar(node.TRPar)
 	 */
 	@Override
 	public void caseTRPar(TRPar node) {
-		// TODO Auto-generated method stub
+		System.out.println(")");
 		super.caseTRPar(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTLBrace(node.TLBrace)
 	 */
 	@Override
 	public void caseTLBrace(TLBrace node) {
-		// TODO Auto-generated method stub
+		System.out.print("{");
 		super.caseTLBrace(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTRBrace(node.TRBrace)
 	 */
 	@Override
 	public void caseTRBrace(TRBrace node) {
-		// TODO Auto-generated method stub
+		System.out.println("}");
 		super.caseTRBrace(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTLArrow(node.TLArrow)
 	 */
 	@Override
 	public void caseTLArrow(TLArrow node) {
-		// TODO Auto-generated method stub
+		System.out.print("<");
 		super.caseTLArrow(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTRArrow(node.TRArrow)
 	 */
 	@Override
 	public void caseTRArrow(TRArrow node) {
-		// TODO Auto-generated method stub
+		System.out.print(">");
 		super.caseTRArrow(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTBlank(node.TBlank)
 	 */
 	@Override
 	public void caseTBlank(TBlank node) {
-		// TODO Auto-generated method stub
+		System.out.print(" ");
 		super.caseTBlank(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTDash(node.TDash)
 	 */
 	@Override
 	public void caseTDash(TDash node) {
-		// TODO Auto-generated method stub
+		System.out.print("-");
 		super.caseTDash(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTAmpersand(node.TAmpersand)
 	 */
 	@Override
 	public void caseTAmpersand(TAmpersand node) {
-		// TODO Auto-generated method stub
+		System.out.print("&");
 		super.caseTAmpersand(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTSlash(node.TSlash)
 	 */
 	@Override
 	public void caseTSlash(TSlash node) {
-		// TODO Auto-generated method stub
+		System.out.print("/");
 		super.caseTSlash(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTQuestion(node.TQuestion)
 	 */
 	@Override
 	public void caseTQuestion(TQuestion node) {
-		// TODO Auto-generated method stub
+		System.out.print("?");
 		super.caseTQuestion(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTExclamation(node.TExclamation)
 	 */
 	@Override
 	public void caseTExclamation(TExclamation node) {
-		// TODO Auto-generated method stub
+		System.out.print("!");
 		super.caseTExclamation(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTAt(node.TAt)
 	 */
 	@Override
 	public void caseTAt(TAt node) {
-		// TODO Auto-generated method stub
+		System.out.print("@");
 		super.caseTAt(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTTilde(node.TTilde)
 	 */
 	@Override
 	public void caseTTilde(TTilde node) {
-		// TODO Auto-generated method stub
+		System.out.print("");
 		super.caseTTilde(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTSection(node.TSection)
 	 */
 	@Override
 	public void caseTSection(TSection node) {
-		// TODO Auto-generated method stub
+		System.out.print("");
+		System.out.print("¤");
 		super.caseTSection(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTUnderscore(node.TUnderscore)
 	 */
 	@Override
 	public void caseTUnderscore(TUnderscore node) {
-		// TODO Auto-generated method stub
+		System.out.print("_");
 		super.caseTUnderscore(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTPipe(node.TPipe)
 	 */
 	@Override
 	public void caseTPipe(TPipe node) {
-		// TODO Auto-generated method stub
+		System.out.print("|");
 		super.caseTPipe(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTHash(node.THash)
 	 */
 	@Override
 	public void caseTHash(THash node) {
-		// TODO Auto-generated method stub
+		System.out.println("");
 		super.caseTHash(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTCaret(node.TCaret)
 	 */
 	@Override
 	public void caseTCaret(TCaret node) {
-		// TODO Auto-generated method stub
+		System.out.print("");
 		super.caseTCaret(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTDegree(node.TDegree)
 	 */
 	@Override
 	public void caseTDegree(TDegree node) {
-		// TODO Auto-generated method stub
+		System.out.print("¡");
 		super.caseTDegree(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTBlackslash(node.TBlackslash)
 	 */
 	@Override
 	public void caseTBlackslash(TBlackslash node) {
-		// TODO Auto-generated method stub
+		System.out.print("\\");
 		super.caseTBlackslash(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTEquals(node.TEquals)
 	 */
 	@Override
 	public void caseTEquals(TEquals node) {
-		// TODO Auto-generated method stub
+		System.out.print("=");
 		super.caseTEquals(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTQuote(node.TQuote)
 	 */
 	@Override
 	public void caseTQuote(TQuote node) {
-		// TODO Auto-generated method stub
+		System.out.print("'");
 		super.caseTQuote(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTReturn(node.TReturn)
 	 */
 	@Override
 	public void caseTReturn(TReturn node) {
-		// TODO Auto-generated method stub
+		System.out.println("");
 		super.caseTReturn(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see analysis.AnalysisAdapter#caseTTab(node.TTab)
+	 */
+	@Override
+	public void caseTTab(TTab node) {
+		System.out.print("	");
+		super.caseTTab(node);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see analysis.AnalysisAdapter#caseTComment(node.TComment)
 	 */
 	@Override
 	public void caseTComment(TComment node) {
-		// TODO Auto-generated method stub
+		System.out.print("//");
 		super.caseTComment(node);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see analysis.AnalysisAdapter#caseTEndoffile(node.TEndoffile)
+	 */
+	@Override
+	public void caseTEndoffile(TEndoffile node) {
+
+		super.caseTEndoffile(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.AnalysisAdapter#caseTBool(node.TBool)
+	 */
+	@Override
+	public void caseTBool(TBool node) {
+		// TODO Auto-generated method stub
+		super.caseTBool(node);
+	}
+	
+//////Start and EOF//////
 	
 	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see analysis.DepthFirstAdapter#caseStart(node.Start)
+	 */
+	@Override
+	public void caseStart(Start node) {
+		System.out.println("Hier beginnt der Code");
+		super.caseStart(node);
+	}
+
 	
-	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see analysis.AnalysisAdapter#caseEOF(node.EOF)
+	 */
+	@Override
+	public void caseEOF(EOF node) {
+		System.out.println("Datei zu ende");
+		super.caseEOF(node);
+	}
+
 }

@@ -7,8 +7,7 @@ import analysis.*;
 @SuppressWarnings("nls")
 public final class AFunctionProgram extends PProgram
 {
-    private PDefine _define_;
-    private PProgram _program_;
+    private PFunction _function_;
 
     public AFunctionProgram()
     {
@@ -16,13 +15,10 @@ public final class AFunctionProgram extends PProgram
     }
 
     public AFunctionProgram(
-        @SuppressWarnings("hiding") PDefine _define_,
-        @SuppressWarnings("hiding") PProgram _program_)
+        @SuppressWarnings("hiding") PFunction _function_)
     {
         // Constructor
-        setDefine(_define_);
-
-        setProgram(_program_);
+        setFunction(_function_);
 
     }
 
@@ -30,8 +26,7 @@ public final class AFunctionProgram extends PProgram
     public Object clone()
     {
         return new AFunctionProgram(
-            cloneNode(this._define_),
-            cloneNode(this._program_));
+            cloneNode(this._function_));
     }
 
     @Override
@@ -40,16 +35,16 @@ public final class AFunctionProgram extends PProgram
         ((Analysis) sw).caseAFunctionProgram(this);
     }
 
-    public PDefine getDefine()
+    public PFunction getFunction()
     {
-        return this._define_;
+        return this._function_;
     }
 
-    public void setDefine(PDefine node)
+    public void setFunction(PFunction node)
     {
-        if(this._define_ != null)
+        if(this._function_ != null)
         {
-            this._define_.parent(null);
+            this._function_.parent(null);
         }
 
         if(node != null)
@@ -62,55 +57,23 @@ public final class AFunctionProgram extends PProgram
             node.parent(this);
         }
 
-        this._define_ = node;
-    }
-
-    public PProgram getProgram()
-    {
-        return this._program_;
-    }
-
-    public void setProgram(PProgram node)
-    {
-        if(this._program_ != null)
-        {
-            this._program_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._program_ = node;
+        this._function_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._define_)
-            + toString(this._program_);
+            + toString(this._function_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._define_ == child)
+        if(this._function_ == child)
         {
-            this._define_ = null;
-            return;
-        }
-
-        if(this._program_ == child)
-        {
-            this._program_ = null;
+            this._function_ = null;
             return;
         }
 
@@ -121,15 +84,9 @@ public final class AFunctionProgram extends PProgram
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._define_ == oldChild)
+        if(this._function_ == oldChild)
         {
-            setDefine((PDefine) newChild);
-            return;
-        }
-
-        if(this._program_ == oldChild)
-        {
-            setProgram((PProgram) newChild);
+            setFunction((PFunction) newChild);
             return;
         }
 

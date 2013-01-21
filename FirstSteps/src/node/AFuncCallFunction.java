@@ -7,9 +7,10 @@ import analysis.*;
 @SuppressWarnings("nls")
 public final class AFuncCallFunction extends PFunction
 {
+    private TCall _call_;
     private TId _id_;
     private TLPar _lPar_;
-    private PTerm _term_;
+    private PExpr _expr_;
     private TRPar _rPar_;
 
     public AFuncCallFunction()
@@ -18,17 +19,20 @@ public final class AFuncCallFunction extends PFunction
     }
 
     public AFuncCallFunction(
+        @SuppressWarnings("hiding") TCall _call_,
         @SuppressWarnings("hiding") TId _id_,
         @SuppressWarnings("hiding") TLPar _lPar_,
-        @SuppressWarnings("hiding") PTerm _term_,
+        @SuppressWarnings("hiding") PExpr _expr_,
         @SuppressWarnings("hiding") TRPar _rPar_)
     {
         // Constructor
+        setCall(_call_);
+
         setId(_id_);
 
         setLPar(_lPar_);
 
-        setTerm(_term_);
+        setExpr(_expr_);
 
         setRPar(_rPar_);
 
@@ -38,9 +42,10 @@ public final class AFuncCallFunction extends PFunction
     public Object clone()
     {
         return new AFuncCallFunction(
+            cloneNode(this._call_),
             cloneNode(this._id_),
             cloneNode(this._lPar_),
-            cloneNode(this._term_),
+            cloneNode(this._expr_),
             cloneNode(this._rPar_));
     }
 
@@ -48,6 +53,31 @@ public final class AFuncCallFunction extends PFunction
     public void apply(Switch sw)
     {
         ((Analysis) sw).caseAFuncCallFunction(this);
+    }
+
+    public TCall getCall()
+    {
+        return this._call_;
+    }
+
+    public void setCall(TCall node)
+    {
+        if(this._call_ != null)
+        {
+            this._call_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._call_ = node;
     }
 
     public TId getId()
@@ -100,16 +130,16 @@ public final class AFuncCallFunction extends PFunction
         this._lPar_ = node;
     }
 
-    public PTerm getTerm()
+    public PExpr getExpr()
     {
-        return this._term_;
+        return this._expr_;
     }
 
-    public void setTerm(PTerm node)
+    public void setExpr(PExpr node)
     {
-        if(this._term_ != null)
+        if(this._expr_ != null)
         {
-            this._term_.parent(null);
+            this._expr_.parent(null);
         }
 
         if(node != null)
@@ -122,7 +152,7 @@ public final class AFuncCallFunction extends PFunction
             node.parent(this);
         }
 
-        this._term_ = node;
+        this._expr_ = node;
     }
 
     public TRPar getRPar()
@@ -154,9 +184,10 @@ public final class AFuncCallFunction extends PFunction
     public String toString()
     {
         return ""
+            + toString(this._call_)
             + toString(this._id_)
             + toString(this._lPar_)
-            + toString(this._term_)
+            + toString(this._expr_)
             + toString(this._rPar_);
     }
 
@@ -164,6 +195,12 @@ public final class AFuncCallFunction extends PFunction
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
+        if(this._call_ == child)
+        {
+            this._call_ = null;
+            return;
+        }
+
         if(this._id_ == child)
         {
             this._id_ = null;
@@ -176,9 +213,9 @@ public final class AFuncCallFunction extends PFunction
             return;
         }
 
-        if(this._term_ == child)
+        if(this._expr_ == child)
         {
-            this._term_ = null;
+            this._expr_ = null;
             return;
         }
 
@@ -195,6 +232,12 @@ public final class AFuncCallFunction extends PFunction
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
+        if(this._call_ == oldChild)
+        {
+            setCall((TCall) newChild);
+            return;
+        }
+
         if(this._id_ == oldChild)
         {
             setId((TId) newChild);
@@ -207,9 +250,9 @@ public final class AFuncCallFunction extends PFunction
             return;
         }
 
-        if(this._term_ == oldChild)
+        if(this._expr_ == oldChild)
         {
-            setTerm((PTerm) newChild);
+            setExpr((PExpr) newChild);
             return;
         }
 

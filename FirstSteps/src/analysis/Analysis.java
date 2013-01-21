@@ -13,14 +13,16 @@ public interface Analysis extends Switch
 
     void caseStart(Start node);
     void caseAEofProgram(AEofProgram node);
-    void caseADefineProgram(ADefineProgram node);
     void caseAFunctionProgram(AFunctionProgram node);
+    void caseADefineProgram(ADefineProgram node);
     void caseADefineDefine(ADefineDefine node);
     void caseAFunctionDefine(AFunctionDefine node);
     void caseAConsDefine(AConsDefine node);
     void caseANilDefine(ANilDefine node);
+    void caseAEndImpl(AEndImpl node);
+    void caseAReturnImpl(AReturnImpl node);
     void caseAExprImpl(AExprImpl node);
-    void caseAImplexprImpl(AImplexprImpl node);
+    void caseADefineImpl(ADefineImpl node);
     void caseAEndExpr(AEndExpr node);
     void caseATermExpr(ATermExpr node);
     void caseAFunctionExpr(AFunctionExpr node);
@@ -35,6 +37,7 @@ public interface Analysis extends Switch
     void caseAIdTerm(AIdTerm node);
     void caseANumberTerm(ANumberTerm node);
     void caseANullTerm(ANullTerm node);
+    void caseABoolTerm(ABoolTerm node);
     void caseAExprTerm(AExprTerm node);
 
     void caseTDefine(TDefine node);
@@ -44,10 +47,12 @@ public interface Analysis extends Switch
     void caseTCons(TCons node);
     void caseTWhere(TWhere node);
     void caseTBreak(TBreak node);
-    void caseTTrue(TTrue node);
-    void caseTFalse(TFalse node);
     void caseTReturnt(TReturnt node);
     void caseTNull(TNull node);
+    void caseTCstart(TCstart node);
+    void caseTCend(TCend node);
+    void caseTCall(TCall node);
+    void caseTBool(TBool node);
     void caseTId(TId node);
     void caseTNumber(TNumber node);
     void caseTPlus(TPlus node);

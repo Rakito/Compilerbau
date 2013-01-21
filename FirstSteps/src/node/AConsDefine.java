@@ -12,6 +12,7 @@ public final class AConsDefine extends PDefine
     private TLPar _lPar_;
     private PTerm _term_;
     private TRPar _rPar_;
+    private TLBrace _lBrace_;
     private PImpl _impl_;
 
     public AConsDefine()
@@ -25,6 +26,7 @@ public final class AConsDefine extends PDefine
         @SuppressWarnings("hiding") TLPar _lPar_,
         @SuppressWarnings("hiding") PTerm _term_,
         @SuppressWarnings("hiding") TRPar _rPar_,
+        @SuppressWarnings("hiding") TLBrace _lBrace_,
         @SuppressWarnings("hiding") PImpl _impl_)
     {
         // Constructor
@@ -37,6 +39,8 @@ public final class AConsDefine extends PDefine
         setTerm(_term_);
 
         setRPar(_rPar_);
+
+        setLBrace(_lBrace_);
 
         setImpl(_impl_);
 
@@ -51,6 +55,7 @@ public final class AConsDefine extends PDefine
             cloneNode(this._lPar_),
             cloneNode(this._term_),
             cloneNode(this._rPar_),
+            cloneNode(this._lBrace_),
             cloneNode(this._impl_));
     }
 
@@ -185,6 +190,31 @@ public final class AConsDefine extends PDefine
         this._rPar_ = node;
     }
 
+    public TLBrace getLBrace()
+    {
+        return this._lBrace_;
+    }
+
+    public void setLBrace(TLBrace node)
+    {
+        if(this._lBrace_ != null)
+        {
+            this._lBrace_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._lBrace_ = node;
+    }
+
     public PImpl getImpl()
     {
         return this._impl_;
@@ -219,6 +249,7 @@ public final class AConsDefine extends PDefine
             + toString(this._lPar_)
             + toString(this._term_)
             + toString(this._rPar_)
+            + toString(this._lBrace_)
             + toString(this._impl_);
     }
 
@@ -253,6 +284,12 @@ public final class AConsDefine extends PDefine
         if(this._rPar_ == child)
         {
             this._rPar_ = null;
+            return;
+        }
+
+        if(this._lBrace_ == child)
+        {
+            this._lBrace_ = null;
             return;
         }
 
@@ -296,6 +333,12 @@ public final class AConsDefine extends PDefine
         if(this._rPar_ == oldChild)
         {
             setRPar((TRPar) newChild);
+            return;
+        }
+
+        if(this._lBrace_ == oldChild)
+        {
+            setLBrace((TLBrace) newChild);
             return;
         }
 

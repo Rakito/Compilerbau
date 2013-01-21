@@ -7,11 +7,8 @@ import analysis.*;
 @SuppressWarnings("nls")
 public final class AExprImpl extends PImpl
 {
-    private TLBrace _lBrace_;
-    private PExpr _impl_;
-    private TReturnt _returnt_;
-    private PExpr _returnex_;
-    private TRBrace _rBrace_;
+    private PExpr _expr_;
+    private PImpl _impl_;
 
     public AExprImpl()
     {
@@ -19,22 +16,13 @@ public final class AExprImpl extends PImpl
     }
 
     public AExprImpl(
-        @SuppressWarnings("hiding") TLBrace _lBrace_,
-        @SuppressWarnings("hiding") PExpr _impl_,
-        @SuppressWarnings("hiding") TReturnt _returnt_,
-        @SuppressWarnings("hiding") PExpr _returnex_,
-        @SuppressWarnings("hiding") TRBrace _rBrace_)
+        @SuppressWarnings("hiding") PExpr _expr_,
+        @SuppressWarnings("hiding") PImpl _impl_)
     {
         // Constructor
-        setLBrace(_lBrace_);
+        setExpr(_expr_);
 
         setImpl(_impl_);
-
-        setReturnt(_returnt_);
-
-        setReturnex(_returnex_);
-
-        setRBrace(_rBrace_);
 
     }
 
@@ -42,11 +30,8 @@ public final class AExprImpl extends PImpl
     public Object clone()
     {
         return new AExprImpl(
-            cloneNode(this._lBrace_),
-            cloneNode(this._impl_),
-            cloneNode(this._returnt_),
-            cloneNode(this._returnex_),
-            cloneNode(this._rBrace_));
+            cloneNode(this._expr_),
+            cloneNode(this._impl_));
     }
 
     @Override
@@ -55,16 +40,16 @@ public final class AExprImpl extends PImpl
         ((Analysis) sw).caseAExprImpl(this);
     }
 
-    public TLBrace getLBrace()
+    public PExpr getExpr()
     {
-        return this._lBrace_;
+        return this._expr_;
     }
 
-    public void setLBrace(TLBrace node)
+    public void setExpr(PExpr node)
     {
-        if(this._lBrace_ != null)
+        if(this._expr_ != null)
         {
-            this._lBrace_.parent(null);
+            this._expr_.parent(null);
         }
 
         if(node != null)
@@ -77,15 +62,15 @@ public final class AExprImpl extends PImpl
             node.parent(this);
         }
 
-        this._lBrace_ = node;
+        this._expr_ = node;
     }
 
-    public PExpr getImpl()
+    public PImpl getImpl()
     {
         return this._impl_;
     }
 
-    public void setImpl(PExpr node)
+    public void setImpl(PImpl node)
     {
         if(this._impl_ != null)
         {
@@ -105,123 +90,27 @@ public final class AExprImpl extends PImpl
         this._impl_ = node;
     }
 
-    public TReturnt getReturnt()
-    {
-        return this._returnt_;
-    }
-
-    public void setReturnt(TReturnt node)
-    {
-        if(this._returnt_ != null)
-        {
-            this._returnt_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._returnt_ = node;
-    }
-
-    public PExpr getReturnex()
-    {
-        return this._returnex_;
-    }
-
-    public void setReturnex(PExpr node)
-    {
-        if(this._returnex_ != null)
-        {
-            this._returnex_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._returnex_ = node;
-    }
-
-    public TRBrace getRBrace()
-    {
-        return this._rBrace_;
-    }
-
-    public void setRBrace(TRBrace node)
-    {
-        if(this._rBrace_ != null)
-        {
-            this._rBrace_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._rBrace_ = node;
-    }
-
     @Override
     public String toString()
     {
         return ""
-            + toString(this._lBrace_)
-            + toString(this._impl_)
-            + toString(this._returnt_)
-            + toString(this._returnex_)
-            + toString(this._rBrace_);
+            + toString(this._expr_)
+            + toString(this._impl_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._lBrace_ == child)
+        if(this._expr_ == child)
         {
-            this._lBrace_ = null;
+            this._expr_ = null;
             return;
         }
 
         if(this._impl_ == child)
         {
             this._impl_ = null;
-            return;
-        }
-
-        if(this._returnt_ == child)
-        {
-            this._returnt_ = null;
-            return;
-        }
-
-        if(this._returnex_ == child)
-        {
-            this._returnex_ = null;
-            return;
-        }
-
-        if(this._rBrace_ == child)
-        {
-            this._rBrace_ = null;
             return;
         }
 
@@ -232,33 +121,15 @@ public final class AExprImpl extends PImpl
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._lBrace_ == oldChild)
+        if(this._expr_ == oldChild)
         {
-            setLBrace((TLBrace) newChild);
+            setExpr((PExpr) newChild);
             return;
         }
 
         if(this._impl_ == oldChild)
         {
-            setImpl((PExpr) newChild);
-            return;
-        }
-
-        if(this._returnt_ == oldChild)
-        {
-            setReturnt((TReturnt) newChild);
-            return;
-        }
-
-        if(this._returnex_ == oldChild)
-        {
-            setReturnex((PExpr) newChild);
-            return;
-        }
-
-        if(this._rBrace_ == oldChild)
-        {
-            setRBrace((TRBrace) newChild);
+            setImpl((PImpl) newChild);
             return;
         }
 

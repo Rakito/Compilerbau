@@ -81,13 +81,13 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseADefineProgram(ADefineProgram node)
+    public void caseAFunctionProgram(AFunctionProgram node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseAFunctionProgram(AFunctionProgram node)
+    public void caseADefineProgram(ADefineProgram node)
     {
         defaultCase(node);
     }
@@ -117,13 +117,25 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseAEndImpl(AEndImpl node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAReturnImpl(AReturnImpl node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseAExprImpl(AExprImpl node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseAImplexprImpl(AImplexprImpl node)
+    public void caseADefineImpl(ADefineImpl node)
     {
         defaultCase(node);
     }
@@ -213,6 +225,12 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseABoolTerm(ABoolTerm node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseAExprTerm(AExprTerm node)
     {
         defaultCase(node);
@@ -261,18 +279,6 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseTTrue(TTrue node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTFalse(TFalse node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
     public void caseTReturnt(TReturnt node)
     {
         defaultCase(node);
@@ -280,6 +286,30 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseTNull(TNull node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTCstart(TCstart node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTCend(TCend node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTCall(TCall node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTBool(TBool node)
     {
         defaultCase(node);
     }
