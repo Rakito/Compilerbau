@@ -12,7 +12,7 @@ cons tado() {
 }
 
 func <int>halloWelt ((1+1)){
-17+4#
+17+4
 	return 1
 }
 
