@@ -273,8 +273,8 @@ public class ToC extends DepthFirstAdapter {
 	 */
 	@Override
 	public void caseAEndExpr(AEndExpr node) {
-		casePExpr(node.getExpr());
-		System.out.println(";");
+		
+		System.out.println("");
 	}
 
 	/*
@@ -295,7 +295,7 @@ public class ToC extends DepthFirstAdapter {
 	@Override
 	public void caseAFunctionExpr(AFunctionExpr node) {
 		casePFunction(node.getFunction());
-		System.out.println(";");
+		System.out.println("");
 	}
 
 	/*
@@ -408,7 +408,7 @@ public class ToC extends DepthFirstAdapter {
 	public void caseAFuncCallFunction(AFuncCallFunction node) {
 		System.out.print(node.getId().getText()+"( ");
 		casePExpr(node.getExpr());
-		System.out.println(" );");
+		System.out.println(" )");
 	}
 
 //////Token//////

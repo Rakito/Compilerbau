@@ -672,17 +672,14 @@ public class Parser
     {
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
-        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList2 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
         PExpr pexprNode1;
         {
             // Block
-        PExpr pexprNode2;
-        THash thashNode3;
-        pexprNode2 = (PExpr)nodeArrayList1.get(0);
-        thashNode3 = (THash)nodeArrayList2.get(0);
+        THash thashNode2;
+        thashNode2 = (THash)nodeArrayList1.get(0);
 
-        pexprNode1 = new AEndExpr(pexprNode2, thashNode3);
+        pexprNode1 = new AEndExpr(thashNode2);
         }
 	nodeList.add(pexprNode1);
         return nodeList;
@@ -1101,50 +1098,50 @@ public class Parser
 			{{-1, ERROR, 14}, {8, SHIFT, 18}, {10, SHIFT, 19}, {11, SHIFT, 20}, {12, SHIFT, 21}, {24, SHIFT, 22}, },
 			{{-1, ERROR, 15}, {29, SHIFT, 24}, },
 			{{-1, ERROR, 16}, {8, SHIFT, 18}, {10, SHIFT, 19}, {11, SHIFT, 20}, {12, SHIFT, 21}, {24, SHIFT, 22}, {25, SHIFT, 25}, },
-			{{-1, ERROR, 17}, {8, SHIFT, 18}, {9, SHIFT, 5}, {10, SHIFT, 19}, {11, SHIFT, 20}, {12, SHIFT, 21}, {24, SHIFT, 22}, {46, SHIFT, 27}, },
+			{{-1, ERROR, 17}, {8, SHIFT, 18}, {9, SHIFT, 5}, {10, SHIFT, 19}, {11, SHIFT, 20}, {12, SHIFT, 21}, {24, SHIFT, 22}, {40, SHIFT, 27}, {46, SHIFT, 28}, },
 			{{-1, REDUCE, 25}, },
 			{{-1, REDUCE, 26}, },
 			{{-1, REDUCE, 23}, },
 			{{-1, REDUCE, 24}, },
-			{{-1, ERROR, 22}, {8, SHIFT, 18}, {9, SHIFT, 5}, {10, SHIFT, 19}, {11, SHIFT, 20}, {12, SHIFT, 21}, {24, SHIFT, 22}, {46, SHIFT, 27}, },
+			{{-1, ERROR, 22}, {8, SHIFT, 18}, {9, SHIFT, 5}, {10, SHIFT, 19}, {11, SHIFT, 20}, {12, SHIFT, 21}, {24, SHIFT, 22}, {40, SHIFT, 27}, {46, SHIFT, 28}, },
 			{{-1, REDUCE, 3}, },
-			{{-1, ERROR, 24}, {11, SHIFT, 32}, },
-			{{-1, ERROR, 25}, {26, SHIFT, 33}, },
-			{{-1, ERROR, 26}, {25, SHIFT, 34}, },
+			{{-1, ERROR, 24}, {11, SHIFT, 33}, },
+			{{-1, ERROR, 25}, {26, SHIFT, 34}, },
+			{{-1, ERROR, 26}, {25, SHIFT, 35}, },
+			{{-1, REDUCE, 11}, },
 			{{-1, REDUCE, 13}, },
-			{{-1, ERROR, 28}, {13, SHIFT, 35}, {15, SHIFT, 36}, {16, SHIFT, 37}, {18, SHIFT, 38}, {19, SHIFT, 39}, {25, SHIFT, 40}, {30, SHIFT, 41}, {32, SHIFT, 42}, {40, SHIFT, 43}, },
+			{{-1, ERROR, 29}, {13, SHIFT, 36}, {15, SHIFT, 37}, {16, SHIFT, 38}, {18, SHIFT, 39}, {19, SHIFT, 40}, {25, SHIFT, 41}, {30, SHIFT, 42}, {32, SHIFT, 43}, },
 			{{-1, REDUCE, 14}, },
 			{{-1, REDUCE, 12}, },
-			{{-1, ERROR, 31}, {13, SHIFT, 35}, {15, SHIFT, 36}, {16, SHIFT, 37}, {18, SHIFT, 38}, {19, SHIFT, 39}, {25, SHIFT, 44}, {30, SHIFT, 41}, {32, SHIFT, 42}, {40, SHIFT, 43}, },
-			{{-1, ERROR, 32}, {24, SHIFT, 45}, },
-			{{-1, ERROR, 33}, {0, SHIFT, 1}, {1, SHIFT, 2}, {4, SHIFT, 4}, {7, SHIFT, 46}, {8, SHIFT, 18}, {9, SHIFT, 5}, {10, SHIFT, 19}, {11, SHIFT, 20}, {12, SHIFT, 21}, {24, SHIFT, 22}, {27, SHIFT, 47}, {46, SHIFT, 27}, },
-			{{-1, ERROR, 34}, {26, SHIFT, 51}, },
-			{{-1, ERROR, 35}, {8, SHIFT, 18}, {10, SHIFT, 19}, {11, SHIFT, 20}, {12, SHIFT, 21}, {24, SHIFT, 22}, },
+			{{-1, ERROR, 32}, {13, SHIFT, 36}, {15, SHIFT, 37}, {16, SHIFT, 38}, {18, SHIFT, 39}, {19, SHIFT, 40}, {25, SHIFT, 44}, {30, SHIFT, 42}, {32, SHIFT, 43}, },
+			{{-1, ERROR, 33}, {24, SHIFT, 45}, },
+			{{-1, ERROR, 34}, {0, SHIFT, 1}, {1, SHIFT, 2}, {4, SHIFT, 4}, {7, SHIFT, 46}, {8, SHIFT, 18}, {9, SHIFT, 5}, {10, SHIFT, 19}, {11, SHIFT, 20}, {12, SHIFT, 21}, {24, SHIFT, 22}, {27, SHIFT, 47}, {40, SHIFT, 27}, {46, SHIFT, 28}, },
+			{{-1, ERROR, 35}, {26, SHIFT, 51}, },
 			{{-1, ERROR, 36}, {8, SHIFT, 18}, {10, SHIFT, 19}, {11, SHIFT, 20}, {12, SHIFT, 21}, {24, SHIFT, 22}, },
 			{{-1, ERROR, 37}, {8, SHIFT, 18}, {10, SHIFT, 19}, {11, SHIFT, 20}, {12, SHIFT, 21}, {24, SHIFT, 22}, },
 			{{-1, ERROR, 38}, {8, SHIFT, 18}, {10, SHIFT, 19}, {11, SHIFT, 20}, {12, SHIFT, 21}, {24, SHIFT, 22}, },
-			{{-1, ERROR, 39}, {26, SHIFT, 56}, },
+			{{-1, ERROR, 39}, {8, SHIFT, 18}, {10, SHIFT, 19}, {11, SHIFT, 20}, {12, SHIFT, 21}, {24, SHIFT, 22}, },
+			{{-1, ERROR, 40}, {26, SHIFT, 56}, },
 			{{-1, REDUCE, 22}, },
-			{{-1, ERROR, 41}, {8, SHIFT, 18}, {10, SHIFT, 19}, {11, SHIFT, 20}, {12, SHIFT, 21}, {24, SHIFT, 22}, },
 			{{-1, ERROR, 42}, {8, SHIFT, 18}, {10, SHIFT, 19}, {11, SHIFT, 20}, {12, SHIFT, 21}, {24, SHIFT, 22}, },
-			{{-1, REDUCE, 11}, },
+			{{-1, ERROR, 43}, {8, SHIFT, 18}, {10, SHIFT, 19}, {11, SHIFT, 20}, {12, SHIFT, 21}, {24, SHIFT, 22}, },
 			{{-1, REDUCE, 27}, },
 			{{-1, ERROR, 45}, {8, SHIFT, 18}, {10, SHIFT, 19}, {11, SHIFT, 20}, {12, SHIFT, 21}, {24, SHIFT, 22}, },
-			{{-1, ERROR, 46}, {8, SHIFT, 18}, {9, SHIFT, 5}, {10, SHIFT, 19}, {11, SHIFT, 20}, {12, SHIFT, 21}, {24, SHIFT, 22}, {46, SHIFT, 27}, },
+			{{-1, ERROR, 46}, {8, SHIFT, 18}, {9, SHIFT, 5}, {10, SHIFT, 19}, {11, SHIFT, 20}, {12, SHIFT, 21}, {24, SHIFT, 22}, {40, SHIFT, 27}, {46, SHIFT, 28}, },
 			{{-1, REDUCE, 7}, },
-			{{-1, ERROR, 48}, {0, SHIFT, 1}, {1, SHIFT, 2}, {4, SHIFT, 4}, {7, SHIFT, 46}, {8, SHIFT, 18}, {9, SHIFT, 5}, {10, SHIFT, 19}, {11, SHIFT, 20}, {12, SHIFT, 21}, {24, SHIFT, 22}, {27, SHIFT, 47}, {46, SHIFT, 27}, },
+			{{-1, ERROR, 48}, {0, SHIFT, 1}, {1, SHIFT, 2}, {4, SHIFT, 4}, {7, SHIFT, 46}, {8, SHIFT, 18}, {9, SHIFT, 5}, {10, SHIFT, 19}, {11, SHIFT, 20}, {12, SHIFT, 21}, {24, SHIFT, 22}, {27, SHIFT, 47}, {40, SHIFT, 27}, {46, SHIFT, 28}, },
 			{{-1, REDUCE, 6}, },
-			{{-1, ERROR, 50}, {0, SHIFT, 1}, {1, SHIFT, 2}, {4, SHIFT, 4}, {7, SHIFT, 46}, {8, SHIFT, 18}, {9, SHIFT, 5}, {10, SHIFT, 19}, {11, SHIFT, 20}, {12, SHIFT, 21}, {13, SHIFT, 35}, {15, SHIFT, 36}, {16, SHIFT, 37}, {18, SHIFT, 38}, {19, SHIFT, 39}, {24, SHIFT, 22}, {27, SHIFT, 47}, {30, SHIFT, 41}, {32, SHIFT, 42}, {40, SHIFT, 43}, {46, SHIFT, 27}, },
-			{{-1, ERROR, 51}, {0, SHIFT, 1}, {1, SHIFT, 2}, {4, SHIFT, 4}, {7, SHIFT, 46}, {8, SHIFT, 18}, {9, SHIFT, 5}, {10, SHIFT, 19}, {11, SHIFT, 20}, {12, SHIFT, 21}, {24, SHIFT, 22}, {27, SHIFT, 47}, {46, SHIFT, 27}, },
+			{{-1, ERROR, 50}, {0, SHIFT, 1}, {1, SHIFT, 2}, {4, SHIFT, 4}, {7, SHIFT, 46}, {8, SHIFT, 18}, {9, SHIFT, 5}, {10, SHIFT, 19}, {11, SHIFT, 20}, {12, SHIFT, 21}, {13, SHIFT, 36}, {15, SHIFT, 37}, {16, SHIFT, 38}, {18, SHIFT, 39}, {19, SHIFT, 40}, {24, SHIFT, 22}, {27, SHIFT, 47}, {30, SHIFT, 42}, {32, SHIFT, 43}, {40, SHIFT, 27}, {46, SHIFT, 28}, },
+			{{-1, ERROR, 51}, {0, SHIFT, 1}, {1, SHIFT, 2}, {4, SHIFT, 4}, {7, SHIFT, 46}, {8, SHIFT, 18}, {9, SHIFT, 5}, {10, SHIFT, 19}, {11, SHIFT, 20}, {12, SHIFT, 21}, {24, SHIFT, 22}, {27, SHIFT, 47}, {40, SHIFT, 27}, {46, SHIFT, 28}, },
 			{{-1, REDUCE, 15}, },
 			{{-1, REDUCE, 17}, },
 			{{-1, REDUCE, 19}, },
 			{{-1, REDUCE, 21}, },
-			{{-1, ERROR, 56}, {0, SHIFT, 1}, {1, SHIFT, 2}, {4, SHIFT, 4}, {7, SHIFT, 46}, {8, SHIFT, 18}, {9, SHIFT, 5}, {10, SHIFT, 19}, {11, SHIFT, 20}, {12, SHIFT, 21}, {24, SHIFT, 22}, {27, SHIFT, 47}, {46, SHIFT, 27}, },
+			{{-1, ERROR, 56}, {0, SHIFT, 1}, {1, SHIFT, 2}, {4, SHIFT, 4}, {7, SHIFT, 46}, {8, SHIFT, 18}, {9, SHIFT, 5}, {10, SHIFT, 19}, {11, SHIFT, 20}, {12, SHIFT, 21}, {24, SHIFT, 22}, {27, SHIFT, 47}, {40, SHIFT, 27}, {46, SHIFT, 28}, },
 			{{-1, REDUCE, 16}, },
 			{{-1, REDUCE, 18}, },
 			{{-1, ERROR, 59}, {25, SHIFT, 65}, },
-			{{-1, ERROR, 60}, {13, SHIFT, 35}, {15, SHIFT, 36}, {16, SHIFT, 37}, {18, SHIFT, 38}, {19, SHIFT, 39}, {27, SHIFT, 66}, {30, SHIFT, 41}, {32, SHIFT, 42}, {40, SHIFT, 43}, },
+			{{-1, ERROR, 60}, {13, SHIFT, 36}, {15, SHIFT, 37}, {16, SHIFT, 38}, {18, SHIFT, 39}, {19, SHIFT, 40}, {27, SHIFT, 66}, {30, SHIFT, 42}, {32, SHIFT, 43}, },
 			{{-1, REDUCE, 10}, },
 			{{-1, REDUCE, 9}, },
 			{{-1, REDUCE, 5}, },
@@ -1152,8 +1149,8 @@ public class Parser
 			{{-1, ERROR, 65}, {26, SHIFT, 68}, },
 			{{-1, REDUCE, 8}, },
 			{{-1, ERROR, 67}, {26, SHIFT, 69}, },
-			{{-1, ERROR, 68}, {0, SHIFT, 1}, {1, SHIFT, 2}, {4, SHIFT, 4}, {7, SHIFT, 46}, {8, SHIFT, 18}, {9, SHIFT, 5}, {10, SHIFT, 19}, {11, SHIFT, 20}, {12, SHIFT, 21}, {24, SHIFT, 22}, {27, SHIFT, 47}, {46, SHIFT, 27}, },
-			{{-1, ERROR, 69}, {0, SHIFT, 1}, {1, SHIFT, 2}, {4, SHIFT, 4}, {7, SHIFT, 46}, {8, SHIFT, 18}, {9, SHIFT, 5}, {10, SHIFT, 19}, {11, SHIFT, 20}, {12, SHIFT, 21}, {24, SHIFT, 22}, {27, SHIFT, 47}, {46, SHIFT, 27}, },
+			{{-1, ERROR, 68}, {0, SHIFT, 1}, {1, SHIFT, 2}, {4, SHIFT, 4}, {7, SHIFT, 46}, {8, SHIFT, 18}, {9, SHIFT, 5}, {10, SHIFT, 19}, {11, SHIFT, 20}, {12, SHIFT, 21}, {24, SHIFT, 22}, {27, SHIFT, 47}, {40, SHIFT, 27}, {46, SHIFT, 28}, },
+			{{-1, ERROR, 69}, {0, SHIFT, 1}, {1, SHIFT, 2}, {4, SHIFT, 4}, {7, SHIFT, 46}, {8, SHIFT, 18}, {9, SHIFT, 5}, {10, SHIFT, 19}, {11, SHIFT, 20}, {12, SHIFT, 21}, {24, SHIFT, 22}, {27, SHIFT, 47}, {40, SHIFT, 27}, {46, SHIFT, 28}, },
 			{{-1, REDUCE, 4}, },
 			{{-1, REDUCE, 20}, },
         };*/
@@ -1162,9 +1159,9 @@ public class Parser
 			{{-1, 6}, {7, 13}, },
 			{{-1, 48}, {0, 7}, {7, 7}, },
 			{{-1, 49}, {48, 61}, {50, 62}, {51, 63}, {56, 64}, {68, 70}, {69, 71}, },
-			{{-1, 50}, {17, 28}, {22, 31}, {46, 60}, },
-			{{-1, 29}, {0, 8}, {7, 8}, },
-			{{-1, 30}, {14, 23}, {16, 26}, {35, 52}, {36, 53}, {37, 54}, {38, 55}, {41, 57}, {42, 58}, {45, 59}, },
+			{{-1, 50}, {17, 29}, {22, 32}, {46, 60}, },
+			{{-1, 30}, {0, 8}, {7, 8}, },
+			{{-1, 31}, {14, 23}, {16, 26}, {36, 52}, {37, 53}, {38, 54}, {39, 55}, {42, 57}, {43, 58}, {45, 59}, },
         };*/
     private static String[] errorMessages;
 /*      {
@@ -1177,23 +1174,23 @@ public class Parser
 			"expecting: 'null', bool, id, number, '('",
 			"expecting: '>'",
 			"expecting: 'null', bool, id, number, '(', ')'",
-			"expecting: 'null', 'call', bool, id, number, '(', ccode",
+			"expecting: 'null', 'call', bool, id, number, '(', '#', ccode",
 			"expecting: 'define', 'func', 'end', 'cons', 'return', 'null', 'call', bool, id, number, '+', '*', '%', ',', '?', '(', ')', '}', '-', '/', '#', ccode",
-			"expecting: 'define', 'func', 'end', 'cons', 'return', 'null', 'call', bool, id, number, '(', '}', ccode",
+			"expecting: 'define', 'func', 'end', 'cons', 'return', 'null', 'call', bool, id, number, '(', '}', '#', ccode",
 			"expecting: '{'",
 			"expecting: ')'",
 			"expecting: 'define', 'func', 'cons', 'return', 'null', 'call', bool, id, number, '+', '*', '%', ',', '?', '(', ')', '}', '-', '/', '#', ccode",
-			"expecting: '+', '*', '%', ',', '?', ')', '-', '/', '#'",
-			"expecting: 'define', 'func', 'cons', 'return', 'null', 'call', bool, id, number, '(', '}', ccode",
+			"expecting: '+', '*', '%', ',', '?', ')', '-', '/'",
+			"expecting: 'define', 'func', 'cons', 'return', 'null', 'call', bool, id, number, '(', '}', '#', ccode",
 			"expecting: 'define', 'func', 'cons', 'return', 'null', 'call', bool, id, number, '+', '*', '%', ',', '?', '(', ')', '}', '-', '/', '#', ccode, EOF",
 			"expecting: 'define', 'func', 'end', 'cons', 'return', 'null', 'call', bool, id, number, '+', '*', '%', ',', '?', ':', '(', ')', '}', '-', '/', '#', ccode",
 			"expecting: 'define', 'func', 'cons', 'return', 'null', 'call', bool, id, number, '+', '*', '%', ',', '?', '(', '}', '-', '/', '#', ccode",
-			"expecting: '+', '*', '%', ',', '?', '}', '-', '/', '#'",
+			"expecting: '+', '*', '%', ',', '?', '}', '-', '/'",
 			"expecting: ':'",
         };*/
     private static int[] errors;
 /*      {
-			0, 1, 2, 3, 1, 1, 3, 0, 3, 4, 1, 5, 5, 3, 6, 7, 8, 9, 10, 10, 10, 10, 9, 11, 1, 12, 13, 14, 15, 14, 14, 15, 5, 16, 12, 6, 6, 6, 6, 12, 17, 6, 6, 14, 10, 6, 9, 18, 16, 11, 19, 16, 14, 14, 14, 14, 16, 14, 14, 13, 20, 18, 18, 11, 21, 12, 18, 12, 16, 16, 11, 14, 
+			0, 1, 2, 3, 1, 1, 3, 0, 3, 4, 1, 5, 5, 3, 6, 7, 8, 9, 10, 10, 10, 10, 9, 11, 1, 12, 13, 14, 14, 15, 14, 14, 15, 5, 16, 12, 6, 6, 6, 6, 12, 17, 6, 6, 10, 6, 9, 18, 16, 11, 19, 16, 14, 14, 14, 14, 16, 14, 14, 13, 20, 18, 18, 11, 21, 12, 18, 12, 16, 16, 11, 14, 
         };*/
 
     static 

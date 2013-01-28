@@ -393,10 +393,6 @@ public class DepthFirstAdapter extends AnalysisAdapter
     public void caseAEndExpr(AEndExpr node)
     {
         inAEndExpr(node);
-        if(node.getExpr() != null)
-        {
-            node.getExpr().apply(this);
-        }
         if(node.getHash() != null)
         {
             node.getHash().apply(this);

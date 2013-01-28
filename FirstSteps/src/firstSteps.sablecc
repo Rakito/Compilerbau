@@ -64,7 +64,7 @@ Tokens
  
  return = ( 13 | 10 );
  tab = 9 ;
- comment = 'ÚÚ' any_character;
+ comment = 'ÚÚ' ( any_character )*;
  
  endoffile = 4 ;
 
@@ -96,7 +96,7 @@ Productions
   
 
  expr = 
-  {end} expr hash |
+  {end} hash |
   {term} term |
   {nativc} ccode |
   {function} function |
