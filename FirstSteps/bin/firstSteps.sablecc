@@ -60,6 +60,8 @@ Tokens
  equals = '=';
  quote = '"';
  
+ string = ( any_charater )*;
+ 
  return = ( 13 | 10 );
  tab = 9 ;
  comment = 'ÚÚ' any_charater;
@@ -96,6 +98,7 @@ Productions
  expr = 
   {end} expr hash |
   {term} term |
+  {nativc} T.cstart string T.cend |
   {function} function |
   {plus} expr plus term |
   {minus} expr dash term |

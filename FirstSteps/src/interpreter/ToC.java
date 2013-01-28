@@ -84,6 +84,8 @@ public class ToC extends DepthFirstAdapter {
 			caseAPlusExpr((APlusExpr) expr);
 		} else if (expr instanceof ATermExpr) {
 			caseATermExpr((ATermExpr) expr);
+		} else if (expr instanceof ANativcExpr) {
+			caseANativcExpr((ANativcExpr) expr);
 		} else {
 
 		}
@@ -126,6 +128,17 @@ public class ToC extends DepthFirstAdapter {
 	}
 
 //////Production//////
+	
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseANativcExpr(node.ANativcExpr)
+	 */
+	@Override
+	public void caseANativcExpr(ANativcExpr node) {
+		// TODO Auto-generated method stub
+		super.caseANativcExpr(node);
+	}
+
 	
 	/* (non-Javadoc)
 	 * @see analysis.DepthFirstAdapter#caseABoolTerm(node.ABoolTerm)
@@ -1038,6 +1051,15 @@ public class ToC extends DepthFirstAdapter {
 	public void caseTBool(TBool node) {
 		// TODO Auto-generated method stub
 		super.caseTBool(node);
+	}
+	
+	/* (non-Javadoc)
+	 * @see analysis.AnalysisAdapter#caseTString(node.TString)
+	 */
+	@Override
+	public void caseTString(TString node) {
+		// TODO Auto-generated method stub
+		super.caseTString(node);
 	}
 	
 //////Start and EOF//////

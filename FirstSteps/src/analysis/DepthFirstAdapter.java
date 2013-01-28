@@ -425,6 +425,35 @@ public class DepthFirstAdapter extends AnalysisAdapter
         outATermExpr(node);
     }
 
+    public void inANativcExpr(ANativcExpr node)
+    {
+        defaultIn(node);
+    }
+
+    public void outANativcExpr(ANativcExpr node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseANativcExpr(ANativcExpr node)
+    {
+        inANativcExpr(node);
+        if(node.getCstart() != null)
+        {
+            node.getCstart().apply(this);
+        }
+        if(node.getString() != null)
+        {
+            node.getString().apply(this);
+        }
+        if(node.getCend() != null)
+        {
+            node.getCend().apply(this);
+        }
+        outANativcExpr(node);
+    }
+
     public void inAFunctionExpr(AFunctionExpr node)
     {
         defaultIn(node);
