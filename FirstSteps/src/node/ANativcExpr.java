@@ -7,9 +7,7 @@ import analysis.*;
 @SuppressWarnings("nls")
 public final class ANativcExpr extends PExpr
 {
-    private TCstart _cstart_;
-    private TString _string_;
-    private TCend _cend_;
+    private TCcode _ccode_;
 
     public ANativcExpr()
     {
@@ -17,16 +15,10 @@ public final class ANativcExpr extends PExpr
     }
 
     public ANativcExpr(
-        @SuppressWarnings("hiding") TCstart _cstart_,
-        @SuppressWarnings("hiding") TString _string_,
-        @SuppressWarnings("hiding") TCend _cend_)
+        @SuppressWarnings("hiding") TCcode _ccode_)
     {
         // Constructor
-        setCstart(_cstart_);
-
-        setString(_string_);
-
-        setCend(_cend_);
+        setCcode(_ccode_);
 
     }
 
@@ -34,9 +26,7 @@ public final class ANativcExpr extends PExpr
     public Object clone()
     {
         return new ANativcExpr(
-            cloneNode(this._cstart_),
-            cloneNode(this._string_),
-            cloneNode(this._cend_));
+            cloneNode(this._ccode_));
     }
 
     @Override
@@ -45,16 +35,16 @@ public final class ANativcExpr extends PExpr
         ((Analysis) sw).caseANativcExpr(this);
     }
 
-    public TCstart getCstart()
+    public TCcode getCcode()
     {
-        return this._cstart_;
+        return this._ccode_;
     }
 
-    public void setCstart(TCstart node)
+    public void setCcode(TCcode node)
     {
-        if(this._cstart_ != null)
+        if(this._ccode_ != null)
         {
-            this._cstart_.parent(null);
+            this._ccode_.parent(null);
         }
 
         if(node != null)
@@ -67,87 +57,23 @@ public final class ANativcExpr extends PExpr
             node.parent(this);
         }
 
-        this._cstart_ = node;
-    }
-
-    public TString getString()
-    {
-        return this._string_;
-    }
-
-    public void setString(TString node)
-    {
-        if(this._string_ != null)
-        {
-            this._string_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._string_ = node;
-    }
-
-    public TCend getCend()
-    {
-        return this._cend_;
-    }
-
-    public void setCend(TCend node)
-    {
-        if(this._cend_ != null)
-        {
-            this._cend_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._cend_ = node;
+        this._ccode_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._cstart_)
-            + toString(this._string_)
-            + toString(this._cend_);
+            + toString(this._ccode_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._cstart_ == child)
+        if(this._ccode_ == child)
         {
-            this._cstart_ = null;
-            return;
-        }
-
-        if(this._string_ == child)
-        {
-            this._string_ = null;
-            return;
-        }
-
-        if(this._cend_ == child)
-        {
-            this._cend_ = null;
+            this._ccode_ = null;
             return;
         }
 
@@ -158,21 +84,9 @@ public final class ANativcExpr extends PExpr
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._cstart_ == oldChild)
+        if(this._ccode_ == oldChild)
         {
-            setCstart((TCstart) newChild);
-            return;
-        }
-
-        if(this._string_ == oldChild)
-        {
-            setString((TString) newChild);
-            return;
-        }
-
-        if(this._cend_ == oldChild)
-        {
-            setCend((TCend) newChild);
+            setCcode((TCcode) newChild);
             return;
         }
 

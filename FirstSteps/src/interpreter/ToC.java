@@ -458,27 +458,6 @@ public class ToC extends DepthFirstAdapter {
 		super.caseAExprTerm(node);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see analysis.AnalysisAdapter#caseTCstart(node.TCstart)
-	 */
-	@Override
-	public void caseTCstart(TCstart node) {
-		// TODO Auto-generated method stub
-		super.caseTCstart(node);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see analysis.AnalysisAdapter#caseTCend(node.TCend)
-	 */
-	@Override
-	public void caseTCend(TCend node) {
-		// TODO Auto-generated method stub
-		super.caseTCend(node);
-	}
 
 	/*
 	 * (non-Javadoc)
@@ -500,6 +479,15 @@ public class ToC extends DepthFirstAdapter {
 	public void caseAEofProgram(AEofProgram node) {
 		System.out.println("Hier endet der Code");
 		super.caseAEofProgram(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.AnalysisAdapter#caseTCcode(node.TCcode)
+	 */
+	@Override
+	public void caseTCcode(TCcode node) {
+		// TODO Auto-generated method stub
+		super.caseTCcode(node);
 	}
 
 	/*
@@ -1053,14 +1041,7 @@ public class ToC extends DepthFirstAdapter {
 		super.caseTBool(node);
 	}
 	
-	/* (non-Javadoc)
-	 * @see analysis.AnalysisAdapter#caseTString(node.TString)
-	 */
-	@Override
-	public void caseTString(TString node) {
-		// TODO Auto-generated method stub
-		super.caseTString(node);
-	}
+	
 	
 //////Start and EOF//////
 	

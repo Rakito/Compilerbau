@@ -439,17 +439,9 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     public void caseANativcExpr(ANativcExpr node)
     {
         inANativcExpr(node);
-        if(node.getCend() != null)
+        if(node.getCcode() != null)
         {
-            node.getCend().apply(this);
-        }
-        if(node.getString() != null)
-        {
-            node.getString().apply(this);
-        }
-        if(node.getCstart() != null)
-        {
-            node.getCstart().apply(this);
+            node.getCcode().apply(this);
         }
         outANativcExpr(node);
     }

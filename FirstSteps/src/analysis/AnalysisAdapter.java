@@ -297,18 +297,6 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseTCstart(TCstart node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTCend(TCend node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
     public void caseTCall(TCall node)
     {
         defaultCase(node);
@@ -537,7 +525,7 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseTString(TString node)
+    public void caseTCcode(TCcode node)
     {
         defaultCase(node);
     }

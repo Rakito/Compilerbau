@@ -1,9 +1,11 @@
 Helpers
  digit = ['0' .. '9'];
  letter = ['a' .. 'z'] | ['A' .. 'Z'];
- any_charater = [0x0 .. 0xfffff];
+ any_character = [0x0 .. 0xfffff];
  true = 'TRUE';
  false ='FALSE';
+ cstart = 'nativC>';
+ cend = '<nativC';
  
 
 Tokens
@@ -14,12 +16,10 @@ Tokens
  end = 'end';
  cons = 'cons';
  where = 'where';
- break = 'break';
- 
+ break = 'break'; 
  returnt = 'return';
  null = 'null';
- cstart = 'nativC>';
- cend = '<nativC';
+
  call = 'call';
  bool = true | false;
  
@@ -59,12 +59,12 @@ Tokens
  blackslash ='\';
  equals = '=';
  quote = '"';
- 
- string = ( any_charater )*;
+
+ ccode = cstart ( any_character )* cend;
  
  return = ( 13 | 10 );
  tab = 9 ;
- comment = 'ÚÚ' any_charater;
+ comment = 'ÚÚ' any_character;
  
  endoffile = 4 ;
 
@@ -98,7 +98,7 @@ Productions
  expr = 
   {end} expr hash |
   {term} term |
-  {nativc} T.cstart string T.cend |
+  {nativc} ccode |
   {function} function |
   {plus} expr plus term |
   {minus} expr dash term |

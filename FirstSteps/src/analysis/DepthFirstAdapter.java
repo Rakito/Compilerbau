@@ -439,17 +439,9 @@ public class DepthFirstAdapter extends AnalysisAdapter
     public void caseANativcExpr(ANativcExpr node)
     {
         inANativcExpr(node);
-        if(node.getCstart() != null)
+        if(node.getCcode() != null)
         {
-            node.getCstart().apply(this);
-        }
-        if(node.getString() != null)
-        {
-            node.getString().apply(this);
-        }
-        if(node.getCend() != null)
-        {
-            node.getCend().apply(this);
+            node.getCcode().apply(this);
         }
         outANativcExpr(node);
     }

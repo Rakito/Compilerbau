@@ -50,8 +50,6 @@ public interface Analysis extends Switch
     void caseTBreak(TBreak node);
     void caseTReturnt(TReturnt node);
     void caseTNull(TNull node);
-    void caseTCstart(TCstart node);
-    void caseTCend(TCend node);
     void caseTCall(TCall node);
     void caseTBool(TBool node);
     void caseTId(TId node);
@@ -90,7 +88,7 @@ public interface Analysis extends Switch
     void caseTBlackslash(TBlackslash node);
     void caseTEquals(TEquals node);
     void caseTQuote(TQuote node);
-    void caseTString(TString node);
+    void caseTCcode(TCcode node);
     void caseTReturn(TReturn node);
     void caseTTab(TTab node);
     void caseTComment(TComment node);
