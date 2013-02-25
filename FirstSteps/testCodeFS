@@ -1,8 +1,8 @@
-include stdio
-include stdlib
+include stdio ;
+include stdlib ;
 
- <int> lastUsedNumber = 0
- <int> facFive = 0
+ <int> lastUsedNumber = 0 
+ <int> facFive = 0 
 
  <int>main(<char*> argv, <int*> argc)
 {
@@ -22,13 +22,13 @@ include stdlib
 	 lastUsedNumber = n
 	(n is 1)?{return 0}
 	(n is 0)?{return 1}
-	<int> result = n * fac(n - 1)
+	<int> result = n * fac(n - 1) 
 	
 	return result
 }
 
  Olaf {
-	 <int> count
+	 <int> count 
 	
 	cons Olaf()
 	{
