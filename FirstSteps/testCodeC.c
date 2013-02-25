@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 
 int main(char* argv, int* argc)
@@ -18,4 +19,27 @@ int fac(int n)
 	if (n == 0) return 1;
 	
 	return n * fac(n - 1);
+}
+
+struct Olaf {
+	int count
+};
+
+
+Olaf* newOlaf()
+{
+	Olaf* retVal = (Olaf*) malloc(sizeof(Olaf));
+	retVal -> count = 42;
+}
+
+Olaf* newOlaf_1Param(int count)
+{
+	Olaf* retVal = (Olaf*) malloc(sizeof(Olaf));
+	retVal -> count = count;
+}
+
+
+void destroyOlaf(Olaf* olaf)
+{
+	free(olaf);
 }
