@@ -6,14 +6,14 @@ include stdlib
 
  <int>main(<char*> argv, <int*> argc)
 {
-calcFac(null)
+	call calcFac(null)
 
 	return 0
 }
 
  <void>calcFac()
 {
-	 facFive = fac(5)
+	facFive = fac(5)
 
 }
 
@@ -22,7 +22,7 @@ calcFac(null)
 	 lastUsedNumber = n
 	(n is 1)?{return 0}
 	(n is 0)?{return 1}
-<int> result = (n * fac(n - 1))
+	<int> result = n * fac(n - 1)
 	
 	return result
 }
@@ -32,7 +32,7 @@ calcFac(null)
 	
 	cons Olaf()
 	{
-		count = 42
+		count = ( 17 + 4 ) * 2 
 	}
 	
 	cons Olaf(<int> count)

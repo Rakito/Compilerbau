@@ -597,25 +597,25 @@ public class DepthFirstAdapter extends AnalysisAdapter
         outAOperationExpr(node);
     }
 
-    public void inAFunctionExpr(AFunctionExpr node)
+    public void inAFuncExpr(AFuncExpr node)
     {
         defaultIn(node);
     }
 
-    public void outAFunctionExpr(AFunctionExpr node)
+    public void outAFuncExpr(AFuncExpr node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseAFunctionExpr(AFunctionExpr node)
+    public void caseAFuncExpr(AFuncExpr node)
     {
-        inAFunctionExpr(node);
-        if(node.getFunction() != null)
+        inAFuncExpr(node);
+        if(node.getFunc() != null)
         {
-            node.getFunction().apply(this);
+            node.getFunc().apply(this);
         }
-        outAFunctionExpr(node);
+        outAFuncExpr(node);
     }
 
     public void inALogicExpr(ALogicExpr node)
@@ -703,9 +703,9 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getEquals().apply(this);
         }
-        if(node.getExpr() != null)
+        if(node.getTerm() != null)
         {
-            node.getExpr().apply(this);
+            node.getTerm().apply(this);
         }
         outASetSet(node);
     }
@@ -724,6 +724,10 @@ public class DepthFirstAdapter extends AnalysisAdapter
     public void caseAFuncFunc(AFuncFunc node)
     {
         inAFuncFunc(node);
+        if(node.getCall() != null)
+        {
+            node.getCall().apply(this);
+        }
         if(node.getId() != null)
         {
             node.getId().apply(this);

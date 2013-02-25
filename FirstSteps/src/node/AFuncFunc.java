@@ -7,6 +7,7 @@ import analysis.*;
 @SuppressWarnings("nls")
 public final class AFuncFunc extends PFunc
 {
+    private TCall _call_;
     private TId _id_;
     private TLPar _lPar_;
     private PFuncPara _funcPara_;
@@ -17,11 +18,14 @@ public final class AFuncFunc extends PFunc
     }
 
     public AFuncFunc(
+        @SuppressWarnings("hiding") TCall _call_,
         @SuppressWarnings("hiding") TId _id_,
         @SuppressWarnings("hiding") TLPar _lPar_,
         @SuppressWarnings("hiding") PFuncPara _funcPara_)
     {
         // Constructor
+        setCall(_call_);
+
         setId(_id_);
 
         setLPar(_lPar_);
@@ -34,6 +38,7 @@ public final class AFuncFunc extends PFunc
     public Object clone()
     {
         return new AFuncFunc(
+            cloneNode(this._call_),
             cloneNode(this._id_),
             cloneNode(this._lPar_),
             cloneNode(this._funcPara_));
@@ -43,6 +48,31 @@ public final class AFuncFunc extends PFunc
     public void apply(Switch sw)
     {
         ((Analysis) sw).caseAFuncFunc(this);
+    }
+
+    public TCall getCall()
+    {
+        return this._call_;
+    }
+
+    public void setCall(TCall node)
+    {
+        if(this._call_ != null)
+        {
+            this._call_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._call_ = node;
     }
 
     public TId getId()
@@ -124,6 +154,7 @@ public final class AFuncFunc extends PFunc
     public String toString()
     {
         return ""
+            + toString(this._call_)
             + toString(this._id_)
             + toString(this._lPar_)
             + toString(this._funcPara_);
@@ -133,6 +164,12 @@ public final class AFuncFunc extends PFunc
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
+        if(this._call_ == child)
+        {
+            this._call_ = null;
+            return;
+        }
+
         if(this._id_ == child)
         {
             this._id_ = null;
@@ -158,6 +195,12 @@ public final class AFuncFunc extends PFunc
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
+        if(this._call_ == oldChild)
+        {
+            setCall((TCall) newChild);
+            return;
+        }
+
         if(this._id_ == oldChild)
         {
             setId((TId) newChild);

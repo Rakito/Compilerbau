@@ -33,7 +33,7 @@ public interface Analysis extends Switch
     void caseAExprImpl(AExprImpl node);
     void caseADefineImpl(ADefineImpl node);
     void caseAOperationExpr(AOperationExpr node);
-    void caseAFunctionExpr(AFunctionExpr node);
+    void caseAFuncExpr(AFuncExpr node);
     void caseALogicExpr(ALogicExpr node);
     void caseATermExpr(ATermExpr node);
     void caseASetExpr(ASetExpr node);
@@ -78,6 +78,7 @@ public interface Analysis extends Switch
     void caseTPlus(TPlus node);
     void caseTMinus(TMinus node);
     void caseTStar(TStar node);
+    void caseTTimes(TTimes node);
     void caseTPercent(TPercent node);
     void caseTDot(TDot node);
     void caseTComma(TComma node);

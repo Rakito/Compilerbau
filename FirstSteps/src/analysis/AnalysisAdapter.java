@@ -201,7 +201,7 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAFunctionExpr(AFunctionExpr node)
+    public void caseAFuncExpr(AFuncExpr node)
     {
         defaultCase(node);
     }
@@ -460,6 +460,12 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseTStar(TStar node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTTimes(TTimes node)
     {
         defaultCase(node);
     }

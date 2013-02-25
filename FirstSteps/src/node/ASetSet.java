@@ -9,7 +9,7 @@ public final class ASetSet extends PSet
 {
     private TId _id_;
     private TEquals _equals_;
-    private PExpr _expr_;
+    private PTerm _term_;
 
     public ASetSet()
     {
@@ -19,14 +19,14 @@ public final class ASetSet extends PSet
     public ASetSet(
         @SuppressWarnings("hiding") TId _id_,
         @SuppressWarnings("hiding") TEquals _equals_,
-        @SuppressWarnings("hiding") PExpr _expr_)
+        @SuppressWarnings("hiding") PTerm _term_)
     {
         // Constructor
         setId(_id_);
 
         setEquals(_equals_);
 
-        setExpr(_expr_);
+        setTerm(_term_);
 
     }
 
@@ -36,7 +36,7 @@ public final class ASetSet extends PSet
         return new ASetSet(
             cloneNode(this._id_),
             cloneNode(this._equals_),
-            cloneNode(this._expr_));
+            cloneNode(this._term_));
     }
 
     @Override
@@ -95,16 +95,16 @@ public final class ASetSet extends PSet
         this._equals_ = node;
     }
 
-    public PExpr getExpr()
+    public PTerm getTerm()
     {
-        return this._expr_;
+        return this._term_;
     }
 
-    public void setExpr(PExpr node)
+    public void setTerm(PTerm node)
     {
-        if(this._expr_ != null)
+        if(this._term_ != null)
         {
-            this._expr_.parent(null);
+            this._term_.parent(null);
         }
 
         if(node != null)
@@ -117,7 +117,7 @@ public final class ASetSet extends PSet
             node.parent(this);
         }
 
-        this._expr_ = node;
+        this._term_ = node;
     }
 
     @Override
@@ -126,7 +126,7 @@ public final class ASetSet extends PSet
         return ""
             + toString(this._id_)
             + toString(this._equals_)
-            + toString(this._expr_);
+            + toString(this._term_);
     }
 
     @Override
@@ -145,9 +145,9 @@ public final class ASetSet extends PSet
             return;
         }
 
-        if(this._expr_ == child)
+        if(this._term_ == child)
         {
-            this._expr_ = null;
+            this._term_ = null;
             return;
         }
 
@@ -170,9 +170,9 @@ public final class ASetSet extends PSet
             return;
         }
 
-        if(this._expr_ == oldChild)
+        if(this._term_ == oldChild)
         {
-            setExpr((PExpr) newChild);
+            setTerm((PTerm) newChild);
             return;
         }
 
