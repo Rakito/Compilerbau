@@ -82,7 +82,9 @@ Productions
   {define} P.define program ;
 
  define = 
-  {define} T.define id equals term |
+  {var} T.define type id |
+  {vardefine} T.define type id equals term |
+  {set} id equals term |
   {function} T.func l_arrow [return]:id r_arrow [name]:id l_par term r_par l_brace impl |
   {cons} T.cons id l_par term r_par l_brace impl |
   {nil} T.cons id l_par r_par l_brace impl ;
@@ -109,10 +111,11 @@ Productions
   {concat} [left]:expr comma [right]:term ;
   
  function = 
-  {func_call} T.call id l_par expr r_par ;
+  {func_call} id l_par expr r_par ;
 
  term = 
   {id} id |
+  {type} l_arrow id r_arrow
   {number} number |
   {null} T.null |
   {bool} T.bool |
