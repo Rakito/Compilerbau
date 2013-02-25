@@ -187,6 +187,10 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getId().apply(this);
         }
+        if(node.getSemicolon() != null)
+        {
+            node.getSemicolon().apply(this);
+        }
         outAVarDefine(node);
     }
 
@@ -710,6 +714,10 @@ public class DepthFirstAdapter extends AnalysisAdapter
         if(node.getTerm() != null)
         {
             node.getTerm().apply(this);
+        }
+        if(node.getSemicolon() != null)
+        {
+            node.getSemicolon().apply(this);
         }
         outASetSet(node);
     }

@@ -10,6 +10,7 @@ public final class ASetSet extends PSet
     private TId _id_;
     private TEquals _equals_;
     private PTerm _term_;
+    private TSemicolon _semicolon_;
 
     public ASetSet()
     {
@@ -19,7 +20,8 @@ public final class ASetSet extends PSet
     public ASetSet(
         @SuppressWarnings("hiding") TId _id_,
         @SuppressWarnings("hiding") TEquals _equals_,
-        @SuppressWarnings("hiding") PTerm _term_)
+        @SuppressWarnings("hiding") PTerm _term_,
+        @SuppressWarnings("hiding") TSemicolon _semicolon_)
     {
         // Constructor
         setId(_id_);
@@ -27,6 +29,8 @@ public final class ASetSet extends PSet
         setEquals(_equals_);
 
         setTerm(_term_);
+
+        setSemicolon(_semicolon_);
 
     }
 
@@ -36,7 +40,8 @@ public final class ASetSet extends PSet
         return new ASetSet(
             cloneNode(this._id_),
             cloneNode(this._equals_),
-            cloneNode(this._term_));
+            cloneNode(this._term_),
+            cloneNode(this._semicolon_));
     }
 
     @Override
@@ -120,13 +125,39 @@ public final class ASetSet extends PSet
         this._term_ = node;
     }
 
+    public TSemicolon getSemicolon()
+    {
+        return this._semicolon_;
+    }
+
+    public void setSemicolon(TSemicolon node)
+    {
+        if(this._semicolon_ != null)
+        {
+            this._semicolon_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._semicolon_ = node;
+    }
+
     @Override
     public String toString()
     {
         return ""
             + toString(this._id_)
             + toString(this._equals_)
-            + toString(this._term_);
+            + toString(this._term_)
+            + toString(this._semicolon_);
     }
 
     @Override
@@ -148,6 +179,12 @@ public final class ASetSet extends PSet
         if(this._term_ == child)
         {
             this._term_ = null;
+            return;
+        }
+
+        if(this._semicolon_ == child)
+        {
+            this._semicolon_ = null;
             return;
         }
 
@@ -173,6 +210,12 @@ public final class ASetSet extends PSet
         if(this._term_ == oldChild)
         {
             setTerm((PTerm) newChild);
+            return;
+        }
+
+        if(this._semicolon_ == oldChild)
+        {
+            setSemicolon((TSemicolon) newChild);
             return;
         }
 

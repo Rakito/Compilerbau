@@ -38,8 +38,13 @@ public class Main {
 			/* Get our Interpreter going. */
 			ToC interp = new ToC();
 			ast.apply(interp);
+<<<<<<< HEAD
 System.out.println(interp.output.toString());
 //			System.out.println("JETZT KOMMT DER CODEPRINTER!");
+=======
+
+			System.out.println("JETZT KOMMT DER CODEPRINTER!");
+>>>>>>> lauter semicolons
 
 //			System.out.print(interp.cp.code.toString());
 

@@ -88,7 +88,7 @@ Productions
   {function} P.function program ;
 
  define = 
-  {var} P.type id |
+  {var} P.type id semicolon |
   {var_set} P.type set ;
   
  struct = 
@@ -125,7 +125,7 @@ Productions
   {set} set ;
   
  set =
-  {set} id equals term ;
+  {set} id equals term semicolon;
   
  func = 
   {func} T.call id l_par func_para ;

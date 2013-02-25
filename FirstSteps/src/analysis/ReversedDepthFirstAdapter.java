@@ -179,6 +179,10 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     public void caseAVarDefine(AVarDefine node)
     {
         inAVarDefine(node);
+        if(node.getSemicolon() != null)
+        {
+            node.getSemicolon().apply(this);
+        }
         if(node.getId() != null)
         {
             node.getId().apply(this);
@@ -699,6 +703,10 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     public void caseASetSet(ASetSet node)
     {
         inASetSet(node);
+        if(node.getSemicolon() != null)
+        {
+            node.getSemicolon().apply(this);
+        }
         if(node.getTerm() != null)
         {
             node.getTerm().apply(this);

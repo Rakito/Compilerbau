@@ -9,6 +9,7 @@ public final class AVarDefine extends PDefine
 {
     private PType _type_;
     private TId _id_;
+    private TSemicolon _semicolon_;
 
     public AVarDefine()
     {
@@ -17,12 +18,15 @@ public final class AVarDefine extends PDefine
 
     public AVarDefine(
         @SuppressWarnings("hiding") PType _type_,
-        @SuppressWarnings("hiding") TId _id_)
+        @SuppressWarnings("hiding") TId _id_,
+        @SuppressWarnings("hiding") TSemicolon _semicolon_)
     {
         // Constructor
         setType(_type_);
 
         setId(_id_);
+
+        setSemicolon(_semicolon_);
 
     }
 
@@ -31,7 +35,8 @@ public final class AVarDefine extends PDefine
     {
         return new AVarDefine(
             cloneNode(this._type_),
-            cloneNode(this._id_));
+            cloneNode(this._id_),
+            cloneNode(this._semicolon_));
     }
 
     @Override
@@ -90,12 +95,38 @@ public final class AVarDefine extends PDefine
         this._id_ = node;
     }
 
+    public TSemicolon getSemicolon()
+    {
+        return this._semicolon_;
+    }
+
+    public void setSemicolon(TSemicolon node)
+    {
+        if(this._semicolon_ != null)
+        {
+            this._semicolon_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._semicolon_ = node;
+    }
+
     @Override
     public String toString()
     {
         return ""
             + toString(this._type_)
-            + toString(this._id_);
+            + toString(this._id_)
+            + toString(this._semicolon_);
     }
 
     @Override
@@ -111,6 +142,12 @@ public final class AVarDefine extends PDefine
         if(this._id_ == child)
         {
             this._id_ = null;
+            return;
+        }
+
+        if(this._semicolon_ == child)
+        {
+            this._semicolon_ = null;
             return;
         }
 
@@ -130,6 +167,12 @@ public final class AVarDefine extends PDefine
         if(this._id_ == oldChild)
         {
             setId((TId) newChild);
+            return;
+        }
+
+        if(this._semicolon_ == oldChild)
+        {
+            setSemicolon((TSemicolon) newChild);
             return;
         }
 
