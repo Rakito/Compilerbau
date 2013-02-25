@@ -5,22 +5,22 @@ package node;
 import analysis.*;
 
 @SuppressWarnings("nls")
-public final class AFunctionProgram extends PProgram
+public final class AStructProgram extends PProgram
 {
-    private PFunction _function_;
+    private PStruct _struct_;
     private PProgram _program_;
 
-    public AFunctionProgram()
+    public AStructProgram()
     {
         // Constructor
     }
 
-    public AFunctionProgram(
-        @SuppressWarnings("hiding") PFunction _function_,
+    public AStructProgram(
+        @SuppressWarnings("hiding") PStruct _struct_,
         @SuppressWarnings("hiding") PProgram _program_)
     {
         // Constructor
-        setFunction(_function_);
+        setStruct(_struct_);
 
         setProgram(_program_);
 
@@ -29,27 +29,27 @@ public final class AFunctionProgram extends PProgram
     @Override
     public Object clone()
     {
-        return new AFunctionProgram(
-            cloneNode(this._function_),
+        return new AStructProgram(
+            cloneNode(this._struct_),
             cloneNode(this._program_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAFunctionProgram(this);
+        ((Analysis) sw).caseAStructProgram(this);
     }
 
-    public PFunction getFunction()
+    public PStruct getStruct()
     {
-        return this._function_;
+        return this._struct_;
     }
 
-    public void setFunction(PFunction node)
+    public void setStruct(PStruct node)
     {
-        if(this._function_ != null)
+        if(this._struct_ != null)
         {
-            this._function_.parent(null);
+            this._struct_.parent(null);
         }
 
         if(node != null)
@@ -62,7 +62,7 @@ public final class AFunctionProgram extends PProgram
             node.parent(this);
         }
 
-        this._function_ = node;
+        this._struct_ = node;
     }
 
     public PProgram getProgram()
@@ -94,7 +94,7 @@ public final class AFunctionProgram extends PProgram
     public String toString()
     {
         return ""
-            + toString(this._function_)
+            + toString(this._struct_)
             + toString(this._program_);
     }
 
@@ -102,9 +102,9 @@ public final class AFunctionProgram extends PProgram
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._function_ == child)
+        if(this._struct_ == child)
         {
-            this._function_ = null;
+            this._struct_ = null;
             return;
         }
 
@@ -121,9 +121,9 @@ public final class AFunctionProgram extends PProgram
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._function_ == oldChild)
+        if(this._struct_ == oldChild)
         {
-            setFunction((PFunction) newChild);
+            setStruct((PStruct) newChild);
             return;
         }
 

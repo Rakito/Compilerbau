@@ -5,14 +5,14 @@ package node;
 import analysis.*;
 
 @SuppressWarnings("nls")
-public final class TAsterisk extends Token
+public final class TStar extends Token
 {
-    public TAsterisk(String text)
+    public TStar(String text)
     {
         setText(text);
     }
 
-    public TAsterisk(String text, int line, int pos)
+    public TStar(String text, int line, int pos)
     {
         setText(text);
         setLine(line);
@@ -22,12 +22,12 @@ public final class TAsterisk extends Token
     @Override
     public Object clone()
     {
-      return new TAsterisk(getText(), getLine(), getPos());
+      return new TStar(getText(), getLine(), getPos());
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseTAsterisk(this);
+        ((Analysis) sw).caseTStar(this);
     }
 }

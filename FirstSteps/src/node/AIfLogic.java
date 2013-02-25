@@ -5,29 +5,23 @@ package node;
 import analysis.*;
 
 @SuppressWarnings("nls")
-public final class AIfExpr extends PExpr
+public final class AIfLogic extends PLogic
 {
-    private PExpr _if_;
+    private PTerm _if_;
     private TQuery _query_;
     private TLBrace _thenin_;
     private PImpl _then_;
-    private TColon _colon_;
-    private TLBrace _elsein_;
-    private PImpl _else_;
 
-    public AIfExpr()
+    public AIfLogic()
     {
         // Constructor
     }
 
-    public AIfExpr(
-        @SuppressWarnings("hiding") PExpr _if_,
+    public AIfLogic(
+        @SuppressWarnings("hiding") PTerm _if_,
         @SuppressWarnings("hiding") TQuery _query_,
         @SuppressWarnings("hiding") TLBrace _thenin_,
-        @SuppressWarnings("hiding") PImpl _then_,
-        @SuppressWarnings("hiding") TColon _colon_,
-        @SuppressWarnings("hiding") TLBrace _elsein_,
-        @SuppressWarnings("hiding") PImpl _else_)
+        @SuppressWarnings("hiding") PImpl _then_)
     {
         // Constructor
         setIf(_if_);
@@ -38,39 +32,30 @@ public final class AIfExpr extends PExpr
 
         setThen(_then_);
 
-        setColon(_colon_);
-
-        setElsein(_elsein_);
-
-        setElse(_else_);
-
     }
 
     @Override
     public Object clone()
     {
-        return new AIfExpr(
+        return new AIfLogic(
             cloneNode(this._if_),
             cloneNode(this._query_),
             cloneNode(this._thenin_),
-            cloneNode(this._then_),
-            cloneNode(this._colon_),
-            cloneNode(this._elsein_),
-            cloneNode(this._else_));
+            cloneNode(this._then_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAIfExpr(this);
+        ((Analysis) sw).caseAIfLogic(this);
     }
 
-    public PExpr getIf()
+    public PTerm getIf()
     {
         return this._if_;
     }
 
-    public void setIf(PExpr node)
+    public void setIf(PTerm node)
     {
         if(this._if_ != null)
         {
@@ -165,81 +150,6 @@ public final class AIfExpr extends PExpr
         this._then_ = node;
     }
 
-    public TColon getColon()
-    {
-        return this._colon_;
-    }
-
-    public void setColon(TColon node)
-    {
-        if(this._colon_ != null)
-        {
-            this._colon_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._colon_ = node;
-    }
-
-    public TLBrace getElsein()
-    {
-        return this._elsein_;
-    }
-
-    public void setElsein(TLBrace node)
-    {
-        if(this._elsein_ != null)
-        {
-            this._elsein_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._elsein_ = node;
-    }
-
-    public PImpl getElse()
-    {
-        return this._else_;
-    }
-
-    public void setElse(PImpl node)
-    {
-        if(this._else_ != null)
-        {
-            this._else_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._else_ = node;
-    }
-
     @Override
     public String toString()
     {
@@ -247,10 +157,7 @@ public final class AIfExpr extends PExpr
             + toString(this._if_)
             + toString(this._query_)
             + toString(this._thenin_)
-            + toString(this._then_)
-            + toString(this._colon_)
-            + toString(this._elsein_)
-            + toString(this._else_);
+            + toString(this._then_);
     }
 
     @Override
@@ -281,24 +188,6 @@ public final class AIfExpr extends PExpr
             return;
         }
 
-        if(this._colon_ == child)
-        {
-            this._colon_ = null;
-            return;
-        }
-
-        if(this._elsein_ == child)
-        {
-            this._elsein_ = null;
-            return;
-        }
-
-        if(this._else_ == child)
-        {
-            this._else_ = null;
-            return;
-        }
-
         throw new RuntimeException("Not a child.");
     }
 
@@ -308,7 +197,7 @@ public final class AIfExpr extends PExpr
         // Replace child
         if(this._if_ == oldChild)
         {
-            setIf((PExpr) newChild);
+            setIf((PTerm) newChild);
             return;
         }
 
@@ -327,24 +216,6 @@ public final class AIfExpr extends PExpr
         if(this._then_ == oldChild)
         {
             setThen((PImpl) newChild);
-            return;
-        }
-
-        if(this._colon_ == oldChild)
-        {
-            setColon((TColon) newChild);
-            return;
-        }
-
-        if(this._elsein_ == oldChild)
-        {
-            setElsein((TLBrace) newChild);
-            return;
-        }
-
-        if(this._else_ == oldChild)
-        {
-            setElse((PImpl) newChild);
             return;
         }
 

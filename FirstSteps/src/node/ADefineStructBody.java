@@ -5,51 +5,51 @@ package node;
 import analysis.*;
 
 @SuppressWarnings("nls")
-public final class AFunctionProgram extends PProgram
+public final class ADefineStructBody extends PStructBody
 {
-    private PFunction _function_;
-    private PProgram _program_;
+    private PDefine _define_;
+    private PStructBody _structBody_;
 
-    public AFunctionProgram()
+    public ADefineStructBody()
     {
         // Constructor
     }
 
-    public AFunctionProgram(
-        @SuppressWarnings("hiding") PFunction _function_,
-        @SuppressWarnings("hiding") PProgram _program_)
+    public ADefineStructBody(
+        @SuppressWarnings("hiding") PDefine _define_,
+        @SuppressWarnings("hiding") PStructBody _structBody_)
     {
         // Constructor
-        setFunction(_function_);
+        setDefine(_define_);
 
-        setProgram(_program_);
+        setStructBody(_structBody_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AFunctionProgram(
-            cloneNode(this._function_),
-            cloneNode(this._program_));
+        return new ADefineStructBody(
+            cloneNode(this._define_),
+            cloneNode(this._structBody_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAFunctionProgram(this);
+        ((Analysis) sw).caseADefineStructBody(this);
     }
 
-    public PFunction getFunction()
+    public PDefine getDefine()
     {
-        return this._function_;
+        return this._define_;
     }
 
-    public void setFunction(PFunction node)
+    public void setDefine(PDefine node)
     {
-        if(this._function_ != null)
+        if(this._define_ != null)
         {
-            this._function_.parent(null);
+            this._define_.parent(null);
         }
 
         if(node != null)
@@ -62,19 +62,19 @@ public final class AFunctionProgram extends PProgram
             node.parent(this);
         }
 
-        this._function_ = node;
+        this._define_ = node;
     }
 
-    public PProgram getProgram()
+    public PStructBody getStructBody()
     {
-        return this._program_;
+        return this._structBody_;
     }
 
-    public void setProgram(PProgram node)
+    public void setStructBody(PStructBody node)
     {
-        if(this._program_ != null)
+        if(this._structBody_ != null)
         {
-            this._program_.parent(null);
+            this._structBody_.parent(null);
         }
 
         if(node != null)
@@ -87,30 +87,30 @@ public final class AFunctionProgram extends PProgram
             node.parent(this);
         }
 
-        this._program_ = node;
+        this._structBody_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._function_)
-            + toString(this._program_);
+            + toString(this._define_)
+            + toString(this._structBody_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._function_ == child)
+        if(this._define_ == child)
         {
-            this._function_ = null;
+            this._define_ = null;
             return;
         }
 
-        if(this._program_ == child)
+        if(this._structBody_ == child)
         {
-            this._program_ = null;
+            this._structBody_ = null;
             return;
         }
 
@@ -121,15 +121,15 @@ public final class AFunctionProgram extends PProgram
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._function_ == oldChild)
+        if(this._define_ == oldChild)
         {
-            setFunction((PFunction) newChild);
+            setDefine((PDefine) newChild);
             return;
         }
 
-        if(this._program_ == oldChild)
+        if(this._structBody_ == oldChild)
         {
-            setProgram((PProgram) newChild);
+            setStructBody((PStructBody) newChild);
             return;
         }
 

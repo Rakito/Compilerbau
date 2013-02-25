@@ -5,44 +5,94 @@ package node;
 import analysis.*;
 
 @SuppressWarnings("nls")
-public final class AMultExpr extends PExpr
+public final class ASetSet extends PSet
 {
+    private TId _id_;
+    private TEquals _equals_;
     private PExpr _expr_;
-    private TAsterisk _asterisk_;
-    private PTerm _term_;
 
-    public AMultExpr()
+    public ASetSet()
     {
         // Constructor
     }
 
-    public AMultExpr(
-        @SuppressWarnings("hiding") PExpr _expr_,
-        @SuppressWarnings("hiding") TAsterisk _asterisk_,
-        @SuppressWarnings("hiding") PTerm _term_)
+    public ASetSet(
+        @SuppressWarnings("hiding") TId _id_,
+        @SuppressWarnings("hiding") TEquals _equals_,
+        @SuppressWarnings("hiding") PExpr _expr_)
     {
         // Constructor
+        setId(_id_);
+
+        setEquals(_equals_);
+
         setExpr(_expr_);
-
-        setAsterisk(_asterisk_);
-
-        setTerm(_term_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AMultExpr(
-            cloneNode(this._expr_),
-            cloneNode(this._asterisk_),
-            cloneNode(this._term_));
+        return new ASetSet(
+            cloneNode(this._id_),
+            cloneNode(this._equals_),
+            cloneNode(this._expr_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAMultExpr(this);
+        ((Analysis) sw).caseASetSet(this);
+    }
+
+    public TId getId()
+    {
+        return this._id_;
+    }
+
+    public void setId(TId node)
+    {
+        if(this._id_ != null)
+        {
+            this._id_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._id_ = node;
+    }
+
+    public TEquals getEquals()
+    {
+        return this._equals_;
+    }
+
+    public void setEquals(TEquals node)
+    {
+        if(this._equals_ != null)
+        {
+            this._equals_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._equals_ = node;
     }
 
     public PExpr getExpr()
@@ -70,84 +120,34 @@ public final class AMultExpr extends PExpr
         this._expr_ = node;
     }
 
-    public TAsterisk getAsterisk()
-    {
-        return this._asterisk_;
-    }
-
-    public void setAsterisk(TAsterisk node)
-    {
-        if(this._asterisk_ != null)
-        {
-            this._asterisk_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._asterisk_ = node;
-    }
-
-    public PTerm getTerm()
-    {
-        return this._term_;
-    }
-
-    public void setTerm(PTerm node)
-    {
-        if(this._term_ != null)
-        {
-            this._term_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._term_ = node;
-    }
-
     @Override
     public String toString()
     {
         return ""
-            + toString(this._expr_)
-            + toString(this._asterisk_)
-            + toString(this._term_);
+            + toString(this._id_)
+            + toString(this._equals_)
+            + toString(this._expr_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
+        if(this._id_ == child)
+        {
+            this._id_ = null;
+            return;
+        }
+
+        if(this._equals_ == child)
+        {
+            this._equals_ = null;
+            return;
+        }
+
         if(this._expr_ == child)
         {
             this._expr_ = null;
-            return;
-        }
-
-        if(this._asterisk_ == child)
-        {
-            this._asterisk_ = null;
-            return;
-        }
-
-        if(this._term_ == child)
-        {
-            this._term_ = null;
             return;
         }
 
@@ -158,21 +158,21 @@ public final class AMultExpr extends PExpr
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
+        if(this._id_ == oldChild)
+        {
+            setId((TId) newChild);
+            return;
+        }
+
+        if(this._equals_ == oldChild)
+        {
+            setEquals((TEquals) newChild);
+            return;
+        }
+
         if(this._expr_ == oldChild)
         {
             setExpr((PExpr) newChild);
-            return;
-        }
-
-        if(this._asterisk_ == oldChild)
-        {
-            setAsterisk((TAsterisk) newChild);
-            return;
-        }
-
-        if(this._term_ == oldChild)
-        {
-            setTerm((PTerm) newChild);
             return;
         }
 

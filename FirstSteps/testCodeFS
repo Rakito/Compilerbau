@@ -6,24 +6,25 @@ include stdlib
 
  <int>main(<char*> argv, <int*> argc)
 {
-	 calcFac()
-	 printf("The last used Number is %d\n", lastUsedNumber)
+calcFac(null)
+
 	return 0
 }
 
  <void>calcFac()
 {
-	 facFive = (fac(5))
-	 printf("The faculty of 5 is %d\n", facFive)
+	 facFive = fac(5)
+
 }
 
  <int>fac(<int> n)
 {
 	 lastUsedNumber = n
-	(n == 1)?{return 0}
-	(n == 0)?{return 1}
+	(n is 1)?{return 0}
+	(n is 0)?{return 1}
+<int> result = n * fac(n - 1)
 	
-	return (n * fac(n - 1))
+	return result
 }
 
  Olaf {
@@ -31,12 +32,12 @@ include stdlib
 	
 	cons Olaf()
 	{
-		count = 42;
+		count = 42
 	}
 	
 	cons Olaf(<int> count)
 	{
-		count = count;
+		count = count
 	}
  }
 

@@ -5,56 +5,56 @@ package node;
 import analysis.*;
 
 @SuppressWarnings("nls")
-public final class ADivExpr extends PExpr
+public final class AOneParam extends PParam
 {
-    private PExpr _expr_;
-    private TSlash _slash_;
-    private PTerm _term_;
+    private PType _type_;
+    private TId _id_;
+    private TRPar _rPar_;
 
-    public ADivExpr()
+    public AOneParam()
     {
         // Constructor
     }
 
-    public ADivExpr(
-        @SuppressWarnings("hiding") PExpr _expr_,
-        @SuppressWarnings("hiding") TSlash _slash_,
-        @SuppressWarnings("hiding") PTerm _term_)
+    public AOneParam(
+        @SuppressWarnings("hiding") PType _type_,
+        @SuppressWarnings("hiding") TId _id_,
+        @SuppressWarnings("hiding") TRPar _rPar_)
     {
         // Constructor
-        setExpr(_expr_);
+        setType(_type_);
 
-        setSlash(_slash_);
+        setId(_id_);
 
-        setTerm(_term_);
+        setRPar(_rPar_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new ADivExpr(
-            cloneNode(this._expr_),
-            cloneNode(this._slash_),
-            cloneNode(this._term_));
+        return new AOneParam(
+            cloneNode(this._type_),
+            cloneNode(this._id_),
+            cloneNode(this._rPar_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseADivExpr(this);
+        ((Analysis) sw).caseAOneParam(this);
     }
 
-    public PExpr getExpr()
+    public PType getType()
     {
-        return this._expr_;
+        return this._type_;
     }
 
-    public void setExpr(PExpr node)
+    public void setType(PType node)
     {
-        if(this._expr_ != null)
+        if(this._type_ != null)
         {
-            this._expr_.parent(null);
+            this._type_.parent(null);
         }
 
         if(node != null)
@@ -67,19 +67,19 @@ public final class ADivExpr extends PExpr
             node.parent(this);
         }
 
-        this._expr_ = node;
+        this._type_ = node;
     }
 
-    public TSlash getSlash()
+    public TId getId()
     {
-        return this._slash_;
+        return this._id_;
     }
 
-    public void setSlash(TSlash node)
+    public void setId(TId node)
     {
-        if(this._slash_ != null)
+        if(this._id_ != null)
         {
-            this._slash_.parent(null);
+            this._id_.parent(null);
         }
 
         if(node != null)
@@ -92,19 +92,19 @@ public final class ADivExpr extends PExpr
             node.parent(this);
         }
 
-        this._slash_ = node;
+        this._id_ = node;
     }
 
-    public PTerm getTerm()
+    public TRPar getRPar()
     {
-        return this._term_;
+        return this._rPar_;
     }
 
-    public void setTerm(PTerm node)
+    public void setRPar(TRPar node)
     {
-        if(this._term_ != null)
+        if(this._rPar_ != null)
         {
-            this._term_.parent(null);
+            this._rPar_.parent(null);
         }
 
         if(node != null)
@@ -117,37 +117,37 @@ public final class ADivExpr extends PExpr
             node.parent(this);
         }
 
-        this._term_ = node;
+        this._rPar_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._expr_)
-            + toString(this._slash_)
-            + toString(this._term_);
+            + toString(this._type_)
+            + toString(this._id_)
+            + toString(this._rPar_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._expr_ == child)
+        if(this._type_ == child)
         {
-            this._expr_ = null;
+            this._type_ = null;
             return;
         }
 
-        if(this._slash_ == child)
+        if(this._id_ == child)
         {
-            this._slash_ = null;
+            this._id_ = null;
             return;
         }
 
-        if(this._term_ == child)
+        if(this._rPar_ == child)
         {
-            this._term_ = null;
+            this._rPar_ = null;
             return;
         }
 
@@ -158,21 +158,21 @@ public final class ADivExpr extends PExpr
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._expr_ == oldChild)
+        if(this._type_ == oldChild)
         {
-            setExpr((PExpr) newChild);
+            setType((PType) newChild);
             return;
         }
 
-        if(this._slash_ == oldChild)
+        if(this._id_ == oldChild)
         {
-            setSlash((TSlash) newChild);
+            setId((TId) newChild);
             return;
         }
 
-        if(this._term_ == oldChild)
+        if(this._rPar_ == oldChild)
         {
-            setTerm((PTerm) newChild);
+            setRPar((TRPar) newChild);
             return;
         }
 

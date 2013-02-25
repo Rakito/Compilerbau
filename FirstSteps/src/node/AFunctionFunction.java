@@ -5,40 +5,36 @@ package node;
 import analysis.*;
 
 @SuppressWarnings("nls")
-public final class AConsDefine extends PDefine
+public final class AFunctionFunction extends PFunction
 {
-    private TCons _cons_;
+    private PType _type_;
     private TId _id_;
     private TLPar _lPar_;
-    private PTerm _term_;
-    private TRPar _rPar_;
+    private PParam _param_;
     private TLBrace _lBrace_;
     private PImpl _impl_;
 
-    public AConsDefine()
+    public AFunctionFunction()
     {
         // Constructor
     }
 
-    public AConsDefine(
-        @SuppressWarnings("hiding") TCons _cons_,
+    public AFunctionFunction(
+        @SuppressWarnings("hiding") PType _type_,
         @SuppressWarnings("hiding") TId _id_,
         @SuppressWarnings("hiding") TLPar _lPar_,
-        @SuppressWarnings("hiding") PTerm _term_,
-        @SuppressWarnings("hiding") TRPar _rPar_,
+        @SuppressWarnings("hiding") PParam _param_,
         @SuppressWarnings("hiding") TLBrace _lBrace_,
         @SuppressWarnings("hiding") PImpl _impl_)
     {
         // Constructor
-        setCons(_cons_);
+        setType(_type_);
 
         setId(_id_);
 
         setLPar(_lPar_);
 
-        setTerm(_term_);
-
-        setRPar(_rPar_);
+        setParam(_param_);
 
         setLBrace(_lBrace_);
 
@@ -49,12 +45,11 @@ public final class AConsDefine extends PDefine
     @Override
     public Object clone()
     {
-        return new AConsDefine(
-            cloneNode(this._cons_),
+        return new AFunctionFunction(
+            cloneNode(this._type_),
             cloneNode(this._id_),
             cloneNode(this._lPar_),
-            cloneNode(this._term_),
-            cloneNode(this._rPar_),
+            cloneNode(this._param_),
             cloneNode(this._lBrace_),
             cloneNode(this._impl_));
     }
@@ -62,19 +57,19 @@ public final class AConsDefine extends PDefine
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAConsDefine(this);
+        ((Analysis) sw).caseAFunctionFunction(this);
     }
 
-    public TCons getCons()
+    public PType getType()
     {
-        return this._cons_;
+        return this._type_;
     }
 
-    public void setCons(TCons node)
+    public void setType(PType node)
     {
-        if(this._cons_ != null)
+        if(this._type_ != null)
         {
-            this._cons_.parent(null);
+            this._type_.parent(null);
         }
 
         if(node != null)
@@ -87,7 +82,7 @@ public final class AConsDefine extends PDefine
             node.parent(this);
         }
 
-        this._cons_ = node;
+        this._type_ = node;
     }
 
     public TId getId()
@@ -140,16 +135,16 @@ public final class AConsDefine extends PDefine
         this._lPar_ = node;
     }
 
-    public PTerm getTerm()
+    public PParam getParam()
     {
-        return this._term_;
+        return this._param_;
     }
 
-    public void setTerm(PTerm node)
+    public void setParam(PParam node)
     {
-        if(this._term_ != null)
+        if(this._param_ != null)
         {
-            this._term_.parent(null);
+            this._param_.parent(null);
         }
 
         if(node != null)
@@ -162,32 +157,7 @@ public final class AConsDefine extends PDefine
             node.parent(this);
         }
 
-        this._term_ = node;
-    }
-
-    public TRPar getRPar()
-    {
-        return this._rPar_;
-    }
-
-    public void setRPar(TRPar node)
-    {
-        if(this._rPar_ != null)
-        {
-            this._rPar_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._rPar_ = node;
+        this._param_ = node;
     }
 
     public TLBrace getLBrace()
@@ -244,11 +214,10 @@ public final class AConsDefine extends PDefine
     public String toString()
     {
         return ""
-            + toString(this._cons_)
+            + toString(this._type_)
             + toString(this._id_)
             + toString(this._lPar_)
-            + toString(this._term_)
-            + toString(this._rPar_)
+            + toString(this._param_)
             + toString(this._lBrace_)
             + toString(this._impl_);
     }
@@ -257,9 +226,9 @@ public final class AConsDefine extends PDefine
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._cons_ == child)
+        if(this._type_ == child)
         {
-            this._cons_ = null;
+            this._type_ = null;
             return;
         }
 
@@ -275,15 +244,9 @@ public final class AConsDefine extends PDefine
             return;
         }
 
-        if(this._term_ == child)
+        if(this._param_ == child)
         {
-            this._term_ = null;
-            return;
-        }
-
-        if(this._rPar_ == child)
-        {
-            this._rPar_ = null;
+            this._param_ = null;
             return;
         }
 
@@ -306,9 +269,9 @@ public final class AConsDefine extends PDefine
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._cons_ == oldChild)
+        if(this._type_ == oldChild)
         {
-            setCons((TCons) newChild);
+            setType((PType) newChild);
             return;
         }
 
@@ -324,15 +287,9 @@ public final class AConsDefine extends PDefine
             return;
         }
 
-        if(this._term_ == oldChild)
+        if(this._param_ == oldChild)
         {
-            setTerm((PTerm) newChild);
-            return;
-        }
-
-        if(this._rPar_ == oldChild)
-        {
-            setRPar((TRPar) newChild);
+            setParam((PParam) newChild);
             return;
         }
 

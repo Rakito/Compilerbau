@@ -5,56 +5,56 @@ package node;
 import analysis.*;
 
 @SuppressWarnings("nls")
-public final class APlusExpr extends PExpr
+public final class AMultOperation extends POperation
 {
-    private PExpr _expr_;
-    private TPlus _plus_;
-    private PTerm _term_;
+    private PTerm _left_;
+    private TStar _star_;
+    private PExpr _right_;
 
-    public APlusExpr()
+    public AMultOperation()
     {
         // Constructor
     }
 
-    public APlusExpr(
-        @SuppressWarnings("hiding") PExpr _expr_,
-        @SuppressWarnings("hiding") TPlus _plus_,
-        @SuppressWarnings("hiding") PTerm _term_)
+    public AMultOperation(
+        @SuppressWarnings("hiding") PTerm _left_,
+        @SuppressWarnings("hiding") TStar _star_,
+        @SuppressWarnings("hiding") PExpr _right_)
     {
         // Constructor
-        setExpr(_expr_);
+        setLeft(_left_);
 
-        setPlus(_plus_);
+        setStar(_star_);
 
-        setTerm(_term_);
+        setRight(_right_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new APlusExpr(
-            cloneNode(this._expr_),
-            cloneNode(this._plus_),
-            cloneNode(this._term_));
+        return new AMultOperation(
+            cloneNode(this._left_),
+            cloneNode(this._star_),
+            cloneNode(this._right_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAPlusExpr(this);
+        ((Analysis) sw).caseAMultOperation(this);
     }
 
-    public PExpr getExpr()
+    public PTerm getLeft()
     {
-        return this._expr_;
+        return this._left_;
     }
 
-    public void setExpr(PExpr node)
+    public void setLeft(PTerm node)
     {
-        if(this._expr_ != null)
+        if(this._left_ != null)
         {
-            this._expr_.parent(null);
+            this._left_.parent(null);
         }
 
         if(node != null)
@@ -67,19 +67,19 @@ public final class APlusExpr extends PExpr
             node.parent(this);
         }
 
-        this._expr_ = node;
+        this._left_ = node;
     }
 
-    public TPlus getPlus()
+    public TStar getStar()
     {
-        return this._plus_;
+        return this._star_;
     }
 
-    public void setPlus(TPlus node)
+    public void setStar(TStar node)
     {
-        if(this._plus_ != null)
+        if(this._star_ != null)
         {
-            this._plus_.parent(null);
+            this._star_.parent(null);
         }
 
         if(node != null)
@@ -92,19 +92,19 @@ public final class APlusExpr extends PExpr
             node.parent(this);
         }
 
-        this._plus_ = node;
+        this._star_ = node;
     }
 
-    public PTerm getTerm()
+    public PExpr getRight()
     {
-        return this._term_;
+        return this._right_;
     }
 
-    public void setTerm(PTerm node)
+    public void setRight(PExpr node)
     {
-        if(this._term_ != null)
+        if(this._right_ != null)
         {
-            this._term_.parent(null);
+            this._right_.parent(null);
         }
 
         if(node != null)
@@ -117,37 +117,37 @@ public final class APlusExpr extends PExpr
             node.parent(this);
         }
 
-        this._term_ = node;
+        this._right_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._expr_)
-            + toString(this._plus_)
-            + toString(this._term_);
+            + toString(this._left_)
+            + toString(this._star_)
+            + toString(this._right_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._expr_ == child)
+        if(this._left_ == child)
         {
-            this._expr_ = null;
+            this._left_ = null;
             return;
         }
 
-        if(this._plus_ == child)
+        if(this._star_ == child)
         {
-            this._plus_ = null;
+            this._star_ = null;
             return;
         }
 
-        if(this._term_ == child)
+        if(this._right_ == child)
         {
-            this._term_ = null;
+            this._right_ = null;
             return;
         }
 
@@ -158,21 +158,21 @@ public final class APlusExpr extends PExpr
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._expr_ == oldChild)
+        if(this._left_ == oldChild)
         {
-            setExpr((PExpr) newChild);
+            setLeft((PTerm) newChild);
             return;
         }
 
-        if(this._plus_ == oldChild)
+        if(this._star_ == oldChild)
         {
-            setPlus((TPlus) newChild);
+            setStar((TStar) newChild);
             return;
         }
 
-        if(this._term_ == oldChild)
+        if(this._right_ == oldChild)
         {
-            setTerm((PTerm) newChild);
+            setRight((PExpr) newChild);
             return;
         }
 

@@ -5,22 +5,26 @@ package node;
 import analysis.*;
 
 @SuppressWarnings("nls")
-public final class AFunctionProgram extends PProgram
+public final class AIncludeProgram extends PProgram
 {
-    private PFunction _function_;
+    private TInclude _include_;
+    private TId _id_;
     private PProgram _program_;
 
-    public AFunctionProgram()
+    public AIncludeProgram()
     {
         // Constructor
     }
 
-    public AFunctionProgram(
-        @SuppressWarnings("hiding") PFunction _function_,
+    public AIncludeProgram(
+        @SuppressWarnings("hiding") TInclude _include_,
+        @SuppressWarnings("hiding") TId _id_,
         @SuppressWarnings("hiding") PProgram _program_)
     {
         // Constructor
-        setFunction(_function_);
+        setInclude(_include_);
+
+        setId(_id_);
 
         setProgram(_program_);
 
@@ -29,27 +33,28 @@ public final class AFunctionProgram extends PProgram
     @Override
     public Object clone()
     {
-        return new AFunctionProgram(
-            cloneNode(this._function_),
+        return new AIncludeProgram(
+            cloneNode(this._include_),
+            cloneNode(this._id_),
             cloneNode(this._program_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAFunctionProgram(this);
+        ((Analysis) sw).caseAIncludeProgram(this);
     }
 
-    public PFunction getFunction()
+    public TInclude getInclude()
     {
-        return this._function_;
+        return this._include_;
     }
 
-    public void setFunction(PFunction node)
+    public void setInclude(TInclude node)
     {
-        if(this._function_ != null)
+        if(this._include_ != null)
         {
-            this._function_.parent(null);
+            this._include_.parent(null);
         }
 
         if(node != null)
@@ -62,7 +67,32 @@ public final class AFunctionProgram extends PProgram
             node.parent(this);
         }
 
-        this._function_ = node;
+        this._include_ = node;
+    }
+
+    public TId getId()
+    {
+        return this._id_;
+    }
+
+    public void setId(TId node)
+    {
+        if(this._id_ != null)
+        {
+            this._id_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._id_ = node;
     }
 
     public PProgram getProgram()
@@ -94,7 +124,8 @@ public final class AFunctionProgram extends PProgram
     public String toString()
     {
         return ""
-            + toString(this._function_)
+            + toString(this._include_)
+            + toString(this._id_)
             + toString(this._program_);
     }
 
@@ -102,9 +133,15 @@ public final class AFunctionProgram extends PProgram
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._function_ == child)
+        if(this._include_ == child)
         {
-            this._function_ = null;
+            this._include_ = null;
+            return;
+        }
+
+        if(this._id_ == child)
+        {
+            this._id_ = null;
             return;
         }
 
@@ -121,9 +158,15 @@ public final class AFunctionProgram extends PProgram
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._function_ == oldChild)
+        if(this._include_ == oldChild)
         {
-            setFunction((PFunction) newChild);
+            setInclude((TInclude) newChild);
+            return;
+        }
+
+        if(this._id_ == oldChild)
+        {
+            setId((TId) newChild);
             return;
         }
 

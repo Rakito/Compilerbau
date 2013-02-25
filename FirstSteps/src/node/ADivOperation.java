@@ -5,56 +5,56 @@ package node;
 import analysis.*;
 
 @SuppressWarnings("nls")
-public final class AModExpr extends PExpr
+public final class ADivOperation extends POperation
 {
-    private PExpr _expr_;
-    private TPercent _percent_;
-    private PTerm _term_;
+    private PTerm _left_;
+    private TSlash _slash_;
+    private PExpr _right_;
 
-    public AModExpr()
+    public ADivOperation()
     {
         // Constructor
     }
 
-    public AModExpr(
-        @SuppressWarnings("hiding") PExpr _expr_,
-        @SuppressWarnings("hiding") TPercent _percent_,
-        @SuppressWarnings("hiding") PTerm _term_)
+    public ADivOperation(
+        @SuppressWarnings("hiding") PTerm _left_,
+        @SuppressWarnings("hiding") TSlash _slash_,
+        @SuppressWarnings("hiding") PExpr _right_)
     {
         // Constructor
-        setExpr(_expr_);
+        setLeft(_left_);
 
-        setPercent(_percent_);
+        setSlash(_slash_);
 
-        setTerm(_term_);
+        setRight(_right_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AModExpr(
-            cloneNode(this._expr_),
-            cloneNode(this._percent_),
-            cloneNode(this._term_));
+        return new ADivOperation(
+            cloneNode(this._left_),
+            cloneNode(this._slash_),
+            cloneNode(this._right_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAModExpr(this);
+        ((Analysis) sw).caseADivOperation(this);
     }
 
-    public PExpr getExpr()
+    public PTerm getLeft()
     {
-        return this._expr_;
+        return this._left_;
     }
 
-    public void setExpr(PExpr node)
+    public void setLeft(PTerm node)
     {
-        if(this._expr_ != null)
+        if(this._left_ != null)
         {
-            this._expr_.parent(null);
+            this._left_.parent(null);
         }
 
         if(node != null)
@@ -67,19 +67,19 @@ public final class AModExpr extends PExpr
             node.parent(this);
         }
 
-        this._expr_ = node;
+        this._left_ = node;
     }
 
-    public TPercent getPercent()
+    public TSlash getSlash()
     {
-        return this._percent_;
+        return this._slash_;
     }
 
-    public void setPercent(TPercent node)
+    public void setSlash(TSlash node)
     {
-        if(this._percent_ != null)
+        if(this._slash_ != null)
         {
-            this._percent_.parent(null);
+            this._slash_.parent(null);
         }
 
         if(node != null)
@@ -92,19 +92,19 @@ public final class AModExpr extends PExpr
             node.parent(this);
         }
 
-        this._percent_ = node;
+        this._slash_ = node;
     }
 
-    public PTerm getTerm()
+    public PExpr getRight()
     {
-        return this._term_;
+        return this._right_;
     }
 
-    public void setTerm(PTerm node)
+    public void setRight(PExpr node)
     {
-        if(this._term_ != null)
+        if(this._right_ != null)
         {
-            this._term_.parent(null);
+            this._right_.parent(null);
         }
 
         if(node != null)
@@ -117,37 +117,37 @@ public final class AModExpr extends PExpr
             node.parent(this);
         }
 
-        this._term_ = node;
+        this._right_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._expr_)
-            + toString(this._percent_)
-            + toString(this._term_);
+            + toString(this._left_)
+            + toString(this._slash_)
+            + toString(this._right_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._expr_ == child)
+        if(this._left_ == child)
         {
-            this._expr_ = null;
+            this._left_ = null;
             return;
         }
 
-        if(this._percent_ == child)
+        if(this._slash_ == child)
         {
-            this._percent_ = null;
+            this._slash_ = null;
             return;
         }
 
-        if(this._term_ == child)
+        if(this._right_ == child)
         {
-            this._term_ = null;
+            this._right_ = null;
             return;
         }
 
@@ -158,21 +158,21 @@ public final class AModExpr extends PExpr
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._expr_ == oldChild)
+        if(this._left_ == oldChild)
         {
-            setExpr((PExpr) newChild);
+            setLeft((PTerm) newChild);
             return;
         }
 
-        if(this._percent_ == oldChild)
+        if(this._slash_ == oldChild)
         {
-            setPercent((TPercent) newChild);
+            setSlash((TSlash) newChild);
             return;
         }
 
-        if(this._term_ == oldChild)
+        if(this._right_ == oldChild)
         {
-            setTerm((PTerm) newChild);
+            setRight((PExpr) newChild);
             return;
         }
 

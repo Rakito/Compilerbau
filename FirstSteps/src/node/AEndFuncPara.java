@@ -5,46 +5,46 @@ package node;
 import analysis.*;
 
 @SuppressWarnings("nls")
-public final class ANativcExpr extends PExpr
+public final class AEndFuncPara extends PFuncPara
 {
-    private TCcode _ccode_;
+    private TRPar _rPar_;
 
-    public ANativcExpr()
+    public AEndFuncPara()
     {
         // Constructor
     }
 
-    public ANativcExpr(
-        @SuppressWarnings("hiding") TCcode _ccode_)
+    public AEndFuncPara(
+        @SuppressWarnings("hiding") TRPar _rPar_)
     {
         // Constructor
-        setCcode(_ccode_);
+        setRPar(_rPar_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new ANativcExpr(
-            cloneNode(this._ccode_));
+        return new AEndFuncPara(
+            cloneNode(this._rPar_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseANativcExpr(this);
+        ((Analysis) sw).caseAEndFuncPara(this);
     }
 
-    public TCcode getCcode()
+    public TRPar getRPar()
     {
-        return this._ccode_;
+        return this._rPar_;
     }
 
-    public void setCcode(TCcode node)
+    public void setRPar(TRPar node)
     {
-        if(this._ccode_ != null)
+        if(this._rPar_ != null)
         {
-            this._ccode_.parent(null);
+            this._rPar_.parent(null);
         }
 
         if(node != null)
@@ -57,23 +57,23 @@ public final class ANativcExpr extends PExpr
             node.parent(this);
         }
 
-        this._ccode_ = node;
+        this._rPar_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._ccode_);
+            + toString(this._rPar_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._ccode_ == child)
+        if(this._rPar_ == child)
         {
-            this._ccode_ = null;
+            this._rPar_ = null;
             return;
         }
 
@@ -84,9 +84,9 @@ public final class ANativcExpr extends PExpr
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._ccode_ == oldChild)
+        if(this._rPar_ == oldChild)
         {
-            setCcode((TCcode) newChild);
+            setRPar((TRPar) newChild);
             return;
         }
 

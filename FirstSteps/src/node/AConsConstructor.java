@@ -5,25 +5,25 @@ package node;
 import analysis.*;
 
 @SuppressWarnings("nls")
-public final class ANilDefine extends PDefine
+public final class AConsConstructor extends PConstructor
 {
     private TCons _cons_;
     private TId _id_;
     private TLPar _lPar_;
-    private TRPar _rPar_;
+    private PParam _param_;
     private TLBrace _lBrace_;
     private PImpl _impl_;
 
-    public ANilDefine()
+    public AConsConstructor()
     {
         // Constructor
     }
 
-    public ANilDefine(
+    public AConsConstructor(
         @SuppressWarnings("hiding") TCons _cons_,
         @SuppressWarnings("hiding") TId _id_,
         @SuppressWarnings("hiding") TLPar _lPar_,
-        @SuppressWarnings("hiding") TRPar _rPar_,
+        @SuppressWarnings("hiding") PParam _param_,
         @SuppressWarnings("hiding") TLBrace _lBrace_,
         @SuppressWarnings("hiding") PImpl _impl_)
     {
@@ -34,7 +34,7 @@ public final class ANilDefine extends PDefine
 
         setLPar(_lPar_);
 
-        setRPar(_rPar_);
+        setParam(_param_);
 
         setLBrace(_lBrace_);
 
@@ -45,11 +45,11 @@ public final class ANilDefine extends PDefine
     @Override
     public Object clone()
     {
-        return new ANilDefine(
+        return new AConsConstructor(
             cloneNode(this._cons_),
             cloneNode(this._id_),
             cloneNode(this._lPar_),
-            cloneNode(this._rPar_),
+            cloneNode(this._param_),
             cloneNode(this._lBrace_),
             cloneNode(this._impl_));
     }
@@ -57,7 +57,7 @@ public final class ANilDefine extends PDefine
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseANilDefine(this);
+        ((Analysis) sw).caseAConsConstructor(this);
     }
 
     public TCons getCons()
@@ -135,16 +135,16 @@ public final class ANilDefine extends PDefine
         this._lPar_ = node;
     }
 
-    public TRPar getRPar()
+    public PParam getParam()
     {
-        return this._rPar_;
+        return this._param_;
     }
 
-    public void setRPar(TRPar node)
+    public void setParam(PParam node)
     {
-        if(this._rPar_ != null)
+        if(this._param_ != null)
         {
-            this._rPar_.parent(null);
+            this._param_.parent(null);
         }
 
         if(node != null)
@@ -157,7 +157,7 @@ public final class ANilDefine extends PDefine
             node.parent(this);
         }
 
-        this._rPar_ = node;
+        this._param_ = node;
     }
 
     public TLBrace getLBrace()
@@ -217,7 +217,7 @@ public final class ANilDefine extends PDefine
             + toString(this._cons_)
             + toString(this._id_)
             + toString(this._lPar_)
-            + toString(this._rPar_)
+            + toString(this._param_)
             + toString(this._lBrace_)
             + toString(this._impl_);
     }
@@ -244,9 +244,9 @@ public final class ANilDefine extends PDefine
             return;
         }
 
-        if(this._rPar_ == child)
+        if(this._param_ == child)
         {
-            this._rPar_ = null;
+            this._param_ = null;
             return;
         }
 
@@ -287,9 +287,9 @@ public final class ANilDefine extends PDefine
             return;
         }
 
-        if(this._rPar_ == oldChild)
+        if(this._param_ == oldChild)
         {
-            setRPar((TRPar) newChild);
+            setParam((PParam) newChild);
             return;
         }
 

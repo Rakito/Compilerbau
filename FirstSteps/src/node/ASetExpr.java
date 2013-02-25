@@ -5,46 +5,46 @@ package node;
 import analysis.*;
 
 @SuppressWarnings("nls")
-public final class AEndExpr extends PExpr
+public final class ASetExpr extends PExpr
 {
-    private THash _hash_;
+    private PSet _set_;
 
-    public AEndExpr()
+    public ASetExpr()
     {
         // Constructor
     }
 
-    public AEndExpr(
-        @SuppressWarnings("hiding") THash _hash_)
+    public ASetExpr(
+        @SuppressWarnings("hiding") PSet _set_)
     {
         // Constructor
-        setHash(_hash_);
+        setSet(_set_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AEndExpr(
-            cloneNode(this._hash_));
+        return new ASetExpr(
+            cloneNode(this._set_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAEndExpr(this);
+        ((Analysis) sw).caseASetExpr(this);
     }
 
-    public THash getHash()
+    public PSet getSet()
     {
-        return this._hash_;
+        return this._set_;
     }
 
-    public void setHash(THash node)
+    public void setSet(PSet node)
     {
-        if(this._hash_ != null)
+        if(this._set_ != null)
         {
-            this._hash_.parent(null);
+            this._set_.parent(null);
         }
 
         if(node != null)
@@ -57,23 +57,23 @@ public final class AEndExpr extends PExpr
             node.parent(this);
         }
 
-        this._hash_ = node;
+        this._set_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._hash_);
+            + toString(this._set_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._hash_ == child)
+        if(this._set_ == child)
         {
-            this._hash_ = null;
+            this._set_ = null;
             return;
         }
 
@@ -84,9 +84,9 @@ public final class AEndExpr extends PExpr
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._hash_ == oldChild)
+        if(this._set_ == oldChild)
         {
-            setHash((THash) newChild);
+            setSet((PSet) newChild);
             return;
         }
 

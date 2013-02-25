@@ -5,51 +5,51 @@ package node;
 import analysis.*;
 
 @SuppressWarnings("nls")
-public final class AFunctionProgram extends PProgram
+public final class AVarSetDefine extends PDefine
 {
-    private PFunction _function_;
-    private PProgram _program_;
+    private PType _type_;
+    private PSet _set_;
 
-    public AFunctionProgram()
+    public AVarSetDefine()
     {
         // Constructor
     }
 
-    public AFunctionProgram(
-        @SuppressWarnings("hiding") PFunction _function_,
-        @SuppressWarnings("hiding") PProgram _program_)
+    public AVarSetDefine(
+        @SuppressWarnings("hiding") PType _type_,
+        @SuppressWarnings("hiding") PSet _set_)
     {
         // Constructor
-        setFunction(_function_);
+        setType(_type_);
 
-        setProgram(_program_);
+        setSet(_set_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AFunctionProgram(
-            cloneNode(this._function_),
-            cloneNode(this._program_));
+        return new AVarSetDefine(
+            cloneNode(this._type_),
+            cloneNode(this._set_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAFunctionProgram(this);
+        ((Analysis) sw).caseAVarSetDefine(this);
     }
 
-    public PFunction getFunction()
+    public PType getType()
     {
-        return this._function_;
+        return this._type_;
     }
 
-    public void setFunction(PFunction node)
+    public void setType(PType node)
     {
-        if(this._function_ != null)
+        if(this._type_ != null)
         {
-            this._function_.parent(null);
+            this._type_.parent(null);
         }
 
         if(node != null)
@@ -62,19 +62,19 @@ public final class AFunctionProgram extends PProgram
             node.parent(this);
         }
 
-        this._function_ = node;
+        this._type_ = node;
     }
 
-    public PProgram getProgram()
+    public PSet getSet()
     {
-        return this._program_;
+        return this._set_;
     }
 
-    public void setProgram(PProgram node)
+    public void setSet(PSet node)
     {
-        if(this._program_ != null)
+        if(this._set_ != null)
         {
-            this._program_.parent(null);
+            this._set_.parent(null);
         }
 
         if(node != null)
@@ -87,30 +87,30 @@ public final class AFunctionProgram extends PProgram
             node.parent(this);
         }
 
-        this._program_ = node;
+        this._set_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._function_)
-            + toString(this._program_);
+            + toString(this._type_)
+            + toString(this._set_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._function_ == child)
+        if(this._type_ == child)
         {
-            this._function_ = null;
+            this._type_ = null;
             return;
         }
 
-        if(this._program_ == child)
+        if(this._set_ == child)
         {
-            this._program_ = null;
+            this._set_ = null;
             return;
         }
 
@@ -121,15 +121,15 @@ public final class AFunctionProgram extends PProgram
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._function_ == oldChild)
+        if(this._type_ == oldChild)
         {
-            setFunction((PFunction) newChild);
+            setType((PType) newChild);
             return;
         }
 
-        if(this._program_ == oldChild)
+        if(this._set_ == oldChild)
         {
-            setProgram((PProgram) newChild);
+            setSet((PSet) newChild);
             return;
         }
 

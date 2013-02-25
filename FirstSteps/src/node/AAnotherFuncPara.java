@@ -5,56 +5,56 @@ package node;
 import analysis.*;
 
 @SuppressWarnings("nls")
-public final class AConcatExpr extends PExpr
+public final class AAnotherFuncPara extends PFuncPara
 {
-    private PExpr _left_;
+    private PTerm _term_;
     private TComma _comma_;
-    private PTerm _right_;
+    private PFuncPara _funcPara_;
 
-    public AConcatExpr()
+    public AAnotherFuncPara()
     {
         // Constructor
     }
 
-    public AConcatExpr(
-        @SuppressWarnings("hiding") PExpr _left_,
+    public AAnotherFuncPara(
+        @SuppressWarnings("hiding") PTerm _term_,
         @SuppressWarnings("hiding") TComma _comma_,
-        @SuppressWarnings("hiding") PTerm _right_)
+        @SuppressWarnings("hiding") PFuncPara _funcPara_)
     {
         // Constructor
-        setLeft(_left_);
+        setTerm(_term_);
 
         setComma(_comma_);
 
-        setRight(_right_);
+        setFuncPara(_funcPara_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AConcatExpr(
-            cloneNode(this._left_),
+        return new AAnotherFuncPara(
+            cloneNode(this._term_),
             cloneNode(this._comma_),
-            cloneNode(this._right_));
+            cloneNode(this._funcPara_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAConcatExpr(this);
+        ((Analysis) sw).caseAAnotherFuncPara(this);
     }
 
-    public PExpr getLeft()
+    public PTerm getTerm()
     {
-        return this._left_;
+        return this._term_;
     }
 
-    public void setLeft(PExpr node)
+    public void setTerm(PTerm node)
     {
-        if(this._left_ != null)
+        if(this._term_ != null)
         {
-            this._left_.parent(null);
+            this._term_.parent(null);
         }
 
         if(node != null)
@@ -67,7 +67,7 @@ public final class AConcatExpr extends PExpr
             node.parent(this);
         }
 
-        this._left_ = node;
+        this._term_ = node;
     }
 
     public TComma getComma()
@@ -95,16 +95,16 @@ public final class AConcatExpr extends PExpr
         this._comma_ = node;
     }
 
-    public PTerm getRight()
+    public PFuncPara getFuncPara()
     {
-        return this._right_;
+        return this._funcPara_;
     }
 
-    public void setRight(PTerm node)
+    public void setFuncPara(PFuncPara node)
     {
-        if(this._right_ != null)
+        if(this._funcPara_ != null)
         {
-            this._right_.parent(null);
+            this._funcPara_.parent(null);
         }
 
         if(node != null)
@@ -117,25 +117,25 @@ public final class AConcatExpr extends PExpr
             node.parent(this);
         }
 
-        this._right_ = node;
+        this._funcPara_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._left_)
+            + toString(this._term_)
             + toString(this._comma_)
-            + toString(this._right_);
+            + toString(this._funcPara_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._left_ == child)
+        if(this._term_ == child)
         {
-            this._left_ = null;
+            this._term_ = null;
             return;
         }
 
@@ -145,9 +145,9 @@ public final class AConcatExpr extends PExpr
             return;
         }
 
-        if(this._right_ == child)
+        if(this._funcPara_ == child)
         {
-            this._right_ = null;
+            this._funcPara_ = null;
             return;
         }
 
@@ -158,9 +158,9 @@ public final class AConcatExpr extends PExpr
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._left_ == oldChild)
+        if(this._term_ == oldChild)
         {
-            setLeft((PExpr) newChild);
+            setTerm((PTerm) newChild);
             return;
         }
 
@@ -170,9 +170,9 @@ public final class AConcatExpr extends PExpr
             return;
         }
 
-        if(this._right_ == oldChild)
+        if(this._funcPara_ == oldChild)
         {
-            setRight((PTerm) newChild);
+            setFuncPara((PFuncPara) newChild);
             return;
         }
 

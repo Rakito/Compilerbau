@@ -5,61 +5,61 @@ package node;
 import analysis.*;
 
 @SuppressWarnings("nls")
-public final class ADefineDefine extends PDefine
+public final class AAnotherParam extends PParam
 {
-    private TDefine _define_;
+    private PType _type_;
     private TId _id_;
-    private TEquals _equals_;
-    private PTerm _term_;
+    private TComma _comma_;
+    private PParam _param_;
 
-    public ADefineDefine()
+    public AAnotherParam()
     {
         // Constructor
     }
 
-    public ADefineDefine(
-        @SuppressWarnings("hiding") TDefine _define_,
+    public AAnotherParam(
+        @SuppressWarnings("hiding") PType _type_,
         @SuppressWarnings("hiding") TId _id_,
-        @SuppressWarnings("hiding") TEquals _equals_,
-        @SuppressWarnings("hiding") PTerm _term_)
+        @SuppressWarnings("hiding") TComma _comma_,
+        @SuppressWarnings("hiding") PParam _param_)
     {
         // Constructor
-        setDefine(_define_);
+        setType(_type_);
 
         setId(_id_);
 
-        setEquals(_equals_);
+        setComma(_comma_);
 
-        setTerm(_term_);
+        setParam(_param_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new ADefineDefine(
-            cloneNode(this._define_),
+        return new AAnotherParam(
+            cloneNode(this._type_),
             cloneNode(this._id_),
-            cloneNode(this._equals_),
-            cloneNode(this._term_));
+            cloneNode(this._comma_),
+            cloneNode(this._param_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseADefineDefine(this);
+        ((Analysis) sw).caseAAnotherParam(this);
     }
 
-    public TDefine getDefine()
+    public PType getType()
     {
-        return this._define_;
+        return this._type_;
     }
 
-    public void setDefine(TDefine node)
+    public void setType(PType node)
     {
-        if(this._define_ != null)
+        if(this._type_ != null)
         {
-            this._define_.parent(null);
+            this._type_.parent(null);
         }
 
         if(node != null)
@@ -72,7 +72,7 @@ public final class ADefineDefine extends PDefine
             node.parent(this);
         }
 
-        this._define_ = node;
+        this._type_ = node;
     }
 
     public TId getId()
@@ -100,16 +100,16 @@ public final class ADefineDefine extends PDefine
         this._id_ = node;
     }
 
-    public TEquals getEquals()
+    public TComma getComma()
     {
-        return this._equals_;
+        return this._comma_;
     }
 
-    public void setEquals(TEquals node)
+    public void setComma(TComma node)
     {
-        if(this._equals_ != null)
+        if(this._comma_ != null)
         {
-            this._equals_.parent(null);
+            this._comma_.parent(null);
         }
 
         if(node != null)
@@ -122,19 +122,19 @@ public final class ADefineDefine extends PDefine
             node.parent(this);
         }
 
-        this._equals_ = node;
+        this._comma_ = node;
     }
 
-    public PTerm getTerm()
+    public PParam getParam()
     {
-        return this._term_;
+        return this._param_;
     }
 
-    public void setTerm(PTerm node)
+    public void setParam(PParam node)
     {
-        if(this._term_ != null)
+        if(this._param_ != null)
         {
-            this._term_.parent(null);
+            this._param_.parent(null);
         }
 
         if(node != null)
@@ -147,26 +147,26 @@ public final class ADefineDefine extends PDefine
             node.parent(this);
         }
 
-        this._term_ = node;
+        this._param_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._define_)
+            + toString(this._type_)
             + toString(this._id_)
-            + toString(this._equals_)
-            + toString(this._term_);
+            + toString(this._comma_)
+            + toString(this._param_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._define_ == child)
+        if(this._type_ == child)
         {
-            this._define_ = null;
+            this._type_ = null;
             return;
         }
 
@@ -176,15 +176,15 @@ public final class ADefineDefine extends PDefine
             return;
         }
 
-        if(this._equals_ == child)
+        if(this._comma_ == child)
         {
-            this._equals_ = null;
+            this._comma_ = null;
             return;
         }
 
-        if(this._term_ == child)
+        if(this._param_ == child)
         {
-            this._term_ = null;
+            this._param_ = null;
             return;
         }
 
@@ -195,9 +195,9 @@ public final class ADefineDefine extends PDefine
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._define_ == oldChild)
+        if(this._type_ == oldChild)
         {
-            setDefine((TDefine) newChild);
+            setType((PType) newChild);
             return;
         }
 
@@ -207,15 +207,15 @@ public final class ADefineDefine extends PDefine
             return;
         }
 
-        if(this._equals_ == oldChild)
+        if(this._comma_ == oldChild)
         {
-            setEquals((TEquals) newChild);
+            setComma((TComma) newChild);
             return;
         }
 
-        if(this._term_ == oldChild)
+        if(this._param_ == oldChild)
         {
-            setTerm((PTerm) newChild);
+            setParam((PParam) newChild);
             return;
         }
 

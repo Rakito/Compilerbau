@@ -5,51 +5,51 @@ package node;
 import analysis.*;
 
 @SuppressWarnings("nls")
-public final class AFunctionProgram extends PProgram
+public final class AOneFuncPara extends PFuncPara
 {
-    private PFunction _function_;
-    private PProgram _program_;
+    private PTerm _term_;
+    private TRPar _rPar_;
 
-    public AFunctionProgram()
+    public AOneFuncPara()
     {
         // Constructor
     }
 
-    public AFunctionProgram(
-        @SuppressWarnings("hiding") PFunction _function_,
-        @SuppressWarnings("hiding") PProgram _program_)
+    public AOneFuncPara(
+        @SuppressWarnings("hiding") PTerm _term_,
+        @SuppressWarnings("hiding") TRPar _rPar_)
     {
         // Constructor
-        setFunction(_function_);
+        setTerm(_term_);
 
-        setProgram(_program_);
+        setRPar(_rPar_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AFunctionProgram(
-            cloneNode(this._function_),
-            cloneNode(this._program_));
+        return new AOneFuncPara(
+            cloneNode(this._term_),
+            cloneNode(this._rPar_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAFunctionProgram(this);
+        ((Analysis) sw).caseAOneFuncPara(this);
     }
 
-    public PFunction getFunction()
+    public PTerm getTerm()
     {
-        return this._function_;
+        return this._term_;
     }
 
-    public void setFunction(PFunction node)
+    public void setTerm(PTerm node)
     {
-        if(this._function_ != null)
+        if(this._term_ != null)
         {
-            this._function_.parent(null);
+            this._term_.parent(null);
         }
 
         if(node != null)
@@ -62,19 +62,19 @@ public final class AFunctionProgram extends PProgram
             node.parent(this);
         }
 
-        this._function_ = node;
+        this._term_ = node;
     }
 
-    public PProgram getProgram()
+    public TRPar getRPar()
     {
-        return this._program_;
+        return this._rPar_;
     }
 
-    public void setProgram(PProgram node)
+    public void setRPar(TRPar node)
     {
-        if(this._program_ != null)
+        if(this._rPar_ != null)
         {
-            this._program_.parent(null);
+            this._rPar_.parent(null);
         }
 
         if(node != null)
@@ -87,30 +87,30 @@ public final class AFunctionProgram extends PProgram
             node.parent(this);
         }
 
-        this._program_ = node;
+        this._rPar_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._function_)
-            + toString(this._program_);
+            + toString(this._term_)
+            + toString(this._rPar_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._function_ == child)
+        if(this._term_ == child)
         {
-            this._function_ = null;
+            this._term_ = null;
             return;
         }
 
-        if(this._program_ == child)
+        if(this._rPar_ == child)
         {
-            this._program_ = null;
+            this._rPar_ = null;
             return;
         }
 
@@ -121,15 +121,15 @@ public final class AFunctionProgram extends PProgram
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._function_ == oldChild)
+        if(this._term_ == oldChild)
         {
-            setFunction((PFunction) newChild);
+            setTerm((PTerm) newChild);
             return;
         }
 
-        if(this._program_ == oldChild)
+        if(this._rPar_ == oldChild)
         {
-            setProgram((PProgram) newChild);
+            setRPar((TRPar) newChild);
             return;
         }
 

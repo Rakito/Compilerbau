@@ -5,51 +5,51 @@ package node;
 import analysis.*;
 
 @SuppressWarnings("nls")
-public final class AFunctionProgram extends PProgram
+public final class AVarDefine extends PDefine
 {
-    private PFunction _function_;
-    private PProgram _program_;
+    private PType _type_;
+    private TId _id_;
 
-    public AFunctionProgram()
+    public AVarDefine()
     {
         // Constructor
     }
 
-    public AFunctionProgram(
-        @SuppressWarnings("hiding") PFunction _function_,
-        @SuppressWarnings("hiding") PProgram _program_)
+    public AVarDefine(
+        @SuppressWarnings("hiding") PType _type_,
+        @SuppressWarnings("hiding") TId _id_)
     {
         // Constructor
-        setFunction(_function_);
+        setType(_type_);
 
-        setProgram(_program_);
+        setId(_id_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AFunctionProgram(
-            cloneNode(this._function_),
-            cloneNode(this._program_));
+        return new AVarDefine(
+            cloneNode(this._type_),
+            cloneNode(this._id_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAFunctionProgram(this);
+        ((Analysis) sw).caseAVarDefine(this);
     }
 
-    public PFunction getFunction()
+    public PType getType()
     {
-        return this._function_;
+        return this._type_;
     }
 
-    public void setFunction(PFunction node)
+    public void setType(PType node)
     {
-        if(this._function_ != null)
+        if(this._type_ != null)
         {
-            this._function_.parent(null);
+            this._type_.parent(null);
         }
 
         if(node != null)
@@ -62,19 +62,19 @@ public final class AFunctionProgram extends PProgram
             node.parent(this);
         }
 
-        this._function_ = node;
+        this._type_ = node;
     }
 
-    public PProgram getProgram()
+    public TId getId()
     {
-        return this._program_;
+        return this._id_;
     }
 
-    public void setProgram(PProgram node)
+    public void setId(TId node)
     {
-        if(this._program_ != null)
+        if(this._id_ != null)
         {
-            this._program_.parent(null);
+            this._id_.parent(null);
         }
 
         if(node != null)
@@ -87,30 +87,30 @@ public final class AFunctionProgram extends PProgram
             node.parent(this);
         }
 
-        this._program_ = node;
+        this._id_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._function_)
-            + toString(this._program_);
+            + toString(this._type_)
+            + toString(this._id_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._function_ == child)
+        if(this._type_ == child)
         {
-            this._function_ = null;
+            this._type_ = null;
             return;
         }
 
-        if(this._program_ == child)
+        if(this._id_ == child)
         {
-            this._program_ = null;
+            this._id_ = null;
             return;
         }
 
@@ -121,15 +121,15 @@ public final class AFunctionProgram extends PProgram
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._function_ == oldChild)
+        if(this._type_ == oldChild)
         {
-            setFunction((PFunction) newChild);
+            setType((PType) newChild);
             return;
         }
 
-        if(this._program_ == oldChild)
+        if(this._id_ == oldChild)
         {
-            setProgram((PProgram) newChild);
+            setId((TId) newChild);
             return;
         }
 

@@ -4,6 +4,7 @@ Helpers
  any_character = [0x0 .. 0xfffff];
  true = 'TRUE';
  false ='FALSE';
+ star = '*';
  cstart = 'nativC>';
  cend = '<nativC';
  
@@ -20,15 +21,17 @@ Tokens
  returnt = 'return';
  null = 'null';
  include = 'include';
-
+ void = 'void';
+ is = 'is';
  call = 'call';
  bool = true | false;
+ struct = 'struct';
  
- id = letter ( digit | letter )*;
+ id = ( letter | star ) ( digit | letter | star )*;
  number = digit+;
  plus = '+';
- hyphen = '-';
- asterisk = '*';
+ minus = '-';
+ star = star;
  percent = '%';
  dot = '.';
  comma = ',';
@@ -44,7 +47,6 @@ Tokens
  l_arrow = '<';
  r_arrow = '>';
  blank = (' ')*;
- dash = '-';
  ampersand = '&';
  slash = '/';
  question = '?';
@@ -79,20 +81,32 @@ Productions
 
  program = 
   {eof} T.end |
-  {function} function |
   {include} T.include id program |
-  {define} P.define program ;
+  {define} P.define program |
+  {struct} P.struct program |
+  {function} P.function program ;
 
  define = 
-  {var} T.define type id |
-  {vardefine} T.define type id equals term |
-  {set} id equals term |
-  {function} type id l_par param r_par l_brace impl |
-  {cons} T.cons id l_par param r_par l_brace impl |
-  {nil} T.cons id l_par r_par l_brace impl ;
+  {var} P.type id |
+  {var_set} P.type set ;
+  
+ struct = 
+  {struct} id l_brace struct_body ;
+  
+ struct_body =
+  {end} r_brace |
+  {define} P.define struct_body |
+  {constructor} P.constructor struct_body ;
+  
+ constructor =
+  {cons} T.cons id l_par param l_brace impl ;
+  
+ function = 
+  {function} type id l_par param l_brace impl ;
   
  param = 
-  {one} type id |
+  {end} r_par |
+  {one} type id r_par |
   {another} type id comma param ; 
   
  impl =
@@ -102,29 +116,44 @@ Productions
   {define} P.define impl ;
   
 
- expr = 
-  {end} hash |
-  {term} term |
+ expr =  
+  {operation} operation |
   {function} function |
-  {plus} expr plus term |
-  {minus} expr dash term |
-  {mult} expr asterisk term |
-  {div} expr slash term |
-  {mod} expr percent term |
-  {if} [if]:expr query [thenin]:l_brace [then]:impl |
-  {ifelse} [if]:expr query [thenin]:l_brace [then]:impl colon [elsein]:l_brace [else]:impl |
-  {concat} [left]:expr comma [right]:term ;
+  {logic} logic |
+  {term} term |
+  {set} set ;
   
- function = 
-  {func_call} id l_par expr r_par ;
+ set =
+  {set} id equals expr ;
+  
+ func = 
+  {func} id l_par func_para ;
+  
+ func_para =
+  {end} r_par |
+  {one} term r_par |
+  {another} term comma func_para ;
+
+ logic =
+  {if} [if]:term query [thenin]:l_brace [then]:impl |
+  {ifelse} [if]:term query [thenin]:l_brace [then]:impl colon [elsein]:l_brace [else]:impl ;
+
+ operation = 
+  {same} [left]:term is [right]:expr |
+  {plus} [left]:term plus [right]:expr |
+  {minus} [left]:term minus [right]:expr |
+  {mult} [left]:term star [right]:expr |
+  {div} [left]:term slash [right]:expr |
+  {mod} [left]:term percent [right]:expr ; 
 
  term = 
+  {expr} l_par expr r_par |
   {id} id |
-  {type} l_arrow id r_arrow
   {number} number |
   {null} T.null |
-  {bool} T.bool |
-  {expr} l_par expr r_par ;
+  {bool} T.bool ;
    
-   
+ type =
+  {void} l_arrow void r_arrow |
+  {type} l_arrow id r_arrow ;
 

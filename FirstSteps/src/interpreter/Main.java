@@ -22,7 +22,7 @@ public class Main {
 		}
 		try {
 			Lexer lexer = new Lexer(new PushbackReader(new FileReader(
-					"testCode.fs")
+					"testCodeFS")
 			// new InputStreamReader(System.in)
 			// new StringReader("1?2:3 ")
 					));

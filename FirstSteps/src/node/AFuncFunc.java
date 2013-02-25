@@ -5,56 +5,56 @@ package node;
 import analysis.*;
 
 @SuppressWarnings("nls")
-public final class AMinusExpr extends PExpr
+public final class AFuncFunc extends PFunc
 {
-    private PExpr _expr_;
-    private TDash _dash_;
-    private PTerm _term_;
+    private TId _id_;
+    private TLPar _lPar_;
+    private PFuncPara _funcPara_;
 
-    public AMinusExpr()
+    public AFuncFunc()
     {
         // Constructor
     }
 
-    public AMinusExpr(
-        @SuppressWarnings("hiding") PExpr _expr_,
-        @SuppressWarnings("hiding") TDash _dash_,
-        @SuppressWarnings("hiding") PTerm _term_)
+    public AFuncFunc(
+        @SuppressWarnings("hiding") TId _id_,
+        @SuppressWarnings("hiding") TLPar _lPar_,
+        @SuppressWarnings("hiding") PFuncPara _funcPara_)
     {
         // Constructor
-        setExpr(_expr_);
+        setId(_id_);
 
-        setDash(_dash_);
+        setLPar(_lPar_);
 
-        setTerm(_term_);
+        setFuncPara(_funcPara_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AMinusExpr(
-            cloneNode(this._expr_),
-            cloneNode(this._dash_),
-            cloneNode(this._term_));
+        return new AFuncFunc(
+            cloneNode(this._id_),
+            cloneNode(this._lPar_),
+            cloneNode(this._funcPara_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAMinusExpr(this);
+        ((Analysis) sw).caseAFuncFunc(this);
     }
 
-    public PExpr getExpr()
+    public TId getId()
     {
-        return this._expr_;
+        return this._id_;
     }
 
-    public void setExpr(PExpr node)
+    public void setId(TId node)
     {
-        if(this._expr_ != null)
+        if(this._id_ != null)
         {
-            this._expr_.parent(null);
+            this._id_.parent(null);
         }
 
         if(node != null)
@@ -67,19 +67,19 @@ public final class AMinusExpr extends PExpr
             node.parent(this);
         }
 
-        this._expr_ = node;
+        this._id_ = node;
     }
 
-    public TDash getDash()
+    public TLPar getLPar()
     {
-        return this._dash_;
+        return this._lPar_;
     }
 
-    public void setDash(TDash node)
+    public void setLPar(TLPar node)
     {
-        if(this._dash_ != null)
+        if(this._lPar_ != null)
         {
-            this._dash_.parent(null);
+            this._lPar_.parent(null);
         }
 
         if(node != null)
@@ -92,19 +92,19 @@ public final class AMinusExpr extends PExpr
             node.parent(this);
         }
 
-        this._dash_ = node;
+        this._lPar_ = node;
     }
 
-    public PTerm getTerm()
+    public PFuncPara getFuncPara()
     {
-        return this._term_;
+        return this._funcPara_;
     }
 
-    public void setTerm(PTerm node)
+    public void setFuncPara(PFuncPara node)
     {
-        if(this._term_ != null)
+        if(this._funcPara_ != null)
         {
-            this._term_.parent(null);
+            this._funcPara_.parent(null);
         }
 
         if(node != null)
@@ -117,37 +117,37 @@ public final class AMinusExpr extends PExpr
             node.parent(this);
         }
 
-        this._term_ = node;
+        this._funcPara_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._expr_)
-            + toString(this._dash_)
-            + toString(this._term_);
+            + toString(this._id_)
+            + toString(this._lPar_)
+            + toString(this._funcPara_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._expr_ == child)
+        if(this._id_ == child)
         {
-            this._expr_ = null;
+            this._id_ = null;
             return;
         }
 
-        if(this._dash_ == child)
+        if(this._lPar_ == child)
         {
-            this._dash_ = null;
+            this._lPar_ = null;
             return;
         }
 
-        if(this._term_ == child)
+        if(this._funcPara_ == child)
         {
-            this._term_ = null;
+            this._funcPara_ = null;
             return;
         }
 
@@ -158,21 +158,21 @@ public final class AMinusExpr extends PExpr
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._expr_ == oldChild)
+        if(this._id_ == oldChild)
         {
-            setExpr((PExpr) newChild);
+            setId((TId) newChild);
             return;
         }
 
-        if(this._dash_ == oldChild)
+        if(this._lPar_ == oldChild)
         {
-            setDash((TDash) newChild);
+            setLPar((TLPar) newChild);
             return;
         }
 
-        if(this._term_ == oldChild)
+        if(this._funcPara_ == oldChild)
         {
-            setTerm((PTerm) newChild);
+            setFuncPara((PFuncPara) newChild);
             return;
         }
 
