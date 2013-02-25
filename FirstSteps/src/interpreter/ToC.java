@@ -5,7 +5,6 @@ package interpreter;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -17,19 +16,31 @@ import analysis.DepthFirstAdapter;
  * 
  */
 public class ToC extends DepthFirstAdapter {
-
+	public StringBuffer output = new StringBuffer();
+	
+	private StructState currentStruct = null;
+	
 	Set<String> includes = new HashSet<String>();
 	Map<String, AFunctionFunction> functions = new HashMap<String, AFunctionFunction>();
 	Map<String, AStructStruct> classes = new HashMap<String, AStructStruct>();
 	//Map<String, AVardef> globalVariables = new HashMap<String, V>
 	
 
+	
+	private static final String CONST_INCLUDE = "#include";
 	/* (non-Javadoc)
 	 * @see analysis.DepthFirstAdapter#caseAIncludeProgram(node.AIncludeProgram)
 	 */
 	@Override
 	public void caseAIncludeProgram(AIncludeProgram node) {
 		includes.add(node.getId().getText());
+		
+		// generate Code
+		output.append(CONST_INCLUDE);
+		output.append(" ");
+		output.append("<");
+		output.append(node.getId().getText());
+		output.append(".h>\n");
 	}
 
 	/* (non-Javadoc)
@@ -77,12 +88,23 @@ public class ToC extends DepthFirstAdapter {
 		super.caseAVarSetDefine(node);
 	}
 
+	private static final String CONST_STRUCT = "struct"; 
+	
 	/* (non-Javadoc)
 	 * @see analysis.DepthFirstAdapter#caseAStructStruct(node.AStructStruct)
 	 */
 	@Override
 	public void caseAStructStruct(AStructStruct node) {
-		this.classes.put(node.getId().getText(), node);
+		String id = node.getId().getText();
+		currentStruct = new StructState(node);
+		
+		this.classes.put(id, node);
+		
+		// generate Code
+		output.append(CONST_STRUCT);
+		output.append(" ");
+		output.append(id);
+		output.append('{');
 	}
 
 	/* (non-Javadoc)
@@ -90,8 +112,13 @@ public class ToC extends DepthFirstAdapter {
 	 */
 	@Override
 	public void caseAEndStructBody(AEndStructBody node) {
-		// TODO Auto-generated method stub
-		super.caseAEndStructBody(node);
+		if (currentStruct == null)
+			throw new SemanticException("No Struct to end here!");
+			
+		output.append("// END STRUCT ");
+		output.append(currentStruct.getStruct().getId().getText());
+		
+		currentStruct = null;
 	}
 
 	/* (non-Javadoc)
@@ -99,8 +126,8 @@ public class ToC extends DepthFirstAdapter {
 	 */
 	@Override
 	public void caseADefineStructBody(ADefineStructBody node) {
-		// TODO Auto-generated method stub
-		super.caseADefineStructBody(node);
+		if (currentStruct == null)
+			throw new SemanticException("No beginning Struct, why should there be a body? There are no bodies hidden here...");
 	}
 
 	/* (non-Javadoc)
@@ -108,17 +135,23 @@ public class ToC extends DepthFirstAdapter {
 	 */
 	@Override
 	public void caseAConstructorStructBody(AConstructorStructBody node) {
-		// TODO Auto-generated method stub
-		super.caseAConstructorStructBody(node);
+		
 	}
 
+	
+	private final static String CONST_VOID = "void";
 	/* (non-Javadoc)
 	 * @see analysis.DepthFirstAdapter#caseAConsConstructor(node.AConsConstructor)
 	 */
 	@Override
 	public void caseAConsConstructor(AConsConstructor node) {
-		// TODO Auto-generated method stub
-		super.caseAConsConstructor(node);
+		if(currentStruct == null)
+			throw new SemanticException("No parent struct!");
+		
+		output.append(CONST_VOID);
+		output.append(' ');
+		output.append("new_");
+		output.append(currentStruct.getStruct().getId().getText());
 	}
 
 	/* (non-Javadoc)
