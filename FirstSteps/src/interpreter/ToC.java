@@ -107,8 +107,9 @@ public class ToC extends DepthFirstAdapter {
 	 */
 	@Override
 	public void caseAVarSetDefine(AVarSetDefine node) {
-		// TODO Auto-generated method stub
-		super.caseAVarSetDefine(node);
+		node.getType().apply(this);
+		output.append(' ');
+		node.getSet().apply(this);
 	}
 
 	private static final String CONST_STRUCT = "struct";
@@ -145,20 +146,18 @@ public class ToC extends DepthFirstAdapter {
 			throw new SemanticException("No Struct to end here!");
 
 		String currentID = currentStruct.getStruct().getId().getText();
-		
-		if (!currentStruct.isConstrCreated())
-		{
-			
+
+		if (!currentStruct.isConstrCreated()) {
+
 		}
-		
+
 		output.append(CONST_VOID);
 		output.append(" destroy_");
 		output.append(currentID);
 		output.append('(');
 		output.append(currentID);
 		output.append("* this) {\nfree(this);\n}\n");
-		
-		
+
 		output.append("// END STRUCT ");
 		output.append(currentID);
 		output.append('\n');
@@ -250,6 +249,8 @@ public class ToC extends DepthFirstAdapter {
 		output.append('(');
 		node.getParam().apply(this);
 		output.append(")\n{\n");
+		node.getImpl().apply(this);
+		output.append("\n}\n");
 	}
 
 	/*
@@ -270,11 +271,9 @@ public class ToC extends DepthFirstAdapter {
 	 */
 	@Override
 	public void caseAOneParam(AOneParam node) {
-		output.append('(');
 		node.getType().apply(this);
 		output.append(' ');
 		output.append(node.getId().getText());
-		output.append(')');
 	}
 
 	/*
@@ -283,9 +282,11 @@ public class ToC extends DepthFirstAdapter {
 	 * @see analysis.DepthFirstAdapter#caseAAnotherParam(node.AAnotherParam)
 	 */
 	@Override
-	public void caseAAnotherParam(AAnotherParam node) {
-		output.append(", ");
+	public void caseAAnotherParam(AAnotherParam node) {		
+		node.getType().apply(this);
+		output.append(' ');
 		output.append(node.getId().getText());
+		output.append(", ");
 		node.getParam().apply(this);
 	}
 
