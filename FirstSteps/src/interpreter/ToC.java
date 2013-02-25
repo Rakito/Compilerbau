@@ -3,6 +3,10 @@
  */
 package interpreter;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import node.*;
 import analysis.DepthFirstAdapter;
 
@@ -11,6 +15,404 @@ import analysis.DepthFirstAdapter;
  * 
  */
 public class ToC extends DepthFirstAdapter {
+
+	Set<String> includeSet = new HashSet<String>();
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseAIncludeProgram(node.AIncludeProgram)
+	 */
+	@Override
+	public void caseAIncludeProgram(AIncludeProgram node) {
+		
+		includeSet.add(node.getId().getText());
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseADefineProgram(node.ADefineProgram)
+	 */
+	@Override
+	public void caseADefineProgram(ADefineProgram node) {
+		// TODO Auto-generated method stub
+		super.caseADefineProgram(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseAStructProgram(node.AStructProgram)
+	 */
+	@Override
+	public void caseAStructProgram(AStructProgram node) {
+		// TODO Auto-generated method stub
+		super.caseAStructProgram(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseAFunctionProgram(node.AFunctionProgram)
+	 */
+	@Override
+	public void caseAFunctionProgram(AFunctionProgram node) {
+		// TODO Auto-generated method stub
+		super.caseAFunctionProgram(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseAVarDefine(node.AVarDefine)
+	 */
+	@Override
+	public void caseAVarDefine(AVarDefine node) {
+		// TODO Auto-generated method stub
+		super.caseAVarDefine(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseAVarSetDefine(node.AVarSetDefine)
+	 */
+	@Override
+	public void caseAVarSetDefine(AVarSetDefine node) {
+		// TODO Auto-generated method stub
+		super.caseAVarSetDefine(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseAStructStruct(node.AStructStruct)
+	 */
+	@Override
+	public void caseAStructStruct(AStructStruct node) {
+		// TODO Auto-generated method stub
+		super.caseAStructStruct(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseAEndStructBody(node.AEndStructBody)
+	 */
+	@Override
+	public void caseAEndStructBody(AEndStructBody node) {
+		// TODO Auto-generated method stub
+		super.caseAEndStructBody(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseADefineStructBody(node.ADefineStructBody)
+	 */
+	@Override
+	public void caseADefineStructBody(ADefineStructBody node) {
+		// TODO Auto-generated method stub
+		super.caseADefineStructBody(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseAConstructorStructBody(node.AConstructorStructBody)
+	 */
+	@Override
+	public void caseAConstructorStructBody(AConstructorStructBody node) {
+		// TODO Auto-generated method stub
+		super.caseAConstructorStructBody(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseAConsConstructor(node.AConsConstructor)
+	 */
+	@Override
+	public void caseAConsConstructor(AConsConstructor node) {
+		// TODO Auto-generated method stub
+		super.caseAConsConstructor(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseAFunctionFunction(node.AFunctionFunction)
+	 */
+	@Override
+	public void caseAFunctionFunction(AFunctionFunction node) {
+		// TODO Auto-generated method stub
+		super.caseAFunctionFunction(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseAEndParam(node.AEndParam)
+	 */
+	@Override
+	public void caseAEndParam(AEndParam node) {
+		// TODO Auto-generated method stub
+		super.caseAEndParam(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseAOneParam(node.AOneParam)
+	 */
+	@Override
+	public void caseAOneParam(AOneParam node) {
+		// TODO Auto-generated method stub
+		super.caseAOneParam(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseAAnotherParam(node.AAnotherParam)
+	 */
+	@Override
+	public void caseAAnotherParam(AAnotherParam node) {
+		// TODO Auto-generated method stub
+		super.caseAAnotherParam(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseAEndImpl(node.AEndImpl)
+	 */
+	@Override
+	public void caseAEndImpl(AEndImpl node) {
+		// TODO Auto-generated method stub
+		super.caseAEndImpl(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseAReturnImpl(node.AReturnImpl)
+	 */
+	@Override
+	public void caseAReturnImpl(AReturnImpl node) {
+		// TODO Auto-generated method stub
+		super.caseAReturnImpl(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseAExprImpl(node.AExprImpl)
+	 */
+	@Override
+	public void caseAExprImpl(AExprImpl node) {
+		// TODO Auto-generated method stub
+		super.caseAExprImpl(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseADefineImpl(node.ADefineImpl)
+	 */
+	@Override
+	public void caseADefineImpl(ADefineImpl node) {
+		// TODO Auto-generated method stub
+		super.caseADefineImpl(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseAOperationExpr(node.AOperationExpr)
+	 */
+	@Override
+	public void caseAOperationExpr(AOperationExpr node) {
+		// TODO Auto-generated method stub
+		super.caseAOperationExpr(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseAFuncExpr(node.AFuncExpr)
+	 */
+	@Override
+	public void caseAFuncExpr(AFuncExpr node) {
+		// TODO Auto-generated method stub
+		super.caseAFuncExpr(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseALogicExpr(node.ALogicExpr)
+	 */
+	@Override
+	public void caseALogicExpr(ALogicExpr node) {
+		// TODO Auto-generated method stub
+		super.caseALogicExpr(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseATermExpr(node.ATermExpr)
+	 */
+	@Override
+	public void caseATermExpr(ATermExpr node) {
+		// TODO Auto-generated method stub
+		super.caseATermExpr(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseASetExpr(node.ASetExpr)
+	 */
+	@Override
+	public void caseASetExpr(ASetExpr node) {
+		// TODO Auto-generated method stub
+		super.caseASetExpr(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseASetSet(node.ASetSet)
+	 */
+	@Override
+	public void caseASetSet(ASetSet node) {
+		// TODO Auto-generated method stub
+		super.caseASetSet(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseAFuncFunc(node.AFuncFunc)
+	 */
+	@Override
+	public void caseAFuncFunc(AFuncFunc node) {
+		// TODO Auto-generated method stub
+		super.caseAFuncFunc(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseAEndFuncPara(node.AEndFuncPara)
+	 */
+	@Override
+	public void caseAEndFuncPara(AEndFuncPara node) {
+		// TODO Auto-generated method stub
+		super.caseAEndFuncPara(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseAOneFuncPara(node.AOneFuncPara)
+	 */
+	@Override
+	public void caseAOneFuncPara(AOneFuncPara node) {
+		// TODO Auto-generated method stub
+		super.caseAOneFuncPara(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseAAnotherFuncPara(node.AAnotherFuncPara)
+	 */
+	@Override
+	public void caseAAnotherFuncPara(AAnotherFuncPara node) {
+		// TODO Auto-generated method stub
+		super.caseAAnotherFuncPara(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseAIfLogic(node.AIfLogic)
+	 */
+	@Override
+	public void caseAIfLogic(AIfLogic node) {
+		// TODO Auto-generated method stub
+		super.caseAIfLogic(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseAIfelseLogic(node.AIfelseLogic)
+	 */
+	@Override
+	public void caseAIfelseLogic(AIfelseLogic node) {
+		// TODO Auto-generated method stub
+		super.caseAIfelseLogic(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseASameOperation(node.ASameOperation)
+	 */
+	@Override
+	public void caseASameOperation(ASameOperation node) {
+		// TODO Auto-generated method stub
+		super.caseASameOperation(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseAPlusOperation(node.APlusOperation)
+	 */
+	@Override
+	public void caseAPlusOperation(APlusOperation node) {
+		// TODO Auto-generated method stub
+		super.caseAPlusOperation(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseAMinusOperation(node.AMinusOperation)
+	 */
+	@Override
+	public void caseAMinusOperation(AMinusOperation node) {
+		// TODO Auto-generated method stub
+		super.caseAMinusOperation(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseAMultOperation(node.AMultOperation)
+	 */
+	@Override
+	public void caseAMultOperation(AMultOperation node) {
+		// TODO Auto-generated method stub
+		super.caseAMultOperation(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseADivOperation(node.ADivOperation)
+	 */
+	@Override
+	public void caseADivOperation(ADivOperation node) {
+		// TODO Auto-generated method stub
+		super.caseADivOperation(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseAModOperation(node.AModOperation)
+	 */
+	@Override
+	public void caseAModOperation(AModOperation node) {
+		// TODO Auto-generated method stub
+		super.caseAModOperation(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseAExprTerm(node.AExprTerm)
+	 */
+	@Override
+	public void caseAExprTerm(AExprTerm node) {
+		// TODO Auto-generated method stub
+		super.caseAExprTerm(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseAIdTerm(node.AIdTerm)
+	 */
+	@Override
+	public void caseAIdTerm(AIdTerm node) {
+		// TODO Auto-generated method stub
+		super.caseAIdTerm(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseANumberTerm(node.ANumberTerm)
+	 */
+	@Override
+	public void caseANumberTerm(ANumberTerm node) {
+		// TODO Auto-generated method stub
+		super.caseANumberTerm(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseANullTerm(node.ANullTerm)
+	 */
+	@Override
+	public void caseANullTerm(ANullTerm node) {
+		// TODO Auto-generated method stub
+		super.caseANullTerm(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseABoolTerm(node.ABoolTerm)
+	 */
+	@Override
+	public void caseABoolTerm(ABoolTerm node) {
+		// TODO Auto-generated method stub
+		super.caseABoolTerm(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseAVoidType(node.AVoidType)
+	 */
+	@Override
+	public void caseAVoidType(AVoidType node) {
+		// TODO Auto-generated method stub
+		super.caseAVoidType(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseATypeType(node.ATypeType)
+	 */
+	@Override
+	public void caseATypeType(ATypeType node) {
+		// TODO Auto-generated method stub
+		super.caseATypeType(node);
+	}
 
 	
 //
