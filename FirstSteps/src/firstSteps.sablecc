@@ -19,6 +19,7 @@ Tokens
  break = 'break'; 
  returnt = 'return';
  null = 'null';
+ include = 'include';
 
  call = 'call';
  bool = true | false;
@@ -79,16 +80,20 @@ Productions
  program = 
   {eof} T.end |
   {function} function |
+  {include} T.include id program |
   {define} P.define program ;
 
  define = 
   {var} T.define type id |
   {vardefine} T.define type id equals term |
   {set} id equals term |
-  {function} T.func l_arrow [return]:id r_arrow [name]:id l_par term r_par l_brace impl |
-  {cons} T.cons id l_par term r_par l_brace impl |
+  {function} type id l_par param r_par l_brace impl |
+  {cons} T.cons id l_par param r_par l_brace impl |
   {nil} T.cons id l_par r_par l_brace impl ;
   
+ param = 
+  {one} type id |
+  {another} type id comma param ; 
   
  impl =
   {end} r_brace |
@@ -100,14 +105,14 @@ Productions
  expr = 
   {end} hash |
   {term} term |
-  {nativc} ccode |
   {function} function |
   {plus} expr plus term |
   {minus} expr dash term |
   {mult} expr asterisk term |
   {div} expr slash term |
   {mod} expr percent term |
-  {if} [if]:expr query [thenin]:l_brace [then]:impl colon [elsein]:l_brace [else]:impl |
+  {if} [if]:expr query [thenin]:l_brace [then]:impl |
+  {ifelse} [if]:expr query [thenin]:l_brace [then]:impl colon [elsein]:l_brace [else]:impl |
   {concat} [left]:expr comma [right]:term ;
   
  function = 
