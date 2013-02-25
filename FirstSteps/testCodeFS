@@ -1,0 +1,44 @@
+include stdio.h
+include stdlib.h
+
+define <int> lastUsedNumber = 0
+define <int> facFive = 0
+
+func <int>main(<char*> argv, <int*> argc)
+{
+	call calcFac()
+	call printf("The last used Number is %d\n", lastUsedNumber)
+	return 0
+}
+
+func <void>calcFac()
+{
+	set facFive = fac(5)
+	call printf("The faculty of 5 is %d\n", facFive)
+}
+
+func <int>fac(<int> n)
+{
+	set lastUsedNumber = n
+	(n == 1)?{return 0}:{
+	(n == 0)?{return 1}:{
+	
+	return (n * fac(n - 1))}}
+}
+
+struct Olaf {
+	set <int> count
+	
+	
+cons Olaf()
+{
+	set count = 42;
+}
+
+cons Olaf(<int> count)
+{
+	set count = count;
+}
+
+}
+
