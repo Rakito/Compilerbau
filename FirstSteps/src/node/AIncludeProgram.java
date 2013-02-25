@@ -9,6 +9,7 @@ public final class AIncludeProgram extends PProgram
 {
     private TInclude _include_;
     private TId _id_;
+    private TSemicolon _semicolon_;
     private PProgram _program_;
 
     public AIncludeProgram()
@@ -19,12 +20,15 @@ public final class AIncludeProgram extends PProgram
     public AIncludeProgram(
         @SuppressWarnings("hiding") TInclude _include_,
         @SuppressWarnings("hiding") TId _id_,
+        @SuppressWarnings("hiding") TSemicolon _semicolon_,
         @SuppressWarnings("hiding") PProgram _program_)
     {
         // Constructor
         setInclude(_include_);
 
         setId(_id_);
+
+        setSemicolon(_semicolon_);
 
         setProgram(_program_);
 
@@ -36,6 +40,7 @@ public final class AIncludeProgram extends PProgram
         return new AIncludeProgram(
             cloneNode(this._include_),
             cloneNode(this._id_),
+            cloneNode(this._semicolon_),
             cloneNode(this._program_));
     }
 
@@ -95,6 +100,31 @@ public final class AIncludeProgram extends PProgram
         this._id_ = node;
     }
 
+    public TSemicolon getSemicolon()
+    {
+        return this._semicolon_;
+    }
+
+    public void setSemicolon(TSemicolon node)
+    {
+        if(this._semicolon_ != null)
+        {
+            this._semicolon_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._semicolon_ = node;
+    }
+
     public PProgram getProgram()
     {
         return this._program_;
@@ -126,6 +156,7 @@ public final class AIncludeProgram extends PProgram
         return ""
             + toString(this._include_)
             + toString(this._id_)
+            + toString(this._semicolon_)
             + toString(this._program_);
     }
 
@@ -142,6 +173,12 @@ public final class AIncludeProgram extends PProgram
         if(this._id_ == child)
         {
             this._id_ = null;
+            return;
+        }
+
+        if(this._semicolon_ == child)
+        {
+            this._semicolon_ = null;
             return;
         }
 
@@ -167,6 +204,12 @@ public final class AIncludeProgram extends PProgram
         if(this._id_ == oldChild)
         {
             setId((TId) newChild);
+            return;
+        }
+
+        if(this._semicolon_ == oldChild)
+        {
+            setSemicolon((TSemicolon) newChild);
             return;
         }
 
