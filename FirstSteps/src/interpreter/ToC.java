@@ -3,8 +3,10 @@
  */
 package interpreter;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import node.*;
@@ -16,15 +18,18 @@ import analysis.DepthFirstAdapter;
  */
 public class ToC extends DepthFirstAdapter {
 
-	Set<String> includeSet = new HashSet<String>();
+	Set<String> includes = new HashSet<String>();
+	Map<String, AFunctionFunction> functions = new HashMap<String, AFunctionFunction>();
+	Map<String, AStructStruct> classes = new HashMap<String, AStructStruct>();
+	//Map<String, AVardef> globalVariables = new HashMap<String, V>
+	
 
 	/* (non-Javadoc)
 	 * @see analysis.DepthFirstAdapter#caseAIncludeProgram(node.AIncludeProgram)
 	 */
 	@Override
 	public void caseAIncludeProgram(AIncludeProgram node) {
-		
-		includeSet.add(node.getId().getText());
+		includes.add(node.getId().getText());
 	}
 
 	/* (non-Javadoc)
@@ -77,8 +82,7 @@ public class ToC extends DepthFirstAdapter {
 	 */
 	@Override
 	public void caseAStructStruct(AStructStruct node) {
-		// TODO Auto-generated method stub
-		super.caseAStructStruct(node);
+		this.classes.put(node.getId().getText(), node);
 	}
 
 	/* (non-Javadoc)
@@ -122,8 +126,8 @@ public class ToC extends DepthFirstAdapter {
 	 */
 	@Override
 	public void caseAFunctionFunction(AFunctionFunction node) {
-		// TODO Auto-generated method stub
-		super.caseAFunctionFunction(node);
+		this.functions.put(node.getId().getText(), node);
+		// TODO: Process functions
 	}
 
 	/* (non-Javadoc)
