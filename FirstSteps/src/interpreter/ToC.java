@@ -339,8 +339,30 @@ public class ToC extends DepthFirstAdapter {
 
 		String currentID = currentStruct.getStruct().getId().getText();
 
+		/*
+		 * No constructor defined and where in body-run, so we generate a empty
+		 * constructor
+		 */
 		if (!currentStruct.isConstrCreated()) {
-			// TODO: empty konstruktor
+			output.append(currentID);
+			output.append("* ");
+			output.append("new_");
+			output.append(currentID);
+			output.append("()");
+			if (state == InterpreterState.body) {
+				// Allocation
+				output.append("\n{\n\t");
+				output.append(currentID);
+				output.append("* this = (");
+				output.append(currentID);
+				output.append("*) malloc(sizeof(");
+				output.append(currentID);
+				output.append(");\n");
+				output.append("\treturn this;");
+				output.append("\n}\n");
+			} else {
+				output.append(";\n");
+			}
 		}
 
 		output.append(CONST_VOID);
@@ -632,7 +654,7 @@ public class ToC extends DepthFirstAdapter {
 	public void caseASetSet(ASetSet node) {
 		String currentID = node.getId().getText();
 
-		if (currentStruct != null) {
+		if (currentStruct != null && currentlyInFunction) {
 			if (currentStructVariableScope.containsKey(currentID)) {
 				output.append("this -> ");
 			} else {
@@ -651,7 +673,11 @@ public class ToC extends DepthFirstAdapter {
 		Variable var = checkVariable(currentID, AccessType.write);
 		output.append(" = ");
 		node.getTerm().apply(this);
-		output.append(";\n");
+		if (currentStruct != null && !currentlyInFunction) {
+			output.append("\n}\n");
+		} else {
+			output.append(";\n");
+		}
 		var.initialize();
 	}
 
