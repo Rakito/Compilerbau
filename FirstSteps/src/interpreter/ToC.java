@@ -744,8 +744,13 @@ public class ToC extends DepthFirstAdapter {
 	 */
 	@Override
 	public void caseAIfLogic(AIfLogic node) {
-		// TODO Auto-generated method stub
-		super.caseAIfLogic(node);
+		output.append(CONST_IF);
+		output.append('(');
+		node.getQuery().apply(this);
+		output.append(')');
+		output.append("\n{\n");
+		node.getIf().apply(this);
+		output.append("\n}\n");
 	}
 
 	private static final String CONST_IF = "if";
@@ -769,6 +774,23 @@ public class ToC extends DepthFirstAdapter {
 		output.append("\n{\n");
 		node.getElse().apply(this);
 		output.append("\n}\n");
+	}
+
+	private static final String WHILE = "while";
+	
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseAWhileLogic(node.AWhileLogic)
+	 */
+	@Override
+	public void caseAWhileLogic(AWhileLogic node) {
+		output.append(WHILE);
+		output.append('(');
+		node.getTerm().apply(this);
+		output.append(')');
+		output.append("\n{\n");
+		node.getImpl().apply(this);
+		output.append("\n}\n");
+		
 	}
 
 	/*
