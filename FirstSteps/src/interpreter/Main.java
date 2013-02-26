@@ -59,6 +59,7 @@ public class Main {
 		}
 
 		printWarnings(interp.getWarnings());
+		interp.resetWarnings();
 
 		System.out.println("Compile completed!");
 	}

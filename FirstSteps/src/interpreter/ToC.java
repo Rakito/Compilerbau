@@ -521,7 +521,6 @@ public class ToC extends DepthFirstAdapter {
 		this.functions.put(node.getId().getText(), node);
 		currentlyInFunction = true;
 
-		// generate code
 		node.getType().apply(this);
 		output.append(' ');
 		output.append(node.getId().getText());
@@ -797,7 +796,7 @@ public class ToC extends DepthFirstAdapter {
 	public void caseAOneFuncPara(AOneFuncPara node) {
 		if (signatureOnly) {
 			// TODO: I need the type here
-			return;
+			throw new RuntimeException("This is not implemented due to missing types!");
 		}
 		node.getTerm().apply(this);
 	}
