@@ -147,9 +147,13 @@ public class ToC extends DepthFirstAdapter {
 	}
 
 	private void checkUsed(Map<String, Variable> vars) {
+		if (state != InterpreterState.body)
+			return;
+		
 		for (Entry<String, Variable> var : vars.entrySet()) {
 			if (!var.getValue().isUsed()) {
-				throw new SemanticException("Variable "+ var.getKey() + " is unused!");
+				throw new SemanticException("Variable " + var.getKey()
+						+ " is unused!");
 			}
 		}
 	}
@@ -647,10 +651,11 @@ public class ToC extends DepthFirstAdapter {
 		}
 
 		output.append(currentID);
-		checkVariable(currentID);
+		Variable var = checkVariable(currentID);
 		output.append(" = ");
 		node.getTerm().apply(this);
 		output.append(";\n");
+		var.initialize();
 	}
 
 	private Variable checkVariable(String currentID) {

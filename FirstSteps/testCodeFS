@@ -1,10 +1,10 @@
 include stdio ;
 include stdlib ;
 
- <int> lastUsedNumber = 0 ;
+ <int> lastUsedNumber;
  <int> facFive = 0 ;
 
- <int>main(<char*> argv, <int*> argc)
+ <int>main()
 {
 	call calcFac(null) 
 	<Olaf> oli = ( new Olaf() ) ;
@@ -19,9 +19,9 @@ include stdlib ;
 
 }
 
- <int>fac(<int> n, <olaf> o)
+ <int>fac(<int> n)
 {
-	 lastUsedNumber = n ;
+	 n = n ;
 	(n is 1)?{return 0}
 	(n is 0)?{return 1}
 
@@ -45,7 +45,7 @@ include stdlib ;
 		count = ( 17 + 4 ) ;
 	}
 	
-	cons Olaf(<int> c, <olaf> o)
+	cons Olaf(<int> c)
 	{
 		count = c;
 	}
