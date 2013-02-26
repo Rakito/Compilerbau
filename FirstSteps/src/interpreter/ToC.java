@@ -131,7 +131,7 @@ public class ToC extends DepthFirstAdapter {
 		String currentID = node.getId().getText();
 		Variable currentVar = checkVariable(currentID, AccessType.read);
 
-		output.append("\tdestroy_");
+		output.append("destroy_");
 		output.append(currentVar.getType());
 		output.append('(');
 		output.append(currentID);
@@ -380,7 +380,7 @@ public class ToC extends DepthFirstAdapter {
 			output.append("()");
 			if (state == InterpreterState.body) {
 				// Allocation
-				output.append("\n{\n\t");
+				output.append("\n{\n");
 				output.append("struct ");
 				output.append(currentID);
 				output.append("* this = (");
@@ -390,7 +390,7 @@ public class ToC extends DepthFirstAdapter {
 				output.append("struct ");
 				output.append(currentID);
 				output.append("));\n");
-				output.append("\treturn this;");
+				output.append("return this;");
 				output.append("\n}\n");
 			} else {
 				output.append(";\n");
@@ -405,7 +405,7 @@ public class ToC extends DepthFirstAdapter {
 		output.append(currentID);
 		output.append("* this)");
 		if (state == InterpreterState.body) {
-			output.append("{\n\tfree(this);\n}\n");
+			output.append("{\nfree(this);\n}\n");
 		} else {
 			output.append(";\n");
 		}
@@ -491,7 +491,7 @@ public class ToC extends DepthFirstAdapter {
 			cleanupAfterFunction();
 			return;
 		}
-		output.append("\n{\n\t");
+		output.append("\n{\n");
 		// Allocation
 		output.append("struct ");
 		output.append(currentID);
@@ -504,7 +504,7 @@ public class ToC extends DepthFirstAdapter {
 		output.append("));\n");
 
 		node.getImpl().apply(this);
-		output.append("\treturn this;");
+		output.append("return this;");
 		output.append("\n}\n");
 
 		cleanupAfterFunction();
@@ -530,7 +530,7 @@ public class ToC extends DepthFirstAdapter {
 		if (state == InterpreterState.head) {
 			output.append(";\n");
 		} else {
-			output.append("\n{\n\t");
+			output.append("\n{\n");
 			node.getImpl().apply(this);
 			output.append("\n}\n");
 		}
@@ -615,7 +615,7 @@ public class ToC extends DepthFirstAdapter {
 	 */
 	@Override
 	public void caseAReturnImpl(AReturnImpl node) {
-		output.append("\treturn ");
+		output.append("return ");
 		node.getExpr().apply(this);
 		output.append(";\n");
 	}
