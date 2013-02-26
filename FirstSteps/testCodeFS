@@ -7,8 +7,7 @@ include stdlib ;
  <int>main()
 {
 	call calcFac(null) 
-	<Olaf> oli = ( new Olaf() ) ;
-	destroy oli
+	
 
 	return 0
 }
@@ -38,17 +37,12 @@ include stdlib ;
 
  Olaf {
  	
-	 <int> count ;
+	 <int> count = 5;
+	 
+	 cons Olaf (<int> c){
+	 	count = c;
+	 } 
 	
-	cons Olaf()
-	{
-		count = ( 17 + 4 ) ;
-	}
-	
-	cons Olaf(<int> c)
-	{
-		count = c;
-	}
  }
 
 end

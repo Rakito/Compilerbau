@@ -289,6 +289,9 @@ public class ToC extends DepthFirstAdapter {
 					extractType(node.getType()), false);
 		}
 
+		if (state != InterpreterState.head && !currentlyInFunction)
+			return;
+
 		node.getType().apply(this);
 		output.append(' ');
 		node.getSet().apply(this);
@@ -701,6 +704,8 @@ public class ToC extends DepthFirstAdapter {
 									+ var.getId()
 									+ " is not initialized, but is used as a right-hand-side of an assignment!");
 				}
+			} else {
+				var.initialize();
 			}
 			var.Use();
 			return var;
