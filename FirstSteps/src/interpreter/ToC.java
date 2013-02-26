@@ -3,12 +3,17 @@
  */
 package interpreter;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import javax.management.RuntimeErrorException;
 
 import node.*;
 import analysis.DepthFirstAdapter;
@@ -18,13 +23,92 @@ import analysis.DepthFirstAdapter;
  * 
  */
 public class ToC extends DepthFirstAdapter {
+	public ToC(String parentPath, String filename) {
+		String path = parentPath + System.getProperty("file.separator")
+				+ filename;
+		header_path = path + ".h";
+		body_path = path + ".c";
+	}
+
+	private void writeOut() throws IOException {
+		String path;
+		switch (state) {
+		case head: {
+			path = header_path;
+			break;
+		}
+		case body: {
+			path = body_path;
+			break;
+		}
+		default: {
+			throw new RuntimeException("Unhandled State! Contact Developer!");
+		}
+		}
+
+		Writer writer = new FileWriter(path);
+		writer.append(output.toString());
+		writer.close();
+		
+		output = new StringBuffer();
+	}
+
+	private String header_path = "";
+	private String body_path = "";
 	public StringBuffer output = new StringBuffer();
 
+	private InterpreterState state = null;
 	private StructState currentStruct = null;
 	private boolean currentlyInFunction = false;
+	/*
+	 * This represents the scope of all currently avaible global-local variables
+	 * variables
+	 */
 	public List<String> currentGlobalVariableScope = new ArrayList<String>();
-	public List<String> currentFunctionVariableScope = new ArrayList<String>();
+	/*
+	 * This represents the scope of all currently avaible struct-local defined
+	 * variables
+	 */
 	public List<String> currentStructVariableScope = new ArrayList<String>();
+
+	@Override
+	public void caseStart(Start node) {
+		if (state == null) {
+			state = InterpreterState.head;
+		}
+		switch (state) {
+		case head: {
+			state = InterpreterState.body;
+			break;
+		}
+		default: {
+			throw new RuntimeException("Unhandled State! Contact Developer!");
+		}
+		}
+
+		node.getPProgram().apply(this);
+	}
+
+	@Override
+	public void caseAEofProgram(AEofProgram node) {
+		cleanupAfterGlobal();
+		try {
+			writeOut();
+		} catch (IOException e) {
+			throw new RuntimeException("Unable to write file by state: "
+					+ state);
+		}
+	}
+
+	private void cleanupAfterGlobal() {
+		currentGlobalVariableScope = new ArrayList<String>();
+	}
+
+	/*
+	 * This represents the scope of all currently avaible function-local defined
+	 * variables
+	 */
+	public List<String> currentFunctionVariableScope = new ArrayList<String>();
 
 	Set<String> includes = new HashSet<String>();
 	Map<String, AFunctionFunction> functions = new HashMap<String, AFunctionFunction>();
@@ -501,7 +585,7 @@ public class ToC extends DepthFirstAdapter {
 		output.append('(');
 		node.getFuncPara().apply(this);
 		output.append(");\n");
-		
+
 	}
 
 	/*

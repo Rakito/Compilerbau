@@ -2,11 +2,7 @@ package interpreter;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PushbackReader;
-import java.io.StringReader;
-import java.util.Scanner;
-
 import lexer.Lexer;
 import node.Start;
 import parser.Parser;
@@ -37,24 +33,30 @@ public class Main {
 			System.out.println("Der Parser parst");
 
 			/* Get our Interpreter going. */
-			 interp = new ToC();
+			interp = new ToC("C:/users/FHoeborn", "olaf");
 			ast.apply(interp);
 
 			System.out.println(interp.output.toString());
-			System.out.println("FunctionScope: " + interp.currentFunctionVariableScope.toString());
-			System.out.println("GlobalScope: " + interp.currentGlobalVariableScope.toString());
-			System.out.println("StructScope: " + interp.currentStructVariableScope.toString());
+			System.out.println("FunctionScope: "
+					+ interp.currentFunctionVariableScope.toString());
+			System.out.println("GlobalScope: "
+					+ interp.currentGlobalVariableScope.toString());
+			System.out.println("StructScope: "
+					+ interp.currentStructVariableScope.toString());
 
 			// System.out.print(interp.cp.code.toString());
 
 		} catch (Exception e) {
 			System.out.println("Verkackt!");
-			if (interp != null){
-				System.out.println("FunctionScope: " + interp.currentFunctionVariableScope.toString());
-				System.out.println("GlobalScope: " + interp.currentGlobalVariableScope.toString());
-				System.out.println("StructScope: " + interp.currentStructVariableScope.toString());
+			if (interp != null) {
+				System.out.println("FunctionScope: "
+						+ interp.currentFunctionVariableScope.toString());
+				System.out.println("GlobalScope: "
+						+ interp.currentGlobalVariableScope.toString());
+				System.out.println("StructScope: "
+						+ interp.currentStructVariableScope.toString());
 			}
-			
+
 			e.printStackTrace();
 		}
 
