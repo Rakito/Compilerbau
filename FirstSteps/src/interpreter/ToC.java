@@ -73,7 +73,7 @@ public class ToC extends DepthFirstAdapter {
 	public List<String> currentStructVariableScope = new ArrayList<String>();
 
 	public Map<String, String> variableTypeMap = new HashMap<String, String>();
-	
+
 	@Override
 	public void caseStart(Start node) {
 		if (state == null) {
@@ -109,8 +109,14 @@ public class ToC extends DepthFirstAdapter {
 
 	@Override
 	public void caseADestroyFunc(ADestroyFunc node) {
-		// TODO Auto-generated method stub
-		super.caseADestroyFunc(node);
+		String currentID = node.getId().getText();
+		checkVariable(currentID);
+		String type = variableTypeMap.get(currentID);
+		output.append("\tdestroy_");
+		output.append(type);
+		output.append('(');
+		output.append(currentID);
+		output.append(");\n");
 	}
 
 	@Override
@@ -139,7 +145,7 @@ public class ToC extends DepthFirstAdapter {
 	}
 
 	private void cleanupAfterGlobal() {
-		for (String entry : currentGlobalVariableScope){
+		for (String entry : currentGlobalVariableScope) {
 			variableTypeMap.remove(entry);
 		}
 		currentGlobalVariableScope = new ArrayList<String>();
@@ -241,6 +247,7 @@ public class ToC extends DepthFirstAdapter {
 				throw new SemanticException("Variable " + currentID
 						+ " in this function already defined!");
 			currentFunctionVariableScope.add(currentID);
+			variableTypeMap.put(currentID, type);
 			return;
 		}
 		if (currentStruct != null) {
@@ -250,6 +257,7 @@ public class ToC extends DepthFirstAdapter {
 						+ currentStruct.getStruct().getId().getText()
 						+ "already defined!");
 			currentStructVariableScope.add(currentID);
+			variableTypeMap.put(currentID, type);
 			return;
 		}
 
@@ -258,7 +266,7 @@ public class ToC extends DepthFirstAdapter {
 					+ currentStruct.getStruct().getId().getText()
 					+ "already defined!");
 		currentGlobalVariableScope.add(currentID);
-		
+
 		variableTypeMap.put(currentID, type);
 	}
 
@@ -273,7 +281,8 @@ public class ToC extends DepthFirstAdapter {
 
 		if (set instanceof ASetSet) {
 			ASetSet setSet = (ASetSet) set;
-			addVariableToScope(setSet.getId().getText(), extractType(node.getType()));
+			addVariableToScope(setSet.getId().getText(),
+					extractType(node.getType()));
 		}
 
 		node.getType().apply(this);
@@ -281,10 +290,10 @@ public class ToC extends DepthFirstAdapter {
 		node.getSet().apply(this);
 	}
 
-	private String extractType(PType type){
-		return type.toString().substring(1, type.toString().indexOf('>'));
+	private String extractType(PType type) {
+		return type.toString().substring(2, type.toString().indexOf('>'));
 	}
-	
+
 	private static final String CONST_STRUCT = "struct";
 
 	/*
@@ -676,8 +685,8 @@ public class ToC extends DepthFirstAdapter {
 	 * @see analysis.DepthFirstAdapter#caseAOneFuncPara(node.AOneFuncPara)
 	 */
 	@Override
-	public void caseAOneFuncPara(AOneFuncPara node) {		
-		if (signatureOnly){
+	public void caseAOneFuncPara(AOneFuncPara node) {
+		if (signatureOnly) {
 			// TODO: I need the type here
 			return;
 		}
