@@ -4,6 +4,7 @@ Helpers
  any_character = [0x0 .. 0xfffff];
  true = 'TRUE' | 'true' ;
  false ='FALSE' | 'false' ;
+ null ='NULL' | 'null' ;
  star = '*';
  cstart = 'nativC>';
  cend = '<nativC';
@@ -19,7 +20,7 @@ Tokens
  where = 'where';
  break = 'break'; 
  returnt = 'return';
- null = 'null';
+ null = null ;
  include = 'include';
  void = 'void';
  is = 'is';
