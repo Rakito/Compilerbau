@@ -73,6 +73,10 @@ public interface Analysis extends Switch
     void caseTCall(TCall node);
     void caseTBool(TBool node);
     void caseTStruct(TStruct node);
+    void caseTWhile(TWhile node);
+    void caseTFor(TFor node);
+    void caseTNew(TNew node);
+    void caseTDestroy(TDestroy node);
     void caseTId(TId node);
     void caseTNumber(TNumber node);
     void caseTPlus(TPlus node);

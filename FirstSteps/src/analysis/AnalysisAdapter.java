@@ -435,6 +435,30 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseTWhile(TWhile node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTFor(TFor node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTNew(TNew node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTDestroy(TDestroy node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseTId(TId node)
     {
         defaultCase(node);

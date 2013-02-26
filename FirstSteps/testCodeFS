@@ -24,7 +24,8 @@ include stdlib ;
 	(n is 0)?{return 1}
 
 	
-	
+<int> result = ( n + call fac((n - 1)) ) ;
+
 	return null
 }
 
