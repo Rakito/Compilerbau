@@ -129,6 +129,7 @@ Productions
   
 
  expr =  
+  {print} at expr |
   {operation} operation |
   {func} P.func |
   {logic} logic |

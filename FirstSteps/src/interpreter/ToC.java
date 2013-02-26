@@ -28,6 +28,15 @@ public class ToC extends DepthFirstAdapter {
 		moduleName = filename;
 	}
 
+	/* (non-Javadoc)
+	 * @see analysis.DepthFirstAdapter#caseAPrintExpr(node.APrintExpr)
+	 */
+	@Override
+	public void caseAPrintExpr(APrintExpr node) {
+		// TODO Auto-generated method stub
+		super.caseAPrintExpr(node);
+	}
+
 	private void writeOut() throws IOException {
 		String path;
 		switch (state) {

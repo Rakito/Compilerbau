@@ -584,6 +584,31 @@ public class DepthFirstAdapter extends AnalysisAdapter
         outADefineImpl(node);
     }
 
+    public void inAPrintExpr(APrintExpr node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAPrintExpr(APrintExpr node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAPrintExpr(APrintExpr node)
+    {
+        inAPrintExpr(node);
+        if(node.getAt() != null)
+        {
+            node.getAt().apply(this);
+        }
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
+        }
+        outAPrintExpr(node);
+    }
+
     public void inAOperationExpr(AOperationExpr node)
     {
         defaultIn(node);

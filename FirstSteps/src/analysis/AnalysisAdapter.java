@@ -195,6 +195,12 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseAPrintExpr(APrintExpr node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseAOperationExpr(AOperationExpr node)
     {
         defaultCase(node);
