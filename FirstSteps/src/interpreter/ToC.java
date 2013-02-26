@@ -33,8 +33,9 @@ public class ToC extends DepthFirstAdapter {
 	 */
 	@Override
 	public void caseAPrintExpr(APrintExpr node) {
-		// TODO Auto-generated method stub
-		super.caseAPrintExpr(node);
+		output.append("printf(%d, ");
+		node.getExpr().apply(this);
+		output.append(");\n");
 	}
 
 	private void writeOut() throws IOException {
