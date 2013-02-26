@@ -35,9 +35,9 @@ public class ToC extends DepthFirstAdapter {
 
 	public void caseAPrintImpl(APrintImpl node) {
 		output.append("printf(\"%d\",");
-
 		node.getExpr().apply(this);
 		output.append(");\n");
+		node.getImpl().apply(this);
 	}
 
 	private void writeOut() throws IOException {
