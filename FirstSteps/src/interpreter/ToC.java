@@ -107,7 +107,7 @@ public class ToC extends DepthFirstAdapter {
 	@Override
 	public void caseADestroyFunc(ADestroyFunc node) {
 		String currentID = node.getId().getText();
-		Variable currentVar = checkVariable(currentID);
+		Variable currentVar = checkVariable(currentID, AccessType.read);
 
 		output.append("\tdestroy_");
 		output.append(currentVar.getType());
@@ -149,7 +149,7 @@ public class ToC extends DepthFirstAdapter {
 	private void checkUsed(Map<String, Variable> vars) {
 		if (state != InterpreterState.body)
 			return;
-		
+
 		for (Entry<String, Variable> var : vars.entrySet()) {
 			if (!var.getValue().isUsed()) {
 				throw new SemanticException("Variable " + var.getKey()
@@ -245,16 +245,19 @@ public class ToC extends DepthFirstAdapter {
 			}
 			output.append('\n');
 		}
-		addVariableToScope(currentID, extractType(node.getType()));
+		addVariableToScope(currentID, extractType(node.getType()), false);
 	}
 
-	private void addVariableToScope(String currentID, String type) {
+	private void addVariableToScope(String currentID, String type,
+			boolean isParam) {
+		Variable var = new Variable(currentID, type);
+		var.setInitialized(isParam);
+
 		if (currentlyInFunction) {
 			if (currentFunctionVariableScope.containsKey(currentID))
 				throw new SemanticException("Variable " + currentID
 						+ " in this function already defined!");
-			currentFunctionVariableScope.put(currentID, new Variable(currentID,
-					type));
+			currentFunctionVariableScope.put(currentID, var);
 			return;
 		}
 		if (currentStruct != null) {
@@ -263,8 +266,7 @@ public class ToC extends DepthFirstAdapter {
 						+ " in struct "
 						+ currentStruct.getStruct().getId().getText()
 						+ "already defined!");
-			currentStructVariableScope.put(currentID, new Variable(currentID,
-					type));
+			currentStructVariableScope.put(currentID, var);
 			return;
 		}
 
@@ -272,8 +274,7 @@ public class ToC extends DepthFirstAdapter {
 			throw new SemanticException("Variable " + currentID
 					+ currentStruct.getStruct().getId().getText()
 					+ "already defined!");
-		currentGlobalVariableScope
-				.put(currentID, new Variable(currentID, type));
+		currentGlobalVariableScope.put(currentID, var);
 	}
 
 	/*
@@ -288,7 +289,7 @@ public class ToC extends DepthFirstAdapter {
 		if (set instanceof ASetSet) {
 			ASetSet setSet = (ASetSet) set;
 			addVariableToScope(setSet.getId().getText(),
-					extractType(node.getType()));
+					extractType(node.getType()), false);
 		}
 
 		node.getType().apply(this);
@@ -494,7 +495,7 @@ public class ToC extends DepthFirstAdapter {
 			output.append(' ');
 			String currentID = node.getId().getText();
 			output.append(currentID);
-			addVariableToScope(currentID, extractType(node.getType()));
+			addVariableToScope(currentID, extractType(node.getType()), true);
 		} else {
 			output.append('_');
 		}
@@ -512,7 +513,7 @@ public class ToC extends DepthFirstAdapter {
 			output.append(' ');
 			String currentID = node.getId().getText();
 			output.append(currentID);
-			addVariableToScope(currentID, extractType(node.getType()));
+			addVariableToScope(currentID, extractType(node.getType()), true);
 			output.append(", ");
 		} else {
 			output.append('_');
@@ -651,28 +652,34 @@ public class ToC extends DepthFirstAdapter {
 		}
 
 		output.append(currentID);
-		Variable var = checkVariable(currentID);
+		Variable var = checkVariable(currentID, AccessType.write);
 		output.append(" = ");
 		node.getTerm().apply(this);
 		output.append(";\n");
 		var.initialize();
 	}
 
-	private Variable checkVariable(String currentID) {
-
+	private Variable checkVariable(String currentID, AccessType accessType) {
+		Variable var = null;
 		if (currentFunctionVariableScope.containsKey(currentID)) {
-			Variable var = currentFunctionVariableScope.get(currentID);
-			var.Use();
-			return var;
+			var = currentFunctionVariableScope.get(currentID);
 		}
 		if (currentStructVariableScope.containsKey(currentID)) {
-			Variable var = currentStructVariableScope.get(currentID);
-			var.Use();
-			return var;
+			var = currentStructVariableScope.get(currentID);
 		}
 
 		if (currentGlobalVariableScope.containsKey(currentID)) {
-			Variable var = currentGlobalVariableScope.get(currentID);
+			var = currentGlobalVariableScope.get(currentID);
+		}
+		if (var != null) {
+			if (accessType == AccessType.read) {
+				if (!var.isInitialized()) {
+					throw new SemanticException(
+							"Variable "
+									+ var.getId()
+									+ " is not initialized, but is used as a right-hand-side of an assignment!");
+				}
+			}
 			var.Use();
 			return var;
 		}
@@ -856,7 +863,7 @@ public class ToC extends DepthFirstAdapter {
 	@Override
 	public void caseAIdTerm(AIdTerm node) {
 		String currentID = node.getId().getText();
-		checkVariable(currentID);
+		checkVariable(currentID, AccessType.read);
 		output.append(currentID);
 	}
 
