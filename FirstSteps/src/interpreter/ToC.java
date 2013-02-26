@@ -473,6 +473,7 @@ public class ToC extends DepthFirstAdapter {
 		output.append("struct ");
 		output.append(currentID);
 		output.append("* this = (");
+		output.append("struct ");
 		output.append(currentID);
 		output.append("*) malloc(sizeof(");
 		output.append("struct ");
