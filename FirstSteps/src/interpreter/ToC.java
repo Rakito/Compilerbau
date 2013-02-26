@@ -6,8 +6,10 @@ package interpreter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -20,6 +22,9 @@ import analysis.DepthFirstAdapter;
  * 
  */
 public class ToC extends DepthFirstAdapter {
+	private List<String> errors = new ArrayList<String>();
+	private List<String> warnings = new ArrayList<String>();
+	
 	public ToC(String parentPath, String filename) {
 		String path = parentPath + System.getProperty("file.separator")
 				+ filename;
