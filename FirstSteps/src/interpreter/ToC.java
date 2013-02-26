@@ -46,7 +46,7 @@ public class ToC extends DepthFirstAdapter {
 	@Override
 
 	public void caseAPrintImpl(APrintImpl node) {
-		output.append("printf(\"%d\n\",");
+		output.append("printf(\"%d\\n\",");
 		node.getExpr().apply(this);
 		output.append(");\n");
 		node.getImpl().apply(this);
