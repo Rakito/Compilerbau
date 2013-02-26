@@ -20,6 +20,7 @@ include stdlib ;
 		result = ( result + a ) ; 
 		runner = ( runner + 1 ) ;
 	}
+	return result
 }
 
 

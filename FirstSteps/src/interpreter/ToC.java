@@ -783,8 +783,9 @@ public class ToC extends DepthFirstAdapter {
 	 */
 	@Override
 	public void caseAAnotherFuncPara(AAnotherFuncPara node) {
-		output.append(", ");
+		
 		node.getTerm().apply(this);
+		output.append(" , ");
 		node.getFuncPara().apply(this);
 	}
 
