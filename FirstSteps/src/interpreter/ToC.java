@@ -408,7 +408,7 @@ public class ToC extends DepthFirstAdapter {
 		node.getDefine().apply(this);
 		if (!(node.getStructBody() instanceof ADefineStructBody)
 				&& state == InterpreterState.head) {
-			output.append("}\n");
+			output.append("};\n");
 		}
 		node.getStructBody().apply(this);
 
