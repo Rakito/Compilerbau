@@ -230,6 +230,7 @@ public class ToC extends DepthFirstAdapter {
 	@Override
 	public void caseAVarDefine(AVarDefine node) {
 		String currentID = node.getId().getText();
+
 		if (currentlyInFunction || currentStruct != null
 				|| (state == InterpreterState.head)) {
 			node.getType().apply(this);
@@ -348,6 +349,7 @@ public class ToC extends DepthFirstAdapter {
 		 * constructor
 		 */
 		if (!currentStruct.isConstrCreated()) {
+			output.append("struct ");
 			output.append(currentID);
 			output.append("* ");
 			output.append("new_");
@@ -356,12 +358,15 @@ public class ToC extends DepthFirstAdapter {
 			if (state == InterpreterState.body) {
 				// Allocation
 				output.append("\n{\n\t");
+				output.append("struct ");
 				output.append(currentID);
 				output.append("* this = (");
+				output.append("struct ");
 				output.append(currentID);
 				output.append("*) malloc(sizeof(");
+				output.append("struct ");
 				output.append(currentID);
-				output.append(");\n");
+				output.append("));\n");
 				output.append("\treturn this;");
 				output.append("\n}\n");
 			} else {
@@ -373,6 +378,7 @@ public class ToC extends DepthFirstAdapter {
 		output.append(" destroy_");
 		output.append(currentID);
 		output.append('(');
+		output.append("struct ");
 		output.append(currentID);
 		output.append("* this)");
 		if (state == InterpreterState.body) {
@@ -398,13 +404,22 @@ public class ToC extends DepthFirstAdapter {
 		if (currentStruct == null)
 			throw new SemanticException(
 					"No beginning Struct, why should there be a body? There are no bodies hidden here...");
-		
+
 		node.getDefine().apply(this);
-		if (!(node.getStructBody() instanceof ADefineStructBody) && state == InterpreterState.head) {
-			 output.append("}\n");		
+		if (!(node.getStructBody() instanceof ADefineStructBody)
+				&& state == InterpreterState.head) {
+			output.append("}\n");
 		}
 		node.getStructBody().apply(this);
-		
+
+	}
+
+	private boolean isNativeType(String type) {
+		if (type.equals("int")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/*
@@ -436,6 +451,7 @@ public class ToC extends DepthFirstAdapter {
 		currentlyInFunction = true;
 		String currentID = currentStruct.getStruct().getId().getText();
 
+		output.append("struct ");
 		output.append(currentID);
 		output.append("* ");
 		output.append("new_");
@@ -454,12 +470,14 @@ public class ToC extends DepthFirstAdapter {
 		}
 		output.append("\n{\n\t");
 		// Allocation
+		output.append("struct ");
 		output.append(currentID);
 		output.append("* this = (");
 		output.append(currentID);
 		output.append("*) malloc(sizeof(");
+		output.append("struct ");
 		output.append(currentID);
-		output.append(");\n");
+		output.append("));\n");
 
 		node.getImpl().apply(this);
 		output.append("\treturn this;");
@@ -679,7 +697,7 @@ public class ToC extends DepthFirstAdapter {
 		Variable var = checkVariable(currentID, AccessType.write);
 		output.append(" = ");
 		node.getTerm().apply(this);
-		if (/*currentStruct != null && !currentlyInFunction*/false) {
+		if (/* currentStruct != null && !currentlyInFunction */false) {
 			output.append("\n}\n");
 		} else {
 			output.append(";\n");
@@ -741,7 +759,7 @@ public class ToC extends DepthFirstAdapter {
 	 */
 	@Override
 	public void caseAEndFuncPara(AEndFuncPara node) {
-		// do nothing here		
+		// do nothing here
 	}
 
 	/*
@@ -982,7 +1000,14 @@ public class ToC extends DepthFirstAdapter {
 	 */
 	@Override
 	public void caseATypeType(ATypeType node) {
-		output.append(node.getId().getText());
+		String currentID = node.getId().getText();
+		if (isNativeType(currentID)) {
+			output.append(currentID);
+		} else {
+			output.append("struct ");
+			output.append(currentID);
+			output.append("*");
+		}
 	}
 
 }
