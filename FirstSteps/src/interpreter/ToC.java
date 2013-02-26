@@ -34,6 +34,8 @@ public class ToC extends DepthFirstAdapter {
 
 	Map<String, AFunctionFunction>	functions						= new HashMap<String, AFunctionFunction>();
 
+	Set<String> avaibleStructs = new HashSet<String>();
+	
 	/*
 	 * This represents the scope of all currently avaible function-local defined variables
 	 */
@@ -521,11 +523,19 @@ public class ToC extends DepthFirstAdapter {
 
 	@Override
 	public void caseANewFunc(ANewFunc node) {
-		// TODO: check if struct exists
+		String currentID = node.getId().getText();
+		checkIfStructExists(currentID);
 		output.append("new_");
 		signatureOnly = true;
 		node.getFuncPara().apply(this);
 		signatureOnly = false;
+				
+	}
+
+	private void checkIfStructExists(String currentID) {
+		if (!avaibleStructs.contains(currentID)){
+			throw new SemanticException("Struct " + currentID + " is not defined!"); 
+		}		
 	}
 
 	/*
@@ -691,8 +701,9 @@ public class ToC extends DepthFirstAdapter {
 	public void caseAStructStruct(AStructStruct node) {
 		String currentID = node.getId().getText();
 		currentStruct = new StructState(node);
-		this.classes.put(currentID, node);
-
+		this.avaibleStructs.add(currentID);
+		
+		
 		// generate Code
 		output.append("//BEGIN STRUCT ");
 		output.append(currentID);
@@ -704,6 +715,7 @@ public class ToC extends DepthFirstAdapter {
 			output.append("\n{\n");
 		}
 		node.getStructBody().apply(this);
+		
 	}
 
 	/*
@@ -907,6 +919,11 @@ public class ToC extends DepthFirstAdapter {
 		writer.close();
 
 		output = new StringBuffer();
+	}
+
+	public void reset() {
+		resetWarnings();
+		avaibleStructs = new HashSet<String>();		
 	}
 
 }

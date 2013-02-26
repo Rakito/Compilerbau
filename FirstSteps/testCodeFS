@@ -9,6 +9,8 @@ include stdlib ;
 
 	facFive = ( call fac(15) ) ;
 	
+	<Ulf> o = new Ulf();
+	
 	@ facFive ;
 	
 	@ 69696969 ;

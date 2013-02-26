@@ -32,8 +32,6 @@ public class Main {
 		Parser parser = new Parser(lexer);
 
 		Start ast = null;
-
-		System.out.println("Versuch mal zu parsen.");
 		try {
 			System.out.println("Pars, pars!");
 			ast = parser.parse();
@@ -59,7 +57,7 @@ public class Main {
 		}
 
 		printWarnings(interp.getWarnings());
-		interp.resetWarnings();
+		interp.reset();
 
 		System.out.println("Compile completed!");
 	}
