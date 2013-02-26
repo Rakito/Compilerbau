@@ -755,6 +755,64 @@ public class DepthFirstAdapter extends AnalysisAdapter
         outAFuncFunc(node);
     }
 
+    public void inANewFunc(ANewFunc node)
+    {
+        defaultIn(node);
+    }
+
+    public void outANewFunc(ANewFunc node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseANewFunc(ANewFunc node)
+    {
+        inANewFunc(node);
+        if(node.getNew() != null)
+        {
+            node.getNew().apply(this);
+        }
+        if(node.getId() != null)
+        {
+            node.getId().apply(this);
+        }
+        if(node.getLPar() != null)
+        {
+            node.getLPar().apply(this);
+        }
+        if(node.getFuncPara() != null)
+        {
+            node.getFuncPara().apply(this);
+        }
+        outANewFunc(node);
+    }
+
+    public void inADestroyFunc(ADestroyFunc node)
+    {
+        defaultIn(node);
+    }
+
+    public void outADestroyFunc(ADestroyFunc node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseADestroyFunc(ADestroyFunc node)
+    {
+        inADestroyFunc(node);
+        if(node.getDestroy() != null)
+        {
+            node.getDestroy().apply(this);
+        }
+        if(node.getId() != null)
+        {
+            node.getId().apply(this);
+        }
+        outADestroyFunc(node);
+    }
+
     public void inAEndFuncPara(AEndFuncPara node)
     {
         defaultIn(node);
@@ -908,6 +966,43 @@ public class DepthFirstAdapter extends AnalysisAdapter
         outAIfelseLogic(node);
     }
 
+    public void inAWhileLogic(AWhileLogic node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAWhileLogic(AWhileLogic node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAWhileLogic(AWhileLogic node)
+    {
+        inAWhileLogic(node);
+        if(node.getWhile() != null)
+        {
+            node.getWhile().apply(this);
+        }
+        if(node.getTerm() != null)
+        {
+            node.getTerm().apply(this);
+        }
+        if(node.getDo() != null)
+        {
+            node.getDo().apply(this);
+        }
+        if(node.getLBrace() != null)
+        {
+            node.getLBrace().apply(this);
+        }
+        if(node.getImpl() != null)
+        {
+            node.getImpl().apply(this);
+        }
+        outAWhileLogic(node);
+    }
+
     public void inASameOperation(ASameOperation node)
     {
         defaultIn(node);
@@ -964,6 +1059,64 @@ public class DepthFirstAdapter extends AnalysisAdapter
             node.getRight().apply(this);
         }
         outAPlusOperation(node);
+    }
+
+    public void inASmallerOperation(ASmallerOperation node)
+    {
+        defaultIn(node);
+    }
+
+    public void outASmallerOperation(ASmallerOperation node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseASmallerOperation(ASmallerOperation node)
+    {
+        inASmallerOperation(node);
+        if(node.getLeft() != null)
+        {
+            node.getLeft().apply(this);
+        }
+        if(node.getSmaller() != null)
+        {
+            node.getSmaller().apply(this);
+        }
+        if(node.getRight() != null)
+        {
+            node.getRight().apply(this);
+        }
+        outASmallerOperation(node);
+    }
+
+    public void inABiggerOperation(ABiggerOperation node)
+    {
+        defaultIn(node);
+    }
+
+    public void outABiggerOperation(ABiggerOperation node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseABiggerOperation(ABiggerOperation node)
+    {
+        inABiggerOperation(node);
+        if(node.getLeft() != null)
+        {
+            node.getLeft().apply(this);
+        }
+        if(node.getBigger() != null)
+        {
+            node.getBigger().apply(this);
+        }
+        if(node.getRight() != null)
+        {
+            node.getRight().apply(this);
+        }
+        outABiggerOperation(node);
     }
 
     public void inAMinusOperation(AMinusOperation node)

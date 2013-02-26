@@ -2,8 +2,8 @@ Helpers
  digit = ['0' .. '9'];
  letter = ['a' .. 'z'] | ['A' .. 'Z'];
  any_character = [0x0 .. 0xfffff];
- true = 'TRUE';
- false ='FALSE';
+ true = 'TRUE' | 'true' ;
+ false ='FALSE' | 'false' ;
  star = '*';
  cstart = 'nativC>';
  cend = '<nativC';
@@ -27,9 +27,13 @@ Tokens
  bool = true | false;
  struct = 'struct';
  while = 'while';
+ do = 'do';
  for = 'for';
  new = 'new';
  destroy = 'destroy';
+ 
+ smaller = 'smaller';
+ bigger = 'bigger';
  
  id = ( letter | star ) ( digit | letter | star )*;
  number = digit+;
@@ -132,7 +136,9 @@ Productions
   {set} id equals term semicolon;
   
  func = 
-  {func} T.call id l_par func_para ;
+  {func} T.call id l_par func_para |
+  {new} T.new id l_par func_para |
+  {destroy} T.destroy id ;
   
  func_para =
   {end} r_par |
@@ -141,11 +147,14 @@ Productions
 
  logic =
   {if} [if]:term query [thenin]:l_brace [then]:impl |
-  {ifelse} [if]:term query [thenin]:l_brace [then]:impl colon [elsein]:l_brace [else]:impl ;
+  {ifelse} [if]:term query [thenin]:l_brace [then]:impl colon [elsein]:l_brace [else]:impl |
+  {while} T.while term T.do l_brace impl ;
 
  operation = 
   {same} [left]:term is [right]:expr |
   {plus} [left]:term plus [right]:expr |
+  {smaller} [left]:term smaller [right]:expr |
+  {bigger} [left]:term bigger [right]:expr |
   {minus} [left]:term minus [right]:expr |
   {mult} [left]:term star [right]:expr |
   {div} [left]:term slash [right]:expr |

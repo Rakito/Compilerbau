@@ -237,6 +237,18 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseANewFunc(ANewFunc node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseADestroyFunc(ADestroyFunc node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseAEndFuncPara(AEndFuncPara node)
     {
         defaultCase(node);
@@ -267,6 +279,12 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseAWhileLogic(AWhileLogic node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseASameOperation(ASameOperation node)
     {
         defaultCase(node);
@@ -274,6 +292,18 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseAPlusOperation(APlusOperation node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseASmallerOperation(ASmallerOperation node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseABiggerOperation(ABiggerOperation node)
     {
         defaultCase(node);
     }
@@ -441,6 +471,12 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseTDo(TDo node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseTFor(TFor node)
     {
         defaultCase(node);
@@ -454,6 +490,18 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseTDestroy(TDestroy node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTSmaller(TSmaller node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTBigger(TBigger node)
     {
         defaultCase(node);
     }
