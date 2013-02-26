@@ -6,17 +6,22 @@ include stdlib ;
 
  <int>main()
 {
-	call calcFac(null) 
+	facFive = ( call fac(5) ) ;
 	
-
 	return 0
 }
 
- <void>calcFac()
+<int> mult(<int> a , <int> b)
 {
-	facFive = ( call fac(5) ) ;
-
+	<int> result = 0 ;
+	<int> runner = 0 ;
+	while ( runner smaller b ) do
+	{
+		result = ( result + a ) ; 
+		runner = ( runner + 1 ) ;
+	}
 }
+
 
  <int>fac(<int> n)
 {
@@ -24,14 +29,14 @@ include stdlib ;
 	(n is 1)?{return 0}
 	(n is 0)?{return 1}
 
-	<int> result ;
-	<int> times = n ;
-	while ( times bigger 0 ) do {
-	result = ( n + call fac((n - 1)) ) ;
-	n = ( n - 1 ) ;
-	}
-
-
+	<int> result = 1 ;
+    <int> runner = 1 ;
+    while ( runner smaller ( n + 1 ) ) do
+    {	
+    	result = ( call mult( result , runner ) ) ;
+    	runner = ( runner + 1 ) ;
+    }
+    
 	return result
 }
 

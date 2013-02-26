@@ -746,7 +746,6 @@ public class ToC extends DepthFirstAdapter {
 		output.append('(');
 		node.getFuncPara().apply(this);
 		output.append(")");
-		System.out.println(node.parent().parent().getClass().toString());
 		if ((node.parent().parent() instanceof AExprImpl)) {
 			output.append(";\n");
 		}
