@@ -398,9 +398,7 @@ public class ToC extends DepthFirstAdapter {
 			throw new SemanticException(
 					"No beginning Struct, why should there be a body? There are no bodies hidden here...");
 
-		// if (state == InterpreterState.head) {
 		node.getDefine().apply(this);
-		// }
 		node.getStructBody().apply(this);
 	}
 
@@ -734,7 +732,7 @@ public class ToC extends DepthFirstAdapter {
 	 */
 	@Override
 	public void caseAEndFuncPara(AEndFuncPara node) {
-		output.append(')');
+		// do nothing here		
 	}
 
 	/*

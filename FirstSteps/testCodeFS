@@ -32,7 +32,7 @@ include stdlib ;
 	}
 
 
-	return null
+	return result;
 }
 
  Olaf {
