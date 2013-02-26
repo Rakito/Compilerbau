@@ -123,13 +123,13 @@ Productions
   
  impl =
   {end} r_brace |
-  {return} T.returnt expr r_brace |
+  {return} T.returnt expr r_brace | 
+  {print} at expr semicolon impl |
   {expr} expr impl |
   {define} P.define impl ;
   
 
  expr =  
-  {print} at expr |
   {operation} operation |
   {func} P.func |
   {logic} logic |

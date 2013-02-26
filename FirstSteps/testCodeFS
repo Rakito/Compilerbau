@@ -6,6 +6,8 @@ include stdlib ;
 
  <int>main()
 {
+	@ 6 ;
+
 	facFive = ( call fac(5) ) ;
 	
 	return 0

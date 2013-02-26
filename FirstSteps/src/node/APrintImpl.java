@@ -5,39 +5,49 @@ package node;
 import analysis.*;
 
 @SuppressWarnings("nls")
-public final class APrintExpr extends PExpr
+public final class APrintImpl extends PImpl
 {
     private TAt _at_;
     private PExpr _expr_;
+    private TSemicolon _semicolon_;
+    private PImpl _impl_;
 
-    public APrintExpr()
+    public APrintImpl()
     {
         // Constructor
     }
 
-    public APrintExpr(
+    public APrintImpl(
         @SuppressWarnings("hiding") TAt _at_,
-        @SuppressWarnings("hiding") PExpr _expr_)
+        @SuppressWarnings("hiding") PExpr _expr_,
+        @SuppressWarnings("hiding") TSemicolon _semicolon_,
+        @SuppressWarnings("hiding") PImpl _impl_)
     {
         // Constructor
         setAt(_at_);
 
         setExpr(_expr_);
 
+        setSemicolon(_semicolon_);
+
+        setImpl(_impl_);
+
     }
 
     @Override
     public Object clone()
     {
-        return new APrintExpr(
+        return new APrintImpl(
             cloneNode(this._at_),
-            cloneNode(this._expr_));
+            cloneNode(this._expr_),
+            cloneNode(this._semicolon_),
+            cloneNode(this._impl_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAPrintExpr(this);
+        ((Analysis) sw).caseAPrintImpl(this);
     }
 
     public TAt getAt()
@@ -90,12 +100,64 @@ public final class APrintExpr extends PExpr
         this._expr_ = node;
     }
 
+    public TSemicolon getSemicolon()
+    {
+        return this._semicolon_;
+    }
+
+    public void setSemicolon(TSemicolon node)
+    {
+        if(this._semicolon_ != null)
+        {
+            this._semicolon_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._semicolon_ = node;
+    }
+
+    public PImpl getImpl()
+    {
+        return this._impl_;
+    }
+
+    public void setImpl(PImpl node)
+    {
+        if(this._impl_ != null)
+        {
+            this._impl_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._impl_ = node;
+    }
+
     @Override
     public String toString()
     {
         return ""
             + toString(this._at_)
-            + toString(this._expr_);
+            + toString(this._expr_)
+            + toString(this._semicolon_)
+            + toString(this._impl_);
     }
 
     @Override
@@ -111,6 +173,18 @@ public final class APrintExpr extends PExpr
         if(this._expr_ == child)
         {
             this._expr_ = null;
+            return;
+        }
+
+        if(this._semicolon_ == child)
+        {
+            this._semicolon_ = null;
+            return;
+        }
+
+        if(this._impl_ == child)
+        {
+            this._impl_ = null;
             return;
         }
 
@@ -130,6 +204,18 @@ public final class APrintExpr extends PExpr
         if(this._expr_ == oldChild)
         {
             setExpr((PExpr) newChild);
+            return;
+        }
+
+        if(this._semicolon_ == oldChild)
+        {
+            setSemicolon((TSemicolon) newChild);
+            return;
+        }
+
+        if(this._impl_ == oldChild)
+        {
+            setImpl((PImpl) newChild);
             return;
         }
 

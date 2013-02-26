@@ -30,9 +30,9 @@ public interface Analysis extends Switch
     void caseAAnotherParam(AAnotherParam node);
     void caseAEndImpl(AEndImpl node);
     void caseAReturnImpl(AReturnImpl node);
+    void caseAPrintImpl(APrintImpl node);
     void caseAExprImpl(AExprImpl node);
     void caseADefineImpl(ADefineImpl node);
-    void caseAPrintExpr(APrintExpr node);
     void caseAOperationExpr(AOperationExpr node);
     void caseAFuncExpr(AFuncExpr node);
     void caseALogicExpr(ALogicExpr node);

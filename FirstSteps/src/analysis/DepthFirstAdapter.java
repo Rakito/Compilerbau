@@ -534,6 +534,39 @@ public class DepthFirstAdapter extends AnalysisAdapter
         outAReturnImpl(node);
     }
 
+    public void inAPrintImpl(APrintImpl node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAPrintImpl(APrintImpl node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAPrintImpl(APrintImpl node)
+    {
+        inAPrintImpl(node);
+        if(node.getAt() != null)
+        {
+            node.getAt().apply(this);
+        }
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
+        }
+        if(node.getSemicolon() != null)
+        {
+            node.getSemicolon().apply(this);
+        }
+        if(node.getImpl() != null)
+        {
+            node.getImpl().apply(this);
+        }
+        outAPrintImpl(node);
+    }
+
     public void inAExprImpl(AExprImpl node)
     {
         defaultIn(node);
@@ -582,31 +615,6 @@ public class DepthFirstAdapter extends AnalysisAdapter
             node.getImpl().apply(this);
         }
         outADefineImpl(node);
-    }
-
-    public void inAPrintExpr(APrintExpr node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAPrintExpr(APrintExpr node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAPrintExpr(APrintExpr node)
-    {
-        inAPrintExpr(node);
-        if(node.getAt() != null)
-        {
-            node.getAt().apply(this);
-        }
-        if(node.getExpr() != null)
-        {
-            node.getExpr().apply(this);
-        }
-        outAPrintExpr(node);
     }
 
     public void inAOperationExpr(AOperationExpr node)
