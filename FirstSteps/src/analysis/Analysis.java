@@ -47,6 +47,7 @@ public interface Analysis extends Switch
     void caseAIfLogic(AIfLogic node);
     void caseAIfelseLogic(AIfelseLogic node);
     void caseAWhileLogic(AWhileLogic node);
+    void caseAForeachLogic(AForeachLogic node);
     void caseASameOperation(ASameOperation node);
     void caseAPlusOperation(APlusOperation node);
     void caseASmallerOperation(ASmallerOperation node);
@@ -81,6 +82,8 @@ public interface Analysis extends Switch
     void caseTWhile(TWhile node);
     void caseTDo(TDo node);
     void caseTFor(TFor node);
+    void caseTForeach(TForeach node);
+    void caseTIn(TIn node);
     void caseTNew(TNew node);
     void caseTDestroy(TDestroy node);
     void caseTSmaller(TSmaller node);

@@ -8,6 +8,9 @@ include stdlib ;
 {
 	call calcFac(null) 
 	<Olaf> oli = ( new Olaf() ) ;
+	foreach <int> zahl in oli do {
+		lastUsedNumber = ( n + 1 ) ;
+	}
 	destroy oli
 
 	return 0
@@ -26,7 +29,8 @@ include stdlib ;
 	(n is 0)?{return 1}
 
 	<int> result ;
-	while ( n bigger 1 ) do {
+	<int> times = n ;
+	while ( times bigger 0 ) do {
 	result = ( n + call fac((n - 1)) ) ;
 	n = ( n - 1 ) ;
 	}

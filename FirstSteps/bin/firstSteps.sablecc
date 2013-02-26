@@ -29,6 +29,8 @@ Tokens
  while = 'while';
  do = 'do';
  for = 'for';
+ foreach = 'foreach';
+ in = 'in';
  new = 'new';
  destroy = 'destroy';
  
@@ -148,7 +150,8 @@ Productions
  logic =
   {if} [if]:term query [thenin]:l_brace [then]:impl |
   {ifelse} [if]:term query [thenin]:l_brace [then]:impl colon [elsein]:l_brace [else]:impl |
-  {while} T.while term T.do l_brace impl ;
+  {while} T.while term T.do l_brace impl |
+  {foreach} T.foreach P.type [object]:id T.in [collection]:id T.do l_brace impl  ;
 
  operation = 
   {same} [left]:term is [right]:expr |
