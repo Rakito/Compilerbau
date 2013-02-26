@@ -697,8 +697,10 @@ public class ToC extends DepthFirstAdapter {
 		Variable var = checkVariable(currentID, AccessType.write);
 		output.append(" = ");
 		node.getTerm().apply(this);
-		if (/* currentStruct != null && !currentlyInFunction */false) {
-			output.append("\n}\n");
+		if (state == InterpreterState.head && (node.parent().parent() instanceof PStructBody) && (((ADefineStructBody) node.parent().parent()).getStructBody() instanceof ADefineStructBody)) {
+			
+			output.append(",\n");
+			System.out.println(node.parent().parent().parent().getClass().toString());
 		} else {
 			output.append(";\n");
 		}
