@@ -47,7 +47,6 @@ public interface Analysis extends Switch
     void caseAIfLogic(AIfLogic node);
     void caseAIfelseLogic(AIfelseLogic node);
     void caseAWhileLogic(AWhileLogic node);
-    void caseAForeachLogic(AForeachLogic node);
     void caseASameOperation(ASameOperation node);
     void caseAPlusOperation(APlusOperation node);
     void caseASmallerOperation(ASmallerOperation node);

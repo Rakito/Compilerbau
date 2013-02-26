@@ -285,12 +285,6 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAForeachLogic(AForeachLogic node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
     public void caseASameOperation(ASameOperation node)
     {
         defaultCase(node);

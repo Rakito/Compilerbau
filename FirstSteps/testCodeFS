@@ -8,9 +8,6 @@ include stdlib ;
 {
 	call calcFac(null) 
 	<Olaf> oli = ( new Olaf() ) ;
-	foreach <int> zahl in oli do {
-		lastUsedNumber = ( n + 1 ) ;
-	}
 	destroy oli
 
 	return 0

@@ -1003,55 +1003,6 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         outAWhileLogic(node);
     }
 
-    public void inAForeachLogic(AForeachLogic node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAForeachLogic(AForeachLogic node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAForeachLogic(AForeachLogic node)
-    {
-        inAForeachLogic(node);
-        if(node.getImpl() != null)
-        {
-            node.getImpl().apply(this);
-        }
-        if(node.getLBrace() != null)
-        {
-            node.getLBrace().apply(this);
-        }
-        if(node.getDo() != null)
-        {
-            node.getDo().apply(this);
-        }
-        if(node.getCollection() != null)
-        {
-            node.getCollection().apply(this);
-        }
-        if(node.getIn() != null)
-        {
-            node.getIn().apply(this);
-        }
-        if(node.getObject() != null)
-        {
-            node.getObject().apply(this);
-        }
-        if(node.getType() != null)
-        {
-            node.getType().apply(this);
-        }
-        if(node.getForeach() != null)
-        {
-            node.getForeach().apply(this);
-        }
-        outAForeachLogic(node);
-    }
-
     public void inASameOperation(ASameOperation node)
     {
         defaultIn(node);
