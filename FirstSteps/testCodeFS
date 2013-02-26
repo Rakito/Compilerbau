@@ -1,15 +1,17 @@
 include stdio ;
 include stdlib ;
 
-
- <int> facFive = 0 ;
+<int> facFive = 0 ;
+ 
 
  <int>main()
 {
 	@ 6 ;
 
 	facFive = ( call fac(5) ) ;
-	@facFive
+	
+	@ facFive ;
+	
 	return 0
 }
 
