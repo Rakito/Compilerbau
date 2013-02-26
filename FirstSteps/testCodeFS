@@ -19,7 +19,7 @@ include stdlib ;
 
 }
 
- <int>fac(<int> n)
+ <int>fac(<int> n, <olaf> o)
 {
 	 lastUsedNumber = n ;
 	(n is 1)?{return 0}
@@ -45,7 +45,7 @@ include stdlib ;
 		count = ( 17 + 4 ) ;
 	}
 	
-	cons Olaf(<int> c)
+	cons Olaf(<int> c, <olaf> o)
 	{
 		count = c;
 	}

@@ -33,7 +33,7 @@ public class Main {
 			System.out.println("Der Parser parst");
 
 			/* Get our Interpreter going. */
-			interp = new ToC("/Users/vin/Study/5.Semester/Compilerbau", "olaf");
+			interp = new ToC("C:/users/Fhoeborn/", "olaf");
 			ast.apply(interp);
 			//ast.apply(interp);
 			
@@ -44,6 +44,8 @@ public class Main {
 					+ interp.currentGlobalVariableScope.toString());
 			System.out.println("StructScope: "
 					+ interp.currentStructVariableScope.toString());
+			System.out.println("Map-Variable<->Type: "
+					+ interp.variableTypeMap.toString());
 
 			// System.out.print(interp.cp.code.toString());
 

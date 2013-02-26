@@ -57,6 +57,7 @@ public class ToC extends DepthFirstAdapter {
 	private String bodyPath = "";
 	public StringBuffer output = new StringBuffer();
 
+	private boolean signatureOnly = false;
 	private InterpreterState state = null;
 	private StructState currentStruct = null;
 	private boolean currentlyInFunction = false;
@@ -71,6 +72,8 @@ public class ToC extends DepthFirstAdapter {
 	 */
 	public List<String> currentStructVariableScope = new ArrayList<String>();
 
+	public Map<String, String> variableTypeMap = new HashMap<String, String>();
+	
 	@Override
 	public void caseStart(Start node) {
 		if (state == null) {
@@ -94,17 +97,51 @@ public class ToC extends DepthFirstAdapter {
 	}
 
 	@Override
+	public void caseANewFunc(ANewFunc node) {
+		// TODO: check if struct exists
+		output.append("new_");
+		signatureOnly = true;
+		node.getFuncPara().apply(this);
+		signatureOnly = false;
+		// output.append(node.getId().getText())
+
+	}
+
+	@Override
+	public void caseADestroyFunc(ADestroyFunc node) {
+		// TODO Auto-generated method stub
+		super.caseADestroyFunc(node);
+	}
+
+	@Override
+	public void caseASmallerOperation(ASmallerOperation node) {
+		node.getLeft().apply(this);
+		output.append(" < ");
+		node.getRight().apply(this);
+	}
+
+	@Override
+	public void caseABiggerOperation(ABiggerOperation node) {
+		node.getLeft().apply(this);
+		output.append(" > ");
+		node.getRight().apply(this);
+	}
+
+	@Override
 	public void caseAEofProgram(AEofProgram node) {
 		cleanupAfterGlobal();
 		try {
 			writeOut();
 		} catch (IOException e) {
-			throw new RuntimeException("Unable to write file by state: "
+			throw new RuntimeException("Unable to write file. Current state: "
 					+ state);
 		}
 	}
 
 	private void cleanupAfterGlobal() {
+		for (String entry : currentGlobalVariableScope){
+			variableTypeMap.remove(entry);
+		}
 		currentGlobalVariableScope = new ArrayList<String>();
 	}
 
@@ -186,7 +223,7 @@ public class ToC extends DepthFirstAdapter {
 				&& (state == InterpreterState.head)) {
 			node.getType().apply(this);
 			output.append(' ');
-			
+
 			output.append(currentID);
 			output.append(';');
 
@@ -195,10 +232,10 @@ public class ToC extends DepthFirstAdapter {
 			}
 			output.append('\n');
 		}
-		addVariableToScope(currentID);
+		addVariableToScope(currentID, extractType(node.getType()));
 	}
 
-	private void addVariableToScope(String currentID) {
+	private void addVariableToScope(String currentID, String type) {
 		if (currentlyInFunction) {
 			if (currentFunctionVariableScope.contains(currentID))
 				throw new SemanticException("Variable " + currentID
@@ -221,6 +258,8 @@ public class ToC extends DepthFirstAdapter {
 					+ currentStruct.getStruct().getId().getText()
 					+ "already defined!");
 		currentGlobalVariableScope.add(currentID);
+		
+		variableTypeMap.put(currentID, type);
 	}
 
 	/*
@@ -234,7 +273,7 @@ public class ToC extends DepthFirstAdapter {
 
 		if (set instanceof ASetSet) {
 			ASetSet setSet = (ASetSet) set;
-			addVariableToScope(setSet.getId().getText());
+			addVariableToScope(setSet.getId().getText(), extractType(node.getType()));
 		}
 
 		node.getType().apply(this);
@@ -242,6 +281,10 @@ public class ToC extends DepthFirstAdapter {
 		node.getSet().apply(this);
 	}
 
+	private String extractType(PType type){
+		return type.toString().substring(1, type.toString().indexOf('>'));
+	}
+	
 	private static final String CONST_STRUCT = "struct";
 
 	/*
@@ -351,6 +394,9 @@ public class ToC extends DepthFirstAdapter {
 		output.append(currentID);
 		output.append("* ");
 		output.append("new_");
+		signatureOnly = true;
+		node.getParam().apply(this);
+		signatureOnly = false;
 		output.append(currentID);
 		output.append('(');
 		node.getParam().apply(this);
@@ -425,10 +471,14 @@ public class ToC extends DepthFirstAdapter {
 	@Override
 	public void caseAOneParam(AOneParam node) {
 		node.getType().apply(this);
-		output.append(' ');
-		String currentID = node.getId().getText();
-		output.append(currentID);
-		addVariableToScope(currentID);
+		if (!signatureOnly) {
+			output.append(' ');
+			String currentID = node.getId().getText();
+			output.append(currentID);
+			addVariableToScope(currentID, extractType(node.getType()));
+		} else {
+			output.append('_');
+		}
 	}
 
 	/*
@@ -439,11 +489,15 @@ public class ToC extends DepthFirstAdapter {
 	@Override
 	public void caseAAnotherParam(AAnotherParam node) {
 		node.getType().apply(this);
-		output.append(' ');
-		String currentID = node.getId().getText();
-		output.append(currentID);
-		addVariableToScope(currentID);
-		output.append(", ");
+		if (!signatureOnly) {
+			output.append(' ');
+			String currentID = node.getId().getText();
+			output.append(currentID);
+			addVariableToScope(currentID, extractType(node.getType()));
+			output.append(", ");
+		} else {
+			output.append('_');
+		}
 		node.getParam().apply(this);
 	}
 
@@ -622,7 +676,11 @@ public class ToC extends DepthFirstAdapter {
 	 * @see analysis.DepthFirstAdapter#caseAOneFuncPara(node.AOneFuncPara)
 	 */
 	@Override
-	public void caseAOneFuncPara(AOneFuncPara node) {
+	public void caseAOneFuncPara(AOneFuncPara node) {		
+		if (signatureOnly){
+			// TODO: I need the type here
+			return;
+		}
 		node.getTerm().apply(this);
 	}
 
