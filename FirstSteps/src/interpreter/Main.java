@@ -14,10 +14,9 @@ import parser.ParserException;
 
 public class Main {
 	public static void main(String[] args) {
-		System.out.println("Run, run, run!");
-
-		if (args.length < 1) {
-			System.out.println("No filename supplied!");
+		if (args.length < 3) {
+			System.out.println("Not enough parameters! See how to!");
+			return;
 		}
 
 		ToC interp = null;
@@ -51,7 +50,7 @@ public class Main {
 		}
 		try {
 			/* Get our Interpreter going. */
-			interp = new ToC("C:/users/fhoeborn", "olaf");
+			interp = new ToC(args[1], args[2]);
 			ast.apply(interp);
 		} catch (SemanticException e) {
 			System.out.println("Semantic Error occured!\nError: "
