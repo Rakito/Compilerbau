@@ -9,7 +9,7 @@ include stdlib ;
 	@ 6 ;
 
 	facFive = ( call fac(5) ) ;
-	
+	@facFive
 	return 0
 }
 
