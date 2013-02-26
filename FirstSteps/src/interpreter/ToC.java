@@ -32,10 +32,10 @@ public class ToC extends DepthFirstAdapter {
 
 	Map<String, AStructStruct>		classes							= new HashMap<String, AStructStruct>();
 
-	Map<String, AFunctionFunction>	functions						= new HashMap<String, AFunctionFunction>();
+	Set<String>						avaibleFunctions				= new HashSet<String>();
 
-	Set<String> avaibleStructs = new HashSet<String>();
-	
+	Set<String>						avaibleStructs					= new HashSet<String>();
+
 	/*
 	 * This represents the scope of all currently avaible function-local defined variables
 	 */
@@ -375,12 +375,20 @@ public class ToC extends DepthFirstAdapter {
 	 */
 	@Override
 	public void caseAFuncFunc(AFuncFunc node) {
-		output.append(node.getId().getText());
+		String currentID = node.getId().getText();
+		checkIfFunctionExists(currentID);
+		output.append(currentID);
 		output.append('(');
 		node.getFuncPara().apply(this);
 		output.append(")");
 		if ((node.parent().parent() instanceof AExprImpl)) {
 			output.append(";\n");
+		}
+	}
+
+	private void checkIfFunctionExists(String currentID) {
+		if (!avaibleFunctions.contains(currentID)) {
+			throw new SemanticException("Function " + currentID + " not defined.");
 		}
 	}
 
@@ -390,11 +398,12 @@ public class ToC extends DepthFirstAdapter {
 	 */
 	@Override
 	public void caseAFunctionFunction(AFunctionFunction node) {
-		this.functions.put(node.getId().getText(), node);
+		String currentID = node.getId().getText();
+		this.avaibleFunctions.add(currentID);
 		currentlyInFunction = true;
 		node.getType().apply(this);
 		output.append(' ');
-		output.append(node.getId().getText());
+		output.append(currentID);
 		output.append('(');
 		node.getParam().apply(this);
 		output.append(')');
@@ -529,13 +538,13 @@ public class ToC extends DepthFirstAdapter {
 		signatureOnly = true;
 		node.getFuncPara().apply(this);
 		signatureOnly = false;
-				
+
 	}
 
 	private void checkIfStructExists(String currentID) {
-		if (!avaibleStructs.contains(currentID)){
-			throw new SemanticException("Struct " + currentID + " is not defined!"); 
-		}		
+		if (!avaibleStructs.contains(currentID)) {
+			throw new SemanticException("Struct " + currentID + " is not defined!");
+		}
 	}
 
 	/*
@@ -702,8 +711,7 @@ public class ToC extends DepthFirstAdapter {
 		String currentID = node.getId().getText();
 		currentStruct = new StructState(node);
 		this.avaibleStructs.add(currentID);
-		
-		
+
 		// generate Code
 		output.append("//BEGIN STRUCT ");
 		output.append(currentID);
@@ -715,7 +723,7 @@ public class ToC extends DepthFirstAdapter {
 			output.append("\n{\n");
 		}
 		node.getStructBody().apply(this);
-		
+
 	}
 
 	/*
@@ -923,7 +931,8 @@ public class ToC extends DepthFirstAdapter {
 
 	public void reset() {
 		resetWarnings();
-		avaibleStructs = new HashSet<String>();		
+		avaibleStructs = new HashSet<String>();
+		avaibleFunctions = new HashSet<String>();
 	}
 
 }
