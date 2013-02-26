@@ -1,7 +1,7 @@
 include stdio ;
 include stdlib ;
 
- <int> lastUsedNumber;
+
  <int> facFive = 0 ;
 
  <int>main()

@@ -746,10 +746,10 @@ public class ToC extends DepthFirstAdapter {
 	public void caseAIfLogic(AIfLogic node) {
 		output.append(CONST_IF);
 		output.append('(');
-		node.getQuery().apply(this);
+		node.getIf().apply(this);
 		output.append(')');
 		output.append("\n{\n");
-		node.getIf().apply(this);
+		node.getThen().apply(this);
 		output.append("\n}\n");
 	}
 
@@ -765,10 +765,10 @@ public class ToC extends DepthFirstAdapter {
 	public void caseAIfelseLogic(AIfelseLogic node) {
 		output.append(CONST_IF);
 		output.append('(');
-		node.getQuery().apply(this);
+		node.getIf().apply(this);
 		output.append(')');
 		output.append("\n{\n");
-		node.getIf().apply(this);
+		node.getThen().apply(this);
 		output.append("\n}\n");
 		output.append(CONST_ELSE);
 		output.append("\n{\n");
