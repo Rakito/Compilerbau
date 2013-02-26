@@ -24,87 +24,74 @@ import analysis.DepthFirstAdapter;
  */
 public class ToC extends DepthFirstAdapter {
 
-	private static final String CONST_ELSE = "else", CONST_IF = "if",
-			CONST_INCLUDE = "#include", CONST_NULL = "NULL",
-			CONST_STRUCT = "struct", CONST_VOID = "void", WHILE = "while";
+	private static final String		CONST_ELSE						= "else", CONST_IF = "if",
+			CONST_INCLUDE = "#include", CONST_NULL = "NULL", CONST_STRUCT = "struct", CONST_VOID = "void",
+			WHILE = "while";
 
-	private String bodyPath = "", headerPath = "", moduleName = "";
+	private String					bodyPath						= "", headerPath = "", moduleName = "";
 
-	Map<String, AStructStruct> classes = new HashMap<String, AStructStruct>();
+	Map<String, AStructStruct>		classes							= new HashMap<String, AStructStruct>();
 
-	Map<String, AFunctionFunction> functions = new HashMap<String, AFunctionFunction>();
-
-	/*
-	 * This represents the scope of all currently avaible function-local defined
-	 * variables
-	 */
-	public Map<String, Variable> currentFunctionVariableScope = new HashMap<String, Variable>();
+	Map<String, AFunctionFunction>	functions						= new HashMap<String, AFunctionFunction>();
 
 	/*
-	 * This represents the scope of all currently avaible global-local variables
-	 * variables
+	 * This represents the scope of all currently avaible function-local defined variables
 	 */
-	public Map<String, Variable> currentGlobalVariableScope = new HashMap<String, Variable>();
+	public Map<String, Variable>	currentFunctionVariableScope	= new HashMap<String, Variable>();
 
 	/*
-	 * This represents the scope of all currently avaible struct-local defined
-	 * variables
+	 * This represents the scope of all currently avaible global-local variables variables
 	 */
-	public Map<String, Variable> currentStructVariableScope = new HashMap<String, Variable>();
-	
-	private boolean currentlyInFunction = false,signatureOnly = false;
+	public Map<String, Variable>	currentGlobalVariableScope		= new HashMap<String, Variable>();
 
-	private StructState currentStruct = null;
+	/*
+	 * This represents the scope of all currently avaible struct-local defined variables
+	 */
+	public Map<String, Variable>	currentStructVariableScope		= new HashMap<String, Variable>();
 
-	Set<String> includes = new HashSet<String>();
+	private boolean					currentlyInFunction				= false, signatureOnly = false;
 
-	public StringBuffer output = new StringBuffer();
+	private StructState				currentStruct					= null;
 
-	private InterpreterState state = null;
+	Set<String>						includes						= new HashSet<String>();
 
-	private List<String> warnings = new ArrayList<String>();
+	public StringBuffer				output							= new StringBuffer();
 
-	
-	
+	private InterpreterState		state							= null;
+
+	private List<String>			warnings						= new ArrayList<String>();
+
 	public ToC(String parentPath, String filename) {
-		String path = parentPath + System.getProperty("file.separator")
-				+ filename;
+		String path = parentPath + System.getProperty("file.separator") + filename;
 		headerPath = path + ".h";
 		bodyPath = path + ".c";
 		moduleName = filename;
 	}
 
-	private void addVariableToScope(String currentID, String type,
-			boolean isParam) {
+	private void addVariableToScope(String currentID, String type, boolean isParam) {
 		Variable var = new Variable(currentID, type);
 		var.setInitialized(isParam);
 		if (currentlyInFunction) {
 			if (currentFunctionVariableScope.containsKey(currentID))
-				throw new SemanticException("Variable " + currentID
-						+ " in this function already defined!");
+				throw new SemanticException("Variable " + currentID + " in this function already defined!");
 			currentFunctionVariableScope.put(currentID, var);
 			return;
 		}
 		if (currentStruct != null) {
 			if (currentStructVariableScope.containsKey(currentID))
-				throw new SemanticException("Variable " + currentID
-						+ " in struct "
-						+ currentStruct.getStruct().getId().getText()
-						+ "already defined!");
+				throw new SemanticException("Variable " + currentID + " in struct "
+						+ currentStruct.getStruct().getId().getText() + "already defined!");
 			currentStructVariableScope.put(currentID, var);
 			return;
 		}
 		if (currentGlobalVariableScope.containsKey(currentID))
-			throw new SemanticException("Variable " + currentID
-					+ " already globally defined!");
+			throw new SemanticException("Variable " + currentID + " already globally defined!");
 		currentGlobalVariableScope.put(currentID, var);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * analysis.DepthFirstAdapter#caseAAnotherFuncPara(node.AAnotherFuncPara)
+	 * @see analysis.DepthFirstAdapter#caseAAnotherFuncPara(node.AAnotherFuncPara)
 	 */
 	@Override
 	public void caseAAnotherFuncPara(AAnotherFuncPara node) {
@@ -115,7 +102,6 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseAAnotherParam(node.AAnotherParam)
 	 */
 	@Override
@@ -142,7 +128,6 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseABoolTerm(node.ABoolTerm)
 	 */
 	@Override
@@ -159,9 +144,7 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * analysis.DepthFirstAdapter#caseAConsConstructor(node.AConsConstructor)
+	 * @see analysis.DepthFirstAdapter#caseAConsConstructor(node.AConsConstructor)
 	 */
 	@Override
 	public void caseAConsConstructor(AConsConstructor node) {
@@ -199,9 +182,7 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see analysis.DepthFirstAdapter#caseAConstructorStructBody(node.
-	 * AConstructorStructBody)
+	 * @see analysis.DepthFirstAdapter#caseAConstructorStructBody(node. AConstructorStructBody)
 	 */
 	@Override
 	public void caseAConstructorStructBody(AConstructorStructBody node) {
@@ -211,7 +192,6 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseADefineImpl(node.ADefineImpl)
 	 */
 	@Override
@@ -222,7 +202,6 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseADefineProgram(node.ADefineProgram)
 	 */
 	@Override
@@ -233,9 +212,7 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * analysis.DepthFirstAdapter#caseADefineStructBody(node.ADefineStructBody)
+	 * @see analysis.DepthFirstAdapter#caseADefineStructBody(node.ADefineStructBody)
 	 */
 	@Override
 	public void caseADefineStructBody(ADefineStructBody node) {
@@ -243,8 +220,7 @@ public class ToC extends DepthFirstAdapter {
 			throw new SemanticException(
 					"No beginning Struct, why should there be a body? There are no bodies hidden here...");
 		node.getDefine().apply(this);
-		if (!(node.getStructBody() instanceof ADefineStructBody)
-				&& state == InterpreterState.head) {
+		if (!(node.getStructBody() instanceof ADefineStructBody) && state == InterpreterState.head) {
 			output.append("};\n");
 		}
 		node.getStructBody().apply(this);
@@ -264,7 +240,6 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseADivOperation(node.ADivOperation)
 	 */
 	@Override
@@ -276,7 +251,6 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseAEndFuncPara(node.AEndFuncPara)
 	 */
 	@Override
@@ -286,7 +260,6 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseAEndImpl(node.AEndImpl)
 	 */
 	@Override
@@ -296,7 +269,6 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseAEndParam(node.AEndParam)
 	 */
 	@Override
@@ -306,7 +278,6 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseAEndStructBody(node.AEndStructBody)
 	 */
 	@Override
@@ -317,8 +288,7 @@ public class ToC extends DepthFirstAdapter {
 		String currentID = currentStruct.getStruct().getId().getText();
 
 		/*
-		 * No constructor defined and where in body-run, so we generate a empty
-		 * constructor
+		 * No constructor defined and where in body-run, so we generate a empty constructor
 		 */
 		if (!currentStruct.isConstrCreated()) {
 			output.append("struct ");
@@ -363,14 +333,12 @@ public class ToC extends DepthFirstAdapter {
 		try {
 			writeOut();
 		} catch (IOException e) {
-			throw new RuntimeException("Unable to write file. Current state: "
-					+ state);
+			throw new RuntimeException("Unable to write file. Current state: " + state);
 		}
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseAExprImpl(node.AExprImpl)
 	 */
 	@Override
@@ -381,7 +349,6 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseAExprTerm(node.AExprTerm)
 	 */
 	@Override
@@ -393,7 +360,6 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseAFuncExpr(node.AFuncExpr)
 	 */
 	@Override
@@ -403,7 +369,6 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseAFuncFunc(node.AFuncFunc)
 	 */
 	@Override
@@ -419,9 +384,7 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * analysis.DepthFirstAdapter#caseAFunctionFunction(node.AFunctionFunction)
+	 * @see analysis.DepthFirstAdapter#caseAFunctionFunction(node.AFunctionFunction)
 	 */
 	@Override
 	public void caseAFunctionFunction(AFunctionFunction node) {
@@ -445,9 +408,7 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * analysis.DepthFirstAdapter#caseAFunctionProgram(node.AFunctionProgram)
+	 * @see analysis.DepthFirstAdapter#caseAFunctionProgram(node.AFunctionProgram)
 	 */
 	@Override
 	public void caseAFunctionProgram(AFunctionProgram node) {
@@ -457,7 +418,6 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseAIdTerm(node.AIdTerm)
 	 */
 	@Override
@@ -469,7 +429,6 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseAIfelseLogic(node.AIfelseLogic)
 	 */
 	@Override
@@ -488,7 +447,6 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseAIfLogic(node.AIfLogic)
 	 */
 	@Override
@@ -503,7 +461,6 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseAIncludeProgram(node.AIncludeProgram)
 	 */
 	@Override
@@ -522,7 +479,6 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseALogicExpr(node.ALogicExpr)
 	 */
 	@Override
@@ -532,7 +488,6 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseAMinusOperation(node.AMinusOperation)
 	 */
 	@Override
@@ -544,7 +499,6 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseAModOperation(node.AModOperation)
 	 */
 	@Override
@@ -556,7 +510,6 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseAMultOperation(node.AMultOperation)
 	 */
 	@Override
@@ -577,7 +530,6 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseANullTerm(node.ANullTerm)
 	 */
 	@Override
@@ -587,7 +539,6 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseANumberTerm(node.ANumberTerm)
 	 */
 	@Override
@@ -597,22 +548,19 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseAOneFuncPara(node.AOneFuncPara)
 	 */
 	@Override
 	public void caseAOneFuncPara(AOneFuncPara node) {
 		if (signatureOnly) {
 			// TODO: I need the type here
-			throw new RuntimeException(
-					"This is not implemented due to missing types!");
+			throw new RuntimeException("This is not implemented due to missing types!");
 		}
 		node.getTerm().apply(this);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseAOneParam(node.AOneParam)
 	 */
 	@Override
@@ -630,7 +578,6 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseAOperationExpr(node.AOperationExpr)
 	 */
 	@Override
@@ -640,7 +587,6 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseAPlusOperation(node.APlusOperation)
 	 */
 	@Override
@@ -652,7 +598,6 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseAPrintImpl(node.APrintImpl)
 	 */
 	@Override
@@ -665,7 +610,6 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseAReturnImpl(node.AReturnImpl)
 	 */
 	@Override
@@ -677,7 +621,6 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseASameOperation(node.ASameOperation)
 	 */
 	@Override
@@ -689,7 +632,6 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseASetExpr(node.ASetExpr)
 	 */
 	@Override
@@ -699,7 +641,6 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseASetSet(node.ASetSet)
 	 */
 	@Override
@@ -712,11 +653,8 @@ public class ToC extends DepthFirstAdapter {
 			} else {
 				if (!(currentFunctionVariableScope.containsKey(currentID) || currentGlobalVariableScope
 						.containsKey(currentID))) {
-					throw new SemanticException(
-							"There is no variable in struct "
-									+ currentStruct.getStruct().getId()
-											.getText() + " with the id "
-									+ currentID);
+					throw new SemanticException("There is no variable in struct "
+							+ currentStruct.getStruct().getId().getText() + " with the id " + currentID);
 				}
 			}
 		}
@@ -737,7 +675,6 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseAStructProgram(node.AStructProgram)
 	 */
 	@Override
@@ -748,7 +685,6 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseAStructStruct(node.AStructStruct)
 	 */
 	@Override
@@ -772,7 +708,6 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseATermExpr(node.ATermExpr)
 	 */
 	@Override
@@ -782,7 +717,6 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseATypeType(node.ATypeType)
 	 */
 	@Override
@@ -799,7 +733,6 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseAVarDefine(node.AVarDefine)
 	 */
 	@Override
@@ -816,7 +749,6 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseAVarSetDefine(node.AVarSetDefine)
 	 */
 	@Override
@@ -824,8 +756,7 @@ public class ToC extends DepthFirstAdapter {
 		PSet set = node.getSet();
 		if (set instanceof ASetSet) {
 			ASetSet setSet = (ASetSet) set;
-			addVariableToScope(setSet.getId().getText(),
-					extractType(node.getType()), false);
+			addVariableToScope(setSet.getId().getText(), extractType(node.getType()), false);
 		}
 		if (state != InterpreterState.head && !currentlyInFunction)
 			return;
@@ -836,7 +767,6 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseAVoidType(node.AVoidType)
 	 */
 	@Override
@@ -846,7 +776,6 @@ public class ToC extends DepthFirstAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see analysis.DepthFirstAdapter#caseAWhileLogic(node.AWhileLogic)
 	 */
 	@Override
@@ -867,16 +796,16 @@ public class ToC extends DepthFirstAdapter {
 			node.getPProgram().apply(this);
 		}
 		switch (state) {
-		case head: {
-			state = InterpreterState.body;
-			output.append("#include \"");
-			output.append(moduleName);
-			output.append(".h\"\n");
-			break;
-		}
-		default: {
-			throw new RuntimeException("Unhandled State! Contact Developer!");
-		}
+			case head: {
+				state = InterpreterState.body;
+				output.append("#include \"");
+				output.append(moduleName);
+				output.append(".h\"\n");
+				break;
+			}
+			default: {
+				throw new RuntimeException("Unhandled State! Contact Developer!");
+			}
 		}
 
 		node.getPProgram().apply(this);
@@ -908,10 +837,8 @@ public class ToC extends DepthFirstAdapter {
 		if (var != null) {
 			if (accessType == AccessType.read) {
 				if (!var.isInitialized()) {
-					throw new SemanticException(
-							"Variable "
-									+ var.getId()
-									+ " is not initialized, but is used as a right-hand-side of an assignment!");
+					throw new SemanticException("Variable " + var.getId()
+							+ " is not initialized, but is used as a right-hand-side of an assignment!");
 				}
 			} else {
 				var.initialize();
@@ -962,17 +889,17 @@ public class ToC extends DepthFirstAdapter {
 	private void writeOut() throws IOException {
 		String path;
 		switch (state) {
-		case head: {
-			path = headerPath;
-			break;
-		}
-		case body: {
-			path = bodyPath;
-			break;
-		}
-		default: {
-			throw new RuntimeException("Unhandled State! Contact Developer!");
-		}
+			case head: {
+				path = headerPath;
+				break;
+			}
+			case body: {
+				path = bodyPath;
+				break;
+			}
+			default: {
+				throw new RuntimeException("Unhandled State! Contact Developer!");
+			}
 		}
 
 		Writer writer = new FileWriter(path);
