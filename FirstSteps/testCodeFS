@@ -32,15 +32,20 @@ include stdlib ;
 	}
 
 
-	return result;
+	return result
 }
+
 
  Olaf {
  	
 	 <int> count = 5;
 	 
+	 <int> doku = 13;
+	 
+	 
 	 cons Olaf (<int> c){
 	 	count = c;
+	 	doku = 14;
 	 } 
 	
  }

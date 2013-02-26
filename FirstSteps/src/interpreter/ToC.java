@@ -310,6 +310,7 @@ public class ToC extends DepthFirstAdapter {
 	 */
 	@Override
 	public void caseAStructStruct(AStructStruct node) {
+
 		String currentID = node.getId().getText();
 		currentStruct = new StructState(node);
 
@@ -397,9 +398,13 @@ public class ToC extends DepthFirstAdapter {
 		if (currentStruct == null)
 			throw new SemanticException(
 					"No beginning Struct, why should there be a body? There are no bodies hidden here...");
-
+		
 		node.getDefine().apply(this);
+		if (!(node.getStructBody() instanceof ADefineStructBody) && state == InterpreterState.head) {
+			 output.append("}\n");		
+		}
 		node.getStructBody().apply(this);
+		
 	}
 
 	/*
@@ -674,7 +679,7 @@ public class ToC extends DepthFirstAdapter {
 		Variable var = checkVariable(currentID, AccessType.write);
 		output.append(" = ");
 		node.getTerm().apply(this);
-		if (currentStruct != null && !currentlyInFunction) {
+		if (/*currentStruct != null && !currentlyInFunction*/false) {
 			output.append("\n}\n");
 		} else {
 			output.append(";\n");
@@ -722,7 +727,11 @@ public class ToC extends DepthFirstAdapter {
 		output.append(node.getId().getText());
 		output.append('(');
 		node.getFuncPara().apply(this);
-		output.append(");\n");
+		output.append(")");
+		System.out.println(node.parent().parent().getClass().toString());
+		if ((node.parent().parent() instanceof AExprImpl)) {
+			output.append(";\n");
+		}
 	}
 
 	/*
