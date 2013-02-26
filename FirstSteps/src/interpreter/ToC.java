@@ -240,7 +240,7 @@ public class ToC extends DepthFirstAdapter {
 			output.append(';');
 
 			if (currentStruct != null) {
-				output.append("\n};");
+//				output.append("\n};");
 			}
 			output.append('\n');
 		}

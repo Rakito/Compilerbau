@@ -44,9 +44,9 @@ include stdlib ;
 
  Olaf {
  	
-	 <int> count = 5;
+	 <int> count ;
 	 
-	 <int> doku = 13;
+	 <int> doku ;
 	 
 	 
 	 cons Olaf (<int> c){
