@@ -35,7 +35,8 @@ public class Main {
 			/* Get our Interpreter going. */
 			interp = new ToC("C:/users/FHoeborn", "olaf");
 			ast.apply(interp);
-
+			//ast.apply(interp);
+			
 			System.out.println(interp.output.toString());
 			System.out.println("FunctionScope: "
 					+ interp.currentFunctionVariableScope.toString());

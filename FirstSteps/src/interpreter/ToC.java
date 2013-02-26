@@ -13,8 +13,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.management.RuntimeErrorException;
-
 import node.*;
 import analysis.DepthFirstAdapter;
 
@@ -26,19 +24,20 @@ public class ToC extends DepthFirstAdapter {
 	public ToC(String parentPath, String filename) {
 		String path = parentPath + System.getProperty("file.separator")
 				+ filename;
-		header_path = path + ".h";
-		body_path = path + ".c";
+		headerPath = path + ".h";
+		bodyPath = path + ".c";
+		moduleName = filename;
 	}
 
 	private void writeOut() throws IOException {
 		String path;
 		switch (state) {
 		case head: {
-			path = header_path;
+			path = headerPath;
 			break;
 		}
 		case body: {
-			path = body_path;
+			path = bodyPath;
 			break;
 		}
 		default: {
@@ -49,12 +48,13 @@ public class ToC extends DepthFirstAdapter {
 		Writer writer = new FileWriter(path);
 		writer.append(output.toString());
 		writer.close();
-		
+
 		output = new StringBuffer();
 	}
 
-	private String header_path = "";
-	private String body_path = "";
+	private String moduleName = "";
+	private String headerPath = "";
+	private String bodyPath = "";
 	public StringBuffer output = new StringBuffer();
 
 	private InterpreterState state = null;
@@ -75,10 +75,14 @@ public class ToC extends DepthFirstAdapter {
 	public void caseStart(Start node) {
 		if (state == null) {
 			state = InterpreterState.head;
+			node.getPProgram().apply(this);
 		}
 		switch (state) {
 		case head: {
 			state = InterpreterState.body;
+			output.append("#include \"");
+			output.append(moduleName);
+			output.append(".h\"\n");
 			break;
 		}
 		default: {
@@ -113,7 +117,6 @@ public class ToC extends DepthFirstAdapter {
 	Set<String> includes = new HashSet<String>();
 	Map<String, AFunctionFunction> functions = new HashMap<String, AFunctionFunction>();
 	Map<String, AStructStruct> classes = new HashMap<String, AStructStruct>();
-	// Map<String, AVardef> globalVariables = new HashMap<String, V>
 
 	private static final String CONST_INCLUDE = "#include";
 
@@ -125,16 +128,16 @@ public class ToC extends DepthFirstAdapter {
 	@Override
 	public void caseAIncludeProgram(AIncludeProgram node) {
 		includes.add(node.getId().getText());
-
-		// generate Code
-		output.append(CONST_INCLUDE);
-		output.append(" ");
-		output.append("<");
-		output.append(node.getId().getText());
-		output.append(".h>\n");
-
+		if (state == InterpreterState.head) {
+			// generate Code
+			output.append(CONST_INCLUDE);
+			output.append(" ");
+			output.append("<");
+			output.append(node.getId().getText());
+			output.append(".h>\n");
+		}
 		// consume the rest
-		super.caseAIncludeProgram(node);
+		node.getProgram().apply(this);
 	}
 
 	/*
@@ -155,8 +158,8 @@ public class ToC extends DepthFirstAdapter {
 	 */
 	@Override
 	public void caseAStructProgram(AStructProgram node) {
-		// TODO Auto-generated method stub
-		super.caseAStructProgram(node);
+		node.getStruct().apply(this);
+		node.getProgram().apply(this);
 	}
 
 	/*
@@ -178,17 +181,20 @@ public class ToC extends DepthFirstAdapter {
 	 */
 	@Override
 	public void caseAVarDefine(AVarDefine node) {
-		node.getType().apply(this);
-		output.append(' ');
 		String currentID = node.getId().getText();
-		output.append(currentID);
-		output.append(';');
+		if (currentStruct != null && !currentlyInFunction
+				&& (state == InterpreterState.head)) {
+			node.getType().apply(this);
+			output.append(' ');
+			
+			output.append(currentID);
+			output.append(';');
 
-		if (currentStruct != null) {
-			output.append("\n};");
+			if (currentStruct != null) {
+				output.append("\n};");
+			}
+			output.append('\n');
 		}
-		output.append('\n');
-
 		addVariableToScope(currentID);
 	}
 
@@ -255,10 +261,12 @@ public class ToC extends DepthFirstAdapter {
 		output.append(currentID);
 		output.append('\n');
 
-		output.append(CONST_STRUCT);
-		output.append(" ");
-		output.append(currentID);
-		output.append("\n{\n");
+		if (state == InterpreterState.head) {
+			output.append(CONST_STRUCT);
+			output.append(" ");
+			output.append(currentID);
+			output.append("\n{\n");
+		}
 
 		node.getStructBody().apply(this);
 	}
@@ -276,22 +284,21 @@ public class ToC extends DepthFirstAdapter {
 		String currentID = currentStruct.getStruct().getId().getText();
 
 		if (!currentStruct.isConstrCreated()) {
-
+			// TODO: empty konstruktor
 		}
-
-		output.append(CONST_VOID);
-		output.append(" destroy_");
-		output.append(currentID);
-		output.append('(');
-		output.append(currentID);
-		output.append("* this) {\nfree(this);\n}\n");
-
+		if (state == InterpreterState.body) {
+			output.append(CONST_VOID);
+			output.append(" destroy_");
+			output.append(currentID);
+			output.append('(');
+			output.append(currentID);
+			output.append("* this) {\n\tfree(this);\n}\n");
+		}
 		output.append("// END STRUCT ");
 		output.append(currentID);
 		output.append('\n');
 
 		cleanupAfterStruct();
-
 	}
 
 	/*
@@ -306,8 +313,9 @@ public class ToC extends DepthFirstAdapter {
 			throw new SemanticException(
 					"No beginning Struct, why should there be a body? There are no bodies hidden here...");
 
-		// process rest
+		// if (state == InterpreterState.head) {
 		node.getDefine().apply(this);
+		// }
 		node.getStructBody().apply(this);
 	}
 
@@ -336,6 +344,7 @@ public class ToC extends DepthFirstAdapter {
 	public void caseAConsConstructor(AConsConstructor node) {
 		if (currentStruct == null)
 			throw new SemanticException("No parent struct!");
+
 		currentlyInFunction = true;
 		String currentID = currentStruct.getStruct().getId().getText();
 
@@ -345,8 +354,14 @@ public class ToC extends DepthFirstAdapter {
 		output.append(currentID);
 		output.append('(');
 		node.getParam().apply(this);
-		output.append(")\n{\n");
+		output.append(')');
 
+		if (state != InterpreterState.body) {
+			output.append(";\n");
+			cleanupAfterFunction();
+			return;
+		}
+		output.append("\n{\n\t");
 		// Allocation
 		output.append(currentID);
 		output.append("* this = (");
@@ -356,7 +371,7 @@ public class ToC extends DepthFirstAdapter {
 		output.append(");\n");
 
 		node.getImpl().apply(this);
-		output.append("return this;");
+		output.append("\treturn this;");
 		output.append("\n}\n");
 
 		cleanupAfterFunction();
@@ -379,9 +394,14 @@ public class ToC extends DepthFirstAdapter {
 		output.append(node.getId().getText());
 		output.append('(');
 		node.getParam().apply(this);
-		output.append(")\n{\n");
-		node.getImpl().apply(this);
-		output.append("\n}\n");
+		output.append(')');
+		if (state == InterpreterState.head) {
+			output.append(";\n");
+		} else {
+			output.append("\n{\n\t");
+			node.getImpl().apply(this);
+			output.append("\n}\n");
+		}
 
 		cleanupAfterFunction();
 	}
@@ -466,8 +486,8 @@ public class ToC extends DepthFirstAdapter {
 	 */
 	@Override
 	public void caseAExprImpl(AExprImpl node) {
-		// TODO Auto-generated method stub
-		super.caseAExprImpl(node);
+		node.getExpr().apply(this);
+		node.getImpl().apply(this);
 	}
 
 	/*
@@ -488,8 +508,7 @@ public class ToC extends DepthFirstAdapter {
 	 */
 	@Override
 	public void caseAOperationExpr(AOperationExpr node) {
-		// TODO Auto-generated method stub
-		super.caseAOperationExpr(node);
+		node.getOperation().apply(this);
 	}
 
 	/*
@@ -584,8 +603,7 @@ public class ToC extends DepthFirstAdapter {
 		output.append(node.getId().getText());
 		output.append('(');
 		node.getFuncPara().apply(this);
-		output.append(");\n");
-
+		output.append(')');
 	}
 
 	/*
