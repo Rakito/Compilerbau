@@ -20,6 +20,7 @@ public class Main {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
+		ToC interp = null;
 		try {
 			Lexer lexer = new Lexer(new PushbackReader(new FileReader(
 					"testCodeFS")
@@ -36,16 +37,24 @@ public class Main {
 			System.out.println("Der Parser parst");
 
 			/* Get our Interpreter going. */
-			ToC interp = new ToC();
+			 interp = new ToC();
 			ast.apply(interp);
 
 			System.out.println(interp.output.toString());
+			System.out.println("FunctionScope: " + interp.currentFunctionVariableScope.toString());
+			System.out.println("GlobalScope: " + interp.currentGlobalVariableScope.toString());
+			System.out.println("StructScope: " + interp.currentStructVariableScope.toString());
 
-
-//			System.out.print(interp.cp.code.toString());
+			// System.out.print(interp.cp.code.toString());
 
 		} catch (Exception e) {
 			System.out.println("Verkackt!");
+			if (interp != null){
+				System.out.println("FunctionScope: " + interp.currentFunctionVariableScope.toString());
+				System.out.println("GlobalScope: " + interp.currentGlobalVariableScope.toString());
+				System.out.println("StructScope: " + interp.currentStructVariableScope.toString());
+			}
+			
 			e.printStackTrace();
 		}
 

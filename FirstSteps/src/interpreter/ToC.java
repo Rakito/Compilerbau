@@ -3,8 +3,10 @@
  */
 package interpreter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -19,6 +21,10 @@ public class ToC extends DepthFirstAdapter {
 	public StringBuffer output = new StringBuffer();
 
 	private StructState currentStruct = null;
+	private boolean currentlyInFunction = false;
+	public List<String> currentGlobalVariableScope = new ArrayList<String>();
+	public List<String> currentFunctionVariableScope = new ArrayList<String>();
+	public List<String> currentStructVariableScope = new ArrayList<String>();
 
 	Set<String> includes = new HashSet<String>();
 	Map<String, AFunctionFunction> functions = new HashMap<String, AFunctionFunction>();
@@ -54,8 +60,8 @@ public class ToC extends DepthFirstAdapter {
 	 */
 	@Override
 	public void caseADefineProgram(ADefineProgram node) {
-		// TODO Auto-generated method stub
-		super.caseADefineProgram(node);
+		node.getDefine().apply(this);
+		node.getProgram().apply(this);
 	}
 
 	/*
@@ -88,9 +94,10 @@ public class ToC extends DepthFirstAdapter {
 	 */
 	@Override
 	public void caseAVarDefine(AVarDefine node) {
-		super.caseAVarDefine(node);
+		node.getType().apply(this);
 		output.append(' ');
-		output.append(node.getId().getText());
+		String currentID = node.getId().getText();
+		output.append(currentID);
 		output.append(';');
 
 		if (currentStruct != null) {
@@ -98,6 +105,32 @@ public class ToC extends DepthFirstAdapter {
 		}
 		output.append('\n');
 
+		addVariableToScope(currentID);
+	}
+
+	private void addVariableToScope(String currentID) {
+		if (currentlyInFunction) {
+			if (currentFunctionVariableScope.contains(currentID))
+				throw new SemanticException("Variable " + currentID
+						+ " in this function already defined!");
+			currentFunctionVariableScope.add(currentID);
+			return;
+		}
+		if (currentStruct != null) {
+			if (currentStructVariableScope.contains(currentID))
+				throw new SemanticException("Variable " + currentID
+						+ " in struct "
+						+ currentStruct.getStruct().getId().getText()
+						+ "already defined!");
+			currentStructVariableScope.add(currentID);
+			return;
+		}
+
+		if (currentGlobalVariableScope.contains(currentID))
+			throw new SemanticException("Variable " + currentID
+					+ currentStruct.getStruct().getId().getText()
+					+ "already defined!");
+		currentGlobalVariableScope.add(currentID);
 	}
 
 	/*
@@ -107,6 +140,13 @@ public class ToC extends DepthFirstAdapter {
 	 */
 	@Override
 	public void caseAVarSetDefine(AVarSetDefine node) {
+		PSet set = node.getSet();
+
+		if (set instanceof ASetSet) {
+			ASetSet setSet = (ASetSet) set;
+			addVariableToScope(setSet.getId().getText());
+		}
+
 		node.getType().apply(this);
 		output.append(' ');
 		node.getSet().apply(this);
@@ -121,15 +161,19 @@ public class ToC extends DepthFirstAdapter {
 	 */
 	@Override
 	public void caseAStructStruct(AStructStruct node) {
-		String id = node.getId().getText();
+		String currentID = node.getId().getText();
 		currentStruct = new StructState(node);
 
-		this.classes.put(id, node);
+		this.classes.put(currentID, node);
 
 		// generate Code
+		output.append("//BEGIN STRUCT ");
+		output.append(currentID);
+		output.append('\n');
+
 		output.append(CONST_STRUCT);
 		output.append(" ");
-		output.append(id);
+		output.append(currentID);
 		output.append("\n{\n");
 
 		node.getStructBody().apply(this);
@@ -162,7 +206,7 @@ public class ToC extends DepthFirstAdapter {
 		output.append(currentID);
 		output.append('\n');
 
-		currentStruct = null;
+		cleanupAfterStruct();
 
 	}
 
@@ -193,7 +237,7 @@ public class ToC extends DepthFirstAdapter {
 	public void caseAConstructorStructBody(AConstructorStructBody node) {
 		node.getConstructor().apply(this);
 
-		super.caseAConstructorStructBody(node);
+		node.getStructBody().apply(this);
 	}
 
 	private final static String CONST_VOID = "void";
@@ -208,7 +252,7 @@ public class ToC extends DepthFirstAdapter {
 	public void caseAConsConstructor(AConsConstructor node) {
 		if (currentStruct == null)
 			throw new SemanticException("No parent struct!");
-
+		currentlyInFunction = true;
 		String currentID = currentStruct.getStruct().getId().getText();
 
 		output.append(currentID);
@@ -230,6 +274,8 @@ public class ToC extends DepthFirstAdapter {
 		node.getImpl().apply(this);
 		output.append("return this;");
 		output.append("\n}\n");
+
+		cleanupAfterFunction();
 	}
 
 	/*
@@ -241,6 +287,7 @@ public class ToC extends DepthFirstAdapter {
 	@Override
 	public void caseAFunctionFunction(AFunctionFunction node) {
 		this.functions.put(node.getId().getText(), node);
+		currentlyInFunction = true;
 
 		// generate code
 		node.getType().apply(this);
@@ -251,6 +298,8 @@ public class ToC extends DepthFirstAdapter {
 		output.append(")\n{\n");
 		node.getImpl().apply(this);
 		output.append("\n}\n");
+
+		cleanupAfterFunction();
 	}
 
 	/*
@@ -273,7 +322,9 @@ public class ToC extends DepthFirstAdapter {
 	public void caseAOneParam(AOneParam node) {
 		node.getType().apply(this);
 		output.append(' ');
-		output.append(node.getId().getText());
+		String currentID = node.getId().getText();
+		output.append(currentID);
+		addVariableToScope(currentID);
 	}
 
 	/*
@@ -282,10 +333,12 @@ public class ToC extends DepthFirstAdapter {
 	 * @see analysis.DepthFirstAdapter#caseAAnotherParam(node.AAnotherParam)
 	 */
 	@Override
-	public void caseAAnotherParam(AAnotherParam node) {		
+	public void caseAAnotherParam(AAnotherParam node) {
 		node.getType().apply(this);
 		output.append(' ');
-		output.append(node.getId().getText());
+		String currentID = node.getId().getText();
+		output.append(currentID);
+		addVariableToScope(currentID);
 		output.append(", ");
 		node.getParam().apply(this);
 	}
@@ -297,8 +350,17 @@ public class ToC extends DepthFirstAdapter {
 	 */
 	@Override
 	public void caseAEndImpl(AEndImpl node) {
-		// TODO Auto-generated method stub
-		super.caseAEndImpl(node);
+		// Nothing to do here
+	}
+
+	private void cleanupAfterFunction() {
+		currentlyInFunction = false;
+		currentFunctionVariableScope = new ArrayList<String>();
+	}
+
+	private void cleanupAfterStruct() {
+		currentStruct = null;
+		currentStructVariableScope = new ArrayList<String>();
 	}
 
 	/*
@@ -308,8 +370,9 @@ public class ToC extends DepthFirstAdapter {
 	 */
 	@Override
 	public void caseAReturnImpl(AReturnImpl node) {
-		// TODO Auto-generated method stub
-		super.caseAReturnImpl(node);
+		output.append("return ");
+		node.getExpr().apply(this);
+		output.append(";\n}\n");
 	}
 
 	/*
@@ -392,14 +455,39 @@ public class ToC extends DepthFirstAdapter {
 	 */
 	@Override
 	public void caseASetSet(ASetSet node) {
+		String currentID = node.getId().getText();
+
 		if (currentStruct != null) {
-			output.append("this.");
+			if (currentStructVariableScope.contains(currentID)) {
+				output.append("this -> ");
+			} else {
+				if (!(currentFunctionVariableScope.contains(currentID) || currentGlobalVariableScope
+						.contains(currentID))) {
+					throw new SemanticException(
+							"There is no variable in struct "
+									+ currentStruct.getStruct().getId()
+											.getText() + " with the id "
+									+ currentID);
+				}
+			}
 		}
 
-		output.append(node.getId().getText());
+		output.append(currentID);
+		checkVariable(currentID);
 		output.append(" = ");
 		node.getTerm().apply(this);
 		output.append(";\n");
+	}
+
+	private void checkVariable(String currentID) {
+
+		if (currentFunctionVariableScope.contains(currentID)
+				|| currentStructVariableScope.contains(currentID)
+				|| currentGlobalVariableScope.contains(currentID)) {
+			return;
+		}
+
+		throw new SemanticException("Variable " + currentID + " not defined!");
 	}
 
 	/*
@@ -412,6 +500,8 @@ public class ToC extends DepthFirstAdapter {
 		output.append(node.getId().getText());
 		output.append('(');
 		node.getFuncPara().apply(this);
+		output.append(");\n");
+		
 	}
 
 	/*
@@ -572,7 +662,9 @@ public class ToC extends DepthFirstAdapter {
 	 */
 	@Override
 	public void caseAIdTerm(AIdTerm node) {
-		output.append(node.getId().getText());
+		String currentID = node.getId().getText();
+		checkVariable(currentID);
+		output.append(currentID);
 	}
 
 	/*
