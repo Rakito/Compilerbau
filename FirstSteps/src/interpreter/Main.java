@@ -33,7 +33,7 @@ public class Main {
 			System.out.println("Der Parser parst");
 
 			/* Get our Interpreter going. */
-			interp = new ToC("/Users/vin/Study/5.Semester/Compilerbau/", "olaf");
+			interp = new ToC("C:/users/fhoeborn", "olaf");
 			ast.apply(interp);
 			//ast.apply(interp);
 			
