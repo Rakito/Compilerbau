@@ -22,22 +22,22 @@
 \pagestyle{plain}
 
 \section{Top-Level}
-Diese Sparche hat auf oberster Ebene 4 Bestandteile.
+Diese Sprache hat auf oberster Ebene 4 Bestandteile.
 
 \subsection{Includes}
-\texttt{include} 'Name der zu includierenden Datei' \texttt{;} \\
+\texttt{include} \textit{dateiname}  \texttt{;} \\
 
 \subsection{Defines} \label{define}
 Es können globale Variabelen definiert werden. \\
-\texttt{<} \textit{type} \texttt{>} \textit{id}  \texttt{;} f"ur nicht initiatisierte Variabelen. \\
-\texttt{<} \textit{type} \texttt{>} \textit{id} \texttt{=} \textit{term} \texttt{;} f"ur nicht initiatisierte Variabelen.
+\texttt{<} \textit{type} \texttt{>} \textit{variablenname}  \texttt{;} f"ur nicht initiatisierte Variabelen. \\
+\texttt{<} \textit{type} \texttt{>} \textit{variablenname} \texttt{=} \textit{term} \texttt{;} f"ur initiatisierte Variabelen.
 
 \subsection{Klassen} \label{struct}
-\textit{id} \texttt{\{}
+\textit{klassenname} \texttt{\{}
 \begin{itemize}
 \item[]{Innerhalb einer Klasse können Definitionen  {\small(siehe \ref{define})} stehen.}
 \item[]{Konstruktoren können nach folgendem Muster definiert werden:\\
-\texttt{cons} \textit{id} \texttt{(<} \textit{type} \texttt{>} \textit{id} {\small( , \texttt{<} \textit{type} \texttt{>} \textit{id} , ... )} \texttt{)}\\ 
+\texttt{cons} \textit{id} \texttt{(<} \textit{type} \texttt{>} \textit{parametername1} {\small( , \texttt{<} \textit{type} \texttt{>} \textit{parametername2} , ... )} \texttt{)}\\ 
 \texttt{\{}\\
 \textit{expr} {\tiny\ref{expr}} und/oder \textit{define} {\tiny\ref{define}}\\
 \texttt{\}}}
@@ -46,7 +46,7 @@ Es können globale Variabelen definiert werden. \\
 
 \subsection{Funktionsdefinition} \label{function}
 Funktionen werden wie folgt definiert: \\
-\texttt{<} \textit{type} \texttt{>} \textit{id}\texttt{(<} \textit{type} \texttt{>} \textit{id}  {\small( , \texttt{<} \textit{type} \texttt{>} \textit{id} , ... )} \texttt{)}\\
+\texttt{<} \textit{type} \texttt{>} \textit{parametername1}\texttt{(<} \textit{type} \texttt{>} \textit{parametername2}  {\small( , \texttt{<} \textit{type} \texttt{>} \textit{id} , ... )} \texttt{)}\\
 \texttt{\{}\\
 \textit{expr} {\tiny\ref{expr}} und/oder \textit{define} {\tiny\ref{define}}\\
 \texttt{\}}
@@ -63,8 +63,8 @@ Operanten sind \texttt{+} , \texttt{-} , \texttt{*} , \texttt{/} , \texttt{\%} ,
 \subsubsection{Funktionsaufrufe}
 Es gibt 3 Arten von Funktionsaufrufen:
 \begin{itemize}
-\item[call]{\texttt{call} \textit{id}\texttt{(} \textit{id}  {\tiny( , \textit{id} , ... )} \texttt{)} }
-\item[new]{\texttt{new} \textit{id}\texttt{(} \textit{id}  {\tiny( , \textit{id} , ... )} \texttt{)} }
+\item[call]{\texttt{call} \textit{parameter1}\texttt{(} \textit{parameter2}  {\tiny( , \textit{id} , ... )} \texttt{)} }
+\item[new]{\texttt{new} \textit{parameter1}\texttt{(} \textit{parameter2}  {\tiny( , \textit{id} , ... )} \texttt{)} }
 \item[destroy]{\texttt{destroy} \textit{id}}
 \end{itemize}
 
@@ -77,7 +77,7 @@ F"ur eine expr kann auch ein term{\tiny\ref{term}} eingesetzt werden.
 \subsection{Terme} \label{term}
 \begin{itemize}
 \item[expr]{\texttt{(} expr \texttt{)}}
-\item[id]{Zeichenketten mit großen und kleinen Buchstaben sowiet Sterne }
+\item[id]{Zeichenketten mit großen und kleinen Buchstaben sowie Sterne }
 \item[number]{ganze Zahlen }
 \item[null]{\texttt{null} }
 \item[boolean]{\texttt{true} oder \texttt{false} }
