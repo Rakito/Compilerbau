@@ -901,9 +901,9 @@ public class ToC extends DepthFirstAdapter {
 	 */
 	@Override
 	public void caseAExprTerm(AExprTerm node) {
-		output.append(node.getLPar().getText());
+		output.append('(');
 		node.getExpr().apply(this);
-		output.append(node.getRPar().getText());
+		output.append(')');
 	}
 
 	/*
