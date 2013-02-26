@@ -21,8 +21,15 @@ import analysis.DepthFirstAdapter;
  * @author Benjamin Arnold, Felix Hoeborn
  * 
  */
-public class ToC extends DepthFirstAdapter {
-	private List<String> errors = new ArrayList<String>();
+public class ToC extends DepthFirstAdapter {	
+	public List<String> getWarnings() {
+		return warnings;
+	}
+	
+	public void resetWarnings(){
+		warnings = new ArrayList<String>();
+	}
+
 	private List<String> warnings = new ArrayList<String>();
 	
 	public ToC(String parentPath, String filename) {
@@ -167,7 +174,7 @@ public class ToC extends DepthFirstAdapter {
 
 		for (Entry<String, Variable> var : vars.entrySet()) {
 			if (!var.getValue().isUsed()) {
-				throw new SemanticException("Variable " + var.getKey()
+				warnings.add("Variable " + var.getKey()
 						+ " is unused!");
 			}
 		}
