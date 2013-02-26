@@ -6,11 +6,10 @@ package interpreter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import node.*;
@@ -65,14 +64,12 @@ public class ToC extends DepthFirstAdapter {
 	 * This represents the scope of all currently avaible global-local variables
 	 * variables
 	 */
-	public List<String> currentGlobalVariableScope = new ArrayList<String>();
+	public Map<String, Variable> currentGlobalVariableScope = new HashMap<String, Variable>();
 	/*
 	 * This represents the scope of all currently avaible struct-local defined
 	 * variables
 	 */
-	public List<String> currentStructVariableScope = new ArrayList<String>();
-
-	public Map<String, String> variableTypeMap = new HashMap<String, String>();
+	public Map<String, Variable> currentStructVariableScope = new HashMap<String, Variable>();
 
 	@Override
 	public void caseStart(Start node) {
@@ -110,10 +107,10 @@ public class ToC extends DepthFirstAdapter {
 	@Override
 	public void caseADestroyFunc(ADestroyFunc node) {
 		String currentID = node.getId().getText();
-		checkVariable(currentID);
-		String type = variableTypeMap.get(currentID);
+		Variable currentVar = checkVariable(currentID);
+
 		output.append("\tdestroy_");
-		output.append(type);
+		output.append(currentVar.getType());
 		output.append('(');
 		output.append(currentID);
 		output.append(");\n");
@@ -145,17 +142,23 @@ public class ToC extends DepthFirstAdapter {
 	}
 
 	private void cleanupAfterGlobal() {
-		for (String entry : currentGlobalVariableScope) {
-			variableTypeMap.remove(entry);
+		checkUsed(currentGlobalVariableScope);
+		currentGlobalVariableScope = new HashMap<String, Variable>();
+	}
+
+	private void checkUsed(Map<String, Variable> vars) {
+		for (Entry<String, Variable> var : vars.entrySet()) {
+			if (!var.getValue().isUsed()) {
+				throw new SemanticException("Variable "+ var.getKey() + " is unused!");
+			}
 		}
-		currentGlobalVariableScope = new ArrayList<String>();
 	}
 
 	/*
 	 * This represents the scope of all currently avaible function-local defined
 	 * variables
 	 */
-	public List<String> currentFunctionVariableScope = new ArrayList<String>();
+	public Map<String, Variable> currentFunctionVariableScope = new HashMap<String, Variable>();
 
 	Set<String> includes = new HashSet<String>();
 	Map<String, AFunctionFunction> functions = new HashMap<String, AFunctionFunction>();
@@ -243,31 +246,30 @@ public class ToC extends DepthFirstAdapter {
 
 	private void addVariableToScope(String currentID, String type) {
 		if (currentlyInFunction) {
-			if (currentFunctionVariableScope.contains(currentID))
+			if (currentFunctionVariableScope.containsKey(currentID))
 				throw new SemanticException("Variable " + currentID
 						+ " in this function already defined!");
-			currentFunctionVariableScope.add(currentID);
-			variableTypeMap.put(currentID, type);
+			currentFunctionVariableScope.put(currentID, new Variable(currentID,
+					type));
 			return;
 		}
 		if (currentStruct != null) {
-			if (currentStructVariableScope.contains(currentID))
+			if (currentStructVariableScope.containsKey(currentID))
 				throw new SemanticException("Variable " + currentID
 						+ " in struct "
 						+ currentStruct.getStruct().getId().getText()
 						+ "already defined!");
-			currentStructVariableScope.add(currentID);
-			variableTypeMap.put(currentID, type);
+			currentStructVariableScope.put(currentID, new Variable(currentID,
+					type));
 			return;
 		}
 
-		if (currentGlobalVariableScope.contains(currentID))
+		if (currentGlobalVariableScope.containsKey(currentID))
 			throw new SemanticException("Variable " + currentID
 					+ currentStruct.getStruct().getId().getText()
 					+ "already defined!");
-		currentGlobalVariableScope.add(currentID);
-
-		variableTypeMap.put(currentID, type);
+		currentGlobalVariableScope
+				.put(currentID, new Variable(currentID, type));
 	}
 
 	/*
@@ -338,17 +340,21 @@ public class ToC extends DepthFirstAdapter {
 		if (!currentStruct.isConstrCreated()) {
 			// TODO: empty konstruktor
 		}
+
+		output.append(CONST_VOID);
+		output.append(" destroy_");
+		output.append(currentID);
+		output.append('(');
+		output.append(currentID);
+		output.append("* this)");
 		if (state == InterpreterState.body) {
-			output.append(CONST_VOID);
-			output.append(" destroy_");
-			output.append(currentID);
-			output.append('(');
-			output.append(currentID);
-			output.append("* this) {\n\tfree(this);\n}\n");
+			output.append("{\n\tfree(this);\n}\n");
+		} else {
+			output.append(";\n");
 		}
 		output.append("// END STRUCT ");
 		output.append(currentID);
-		output.append('\n');
+		output.append("\n\n\n");
 
 		cleanupAfterStruct();
 	}
@@ -521,13 +527,15 @@ public class ToC extends DepthFirstAdapter {
 	}
 
 	private void cleanupAfterFunction() {
+		checkUsed(currentFunctionVariableScope);
 		currentlyInFunction = false;
-		currentFunctionVariableScope = new ArrayList<String>();
+		currentFunctionVariableScope = new HashMap<String, Variable>();
 	}
 
 	private void cleanupAfterStruct() {
+		checkUsed(currentStructVariableScope);
 		currentStruct = null;
-		currentStructVariableScope = new ArrayList<String>();
+		currentStructVariableScope = new HashMap<String, Variable>();
 	}
 
 	/*
@@ -537,9 +545,9 @@ public class ToC extends DepthFirstAdapter {
 	 */
 	@Override
 	public void caseAReturnImpl(AReturnImpl node) {
-		output.append("return ");
+		output.append("\treturn ");
 		node.getExpr().apply(this);
-		output.append(";\n}\n");
+		output.append(";\n");
 	}
 
 	/*
@@ -624,11 +632,11 @@ public class ToC extends DepthFirstAdapter {
 		String currentID = node.getId().getText();
 
 		if (currentStruct != null) {
-			if (currentStructVariableScope.contains(currentID)) {
+			if (currentStructVariableScope.containsKey(currentID)) {
 				output.append("this -> ");
 			} else {
-				if (!(currentFunctionVariableScope.contains(currentID) || currentGlobalVariableScope
-						.contains(currentID))) {
+				if (!(currentFunctionVariableScope.containsKey(currentID) || currentGlobalVariableScope
+						.containsKey(currentID))) {
 					throw new SemanticException(
 							"There is no variable in struct "
 									+ currentStruct.getStruct().getId()
@@ -645,12 +653,23 @@ public class ToC extends DepthFirstAdapter {
 		output.append(";\n");
 	}
 
-	private void checkVariable(String currentID) {
+	private Variable checkVariable(String currentID) {
 
-		if (currentFunctionVariableScope.contains(currentID)
-				|| currentStructVariableScope.contains(currentID)
-				|| currentGlobalVariableScope.contains(currentID)) {
-			return;
+		if (currentFunctionVariableScope.containsKey(currentID)) {
+			Variable var = currentFunctionVariableScope.get(currentID);
+			var.Use();
+			return var;
+		}
+		if (currentStructVariableScope.containsKey(currentID)) {
+			Variable var = currentStructVariableScope.get(currentID);
+			var.Use();
+			return var;
+		}
+
+		if (currentGlobalVariableScope.containsKey(currentID)) {
+			Variable var = currentGlobalVariableScope.get(currentID);
+			var.Use();
+			return var;
 		}
 
 		throw new SemanticException("Variable " + currentID + " not defined!");

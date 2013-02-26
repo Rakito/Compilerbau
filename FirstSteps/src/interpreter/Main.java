@@ -43,9 +43,7 @@ public class Main {
 			System.out.println("GlobalScope: "
 					+ interp.currentGlobalVariableScope.toString());
 			System.out.println("StructScope: "
-					+ interp.currentStructVariableScope.toString());
-			System.out.println("Map-Variable<->Type: "
-					+ interp.variableTypeMap.toString());
+					+ interp.currentStructVariableScope.toString());		
 
 			// System.out.print(interp.cp.code.toString());
 
