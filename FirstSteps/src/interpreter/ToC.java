@@ -230,8 +230,8 @@ public class ToC extends DepthFirstAdapter {
 	@Override
 	public void caseAVarDefine(AVarDefine node) {
 		String currentID = node.getId().getText();
-		if (currentStruct != null && !currentlyInFunction
-				&& (state == InterpreterState.head)) {
+		if (currentlyInFunction || currentStruct != null
+				|| (state == InterpreterState.head)) {
 			node.getType().apply(this);
 			output.append(' ');
 
@@ -724,7 +724,7 @@ public class ToC extends DepthFirstAdapter {
 		output.append(node.getId().getText());
 		output.append('(');
 		node.getFuncPara().apply(this);
-		output.append(')');
+		output.append(");\n");
 	}
 
 	/*
