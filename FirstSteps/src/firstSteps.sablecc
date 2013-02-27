@@ -74,18 +74,15 @@ Tokens
  blackslash ='\';
  equals = '=';
  quote = '"';
-
- ccode = cstart ( any_character )* cend;
  
  return = ( 13 | 10 );
  tab = 9 ;
- comment = 'ÚÚ' ( any_character )*;
  
  endoffile = 4 ;
 
 
 Ignored Tokens
- comment, blank, tab, return ;
+ blank, tab, return ;
  
  
 

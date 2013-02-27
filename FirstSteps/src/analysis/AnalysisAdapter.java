@@ -741,12 +741,6 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseTCcode(TCcode node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
     public void caseTReturn(TReturn node)
     {
         defaultCase(node);
@@ -754,12 +748,6 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseTTab(TTab node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTComment(TComment node)
     {
         defaultCase(node);
     }
