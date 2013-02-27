@@ -28,34 +28,30 @@ public class ToC extends DepthFirstAdapter {
 			CONST_INCLUDE = "#include", CONST_NULL = "NULL", CONST_STRUCT = "struct", CONST_VOID = "void",
 			WHILE = "while";
 
-	private String					bodyPath						= "", headerPath = "", moduleName = "";
+	private String					bodyPath						= "", headerPath = "", moduleName = "";	
 
-	Map<String, AStructStruct>		classes							= new HashMap<String, AStructStruct>();
+	private Set<String>						avaibleFunctions				= new HashSet<String>();
 
-	Set<String>						avaibleFunctions				= new HashSet<String>();
-
-	Set<String>						avaibleStructs					= new HashSet<String>();
+	private Set<String>						avaibleStructs					= new HashSet<String>();
 
 	/*
 	 * This represents the scope of all currently avaible function-local defined variables
 	 */
-	public Map<String, Variable>	currentFunctionVariableScope	= new HashMap<String, Variable>();
+	private Map<String, Variable>	currentFunctionVariableScope	= new HashMap<String, Variable>();
 
 	/*
 	 * This represents the scope of all currently avaible global-local variables variables
 	 */
-	public Map<String, Variable>	currentGlobalVariableScope		= new HashMap<String, Variable>();
+	private Map<String, Variable>	currentGlobalVariableScope		= new HashMap<String, Variable>();
 
 	/*
 	 * This represents the scope of all currently avaible struct-local defined variables
 	 */
-	public Map<String, Variable>	currentStructVariableScope		= new HashMap<String, Variable>();
+	private Map<String, Variable>	currentStructVariableScope		= new HashMap<String, Variable>();
 
 	private boolean					currentlyInFunction				= false, signatureOnly = false;
 
 	private StructState				currentStruct					= null;
-
-	Set<String>						includes						= new HashSet<String>();
 
 	public StringBuffer				output							= new StringBuffer();
 
@@ -476,7 +472,6 @@ public class ToC extends DepthFirstAdapter {
 	 */
 	@Override
 	public void caseAIncludeProgram(AIncludeProgram node) {
-		includes.add(node.getId().getText());
 		if (state == InterpreterState.head) {
 			// generate Code
 			output.append(CONST_INCLUDE);
