@@ -21,6 +21,7 @@ include stdlib ;
 <int> mult(<int> a , <int> b)
 {
 	<int> result = 0 ;
+	<int> guenther;
 	<int> runner = 0 ;
 	while ( runner smaller b ) do
 	{

@@ -28,11 +28,11 @@ public class ToC extends DepthFirstAdapter {
 			CONST_INCLUDE = "#include", CONST_NULL = "NULL", CONST_STRUCT = "struct", CONST_VOID = "void",
 			WHILE = "while";
 
-	private String					bodyPath						= "", headerPath = "", moduleName = "";	
+	private String					bodyPath						= "", headerPath = "", moduleName = "";
 
-	private Set<String>						avaibleFunctions				= new HashSet<String>();
+	private Set<String>				avaibleFunctions				= new HashSet<String>();
 
-	private Set<String>						avaibleStructs					= new HashSet<String>();
+	private Set<String>				avaibleStructs					= new HashSet<String>();
 
 	/*
 	 * This represents the scope of all currently avaible function-local defined variables
@@ -67,23 +67,28 @@ public class ToC extends DepthFirstAdapter {
 	}
 
 	private void addVariableToScope(String currentID, String type, boolean isParam) {
+		addVariableToScope(currentID, type, isParam, -1);
+	}
+	
+	private void addVariableToScope(String currentID, String type, boolean isParam, int line) {
 		Variable var = new Variable(currentID, type);
 		var.setInitialized(isParam);
 		if (currentlyInFunction) {
 			if (currentFunctionVariableScope.containsKey(currentID))
-				throw new SemanticException("Variable " + currentID + " in this function already defined!");
+				throw new SemanticException("In line " + line + ": Variable " + currentID
+						+ " in this function already defined!");
 			currentFunctionVariableScope.put(currentID, var);
 			return;
 		}
 		if (currentStruct != null) {
 			if (currentStructVariableScope.containsKey(currentID))
-				throw new SemanticException("Variable " + currentID + " in struct "
+				throw new SemanticException("In line " + line + ":Variable " + currentID + " in struct "
 						+ currentStruct.getStruct().getId().getText() + "already defined!");
 			currentStructVariableScope.put(currentID, var);
 			return;
 		}
 		if (currentGlobalVariableScope.containsKey(currentID))
-			throw new SemanticException("Variable " + currentID + " already globally defined!");
+			throw new SemanticException("In line " + line + ":Variable " + currentID + " already globally defined!");
 		currentGlobalVariableScope.put(currentID, var);
 	}
 
@@ -109,7 +114,7 @@ public class ToC extends DepthFirstAdapter {
 			output.append(' ');
 			String currentID = node.getId().getText();
 			output.append(currentID);
-			addVariableToScope(currentID, extractType(node.getType()), true);
+			addVariableToScope(currentID, extractType(node.getType()), true, node.getId().getLine());
 			output.append(", ");
 		} else {
 			output.append('_');
@@ -227,7 +232,7 @@ public class ToC extends DepthFirstAdapter {
 	@Override
 	public void caseADestroyFunc(ADestroyFunc node) {
 		String currentID = node.getId().getText();
-		Variable currentVar = checkVariable(currentID, AccessType.read);
+		Variable currentVar = checkVariable(currentID, AccessType.read, node.getId().getLine());
 
 		output.append("destroy_");
 		output.append(currentVar.getType());
@@ -372,7 +377,7 @@ public class ToC extends DepthFirstAdapter {
 	@Override
 	public void caseAFuncFunc(AFuncFunc node) {
 		String currentID = node.getId().getText();
-		checkIfFunctionExists(currentID);
+		checkIfFunctionExists(currentID, node.getCall().getLine());
 		output.append(currentID);
 		output.append('(');
 		node.getFuncPara().apply(this);
@@ -382,9 +387,9 @@ public class ToC extends DepthFirstAdapter {
 		}
 	}
 
-	private void checkIfFunctionExists(String currentID) {
+	private void checkIfFunctionExists(String currentID, int line) {
 		if (!avaibleFunctions.contains(currentID)) {
-			throw new SemanticException("Function " + currentID + " not defined.");
+			throw new SemanticException("In line " + line + ": Function " + currentID + " not defined.");
 		}
 	}
 
@@ -430,7 +435,7 @@ public class ToC extends DepthFirstAdapter {
 	@Override
 	public void caseAIdTerm(AIdTerm node) {
 		String currentID = node.getId().getText();
-		checkVariable(currentID, AccessType.read);
+		checkVariable(currentID, AccessType.read, node.getId().getLine());
 		output.append(currentID);
 	}
 
@@ -528,7 +533,7 @@ public class ToC extends DepthFirstAdapter {
 	@Override
 	public void caseANewFunc(ANewFunc node) {
 		String currentID = node.getId().getText();
-		checkIfStructExists(currentID);
+		checkIfStructExists(currentID, node.getNew().getLine());
 		output.append("new_");
 		signatureOnly = true;
 		node.getFuncPara().apply(this);
@@ -536,9 +541,9 @@ public class ToC extends DepthFirstAdapter {
 
 	}
 
-	private void checkIfStructExists(String currentID) {
+	private void checkIfStructExists(String currentID, int line) {
 		if (!avaibleStructs.contains(currentID)) {
-			throw new SemanticException("Struct " + currentID + " is not defined!");
+			throw new SemanticException("In line " + line + ": Struct " + currentID + " is not defined!");
 		}
 	}
 
@@ -584,7 +589,7 @@ public class ToC extends DepthFirstAdapter {
 			output.append(' ');
 			String currentID = node.getId().getText();
 			output.append(currentID);
-			addVariableToScope(currentID, extractType(node.getType()), true);
+			addVariableToScope(currentID, extractType(node.getType()), true, node.getId().getLine());
 		} else {
 			output.append('_');
 		}
@@ -660,6 +665,7 @@ public class ToC extends DepthFirstAdapter {
 	@Override
 	public void caseASetSet(ASetSet node) {
 		String currentID = node.getId().getText();
+		int line = node.getId().getLine();
 
 		if (currentStruct != null && currentlyInFunction) {
 			if (currentStructVariableScope.containsKey(currentID)) {
@@ -667,13 +673,13 @@ public class ToC extends DepthFirstAdapter {
 			} else {
 				if (!(currentFunctionVariableScope.containsKey(currentID) || currentGlobalVariableScope
 						.containsKey(currentID))) {
-					throw new SemanticException("There is no variable in struct "
+					throw new SemanticException("In line " + line + ": There is no variable in struct "
 							+ currentStruct.getStruct().getId().getText() + " with the id " + currentID);
 				}
 			}
 		}
 		output.append(currentID);
-		Variable var = checkVariable(currentID, AccessType.write);
+		Variable var = checkVariable(currentID, AccessType.write, line);
 		output.append(" = ");
 		node.getTerm().apply(this);
 		output.append(";\n");
@@ -759,7 +765,7 @@ public class ToC extends DepthFirstAdapter {
 			output.append(currentID);
 			output.append(";\n");
 		}
-		addVariableToScope(currentID, extractType(node.getType()), false);
+		addVariableToScope(currentID, extractType(node.getType()), false, node.getId().getLine());
 	}
 
 	/*
@@ -837,7 +843,7 @@ public class ToC extends DepthFirstAdapter {
 		}
 	}
 
-	private Variable checkVariable(String currentID, AccessType accessType) {
+	private Variable checkVariable(String currentID, AccessType accessType, int line) {
 		Variable var = null;
 		if (currentFunctionVariableScope.containsKey(currentID)) {
 			var = currentFunctionVariableScope.get(currentID);
@@ -852,7 +858,7 @@ public class ToC extends DepthFirstAdapter {
 		if (var != null) {
 			if (accessType == AccessType.read) {
 				if (!var.isInitialized()) {
-					throw new SemanticException("Variable " + var.getId()
+					throw new SemanticException("In line " + line + ":Variable " + var.getId()
 							+ " is not initialized, but is used as a right-hand-side of an assignment!");
 				}
 			} else {
@@ -862,7 +868,7 @@ public class ToC extends DepthFirstAdapter {
 			return var;
 		}
 
-		throw new SemanticException("Variable " + currentID + " not defined!");
+		throw new SemanticException("In line " + line + ": Variable " + currentID + " not defined!");
 	}
 
 	private void cleanupAfterFunction() {
