@@ -364,20 +364,14 @@ class TokenIndex extends AnalysisAdapter
     }
 
     @Override
-    public void caseTCcode(@SuppressWarnings("unused") TCcode node)
+    public void caseTEndoffile(@SuppressWarnings("unused") TEndoffile node)
     {
         this.index = 59;
     }
 
     @Override
-    public void caseTEndoffile(@SuppressWarnings("unused") TEndoffile node)
-    {
-        this.index = 60;
-    }
-
-    @Override
     public void caseEOF(@SuppressWarnings("unused") EOF node)
     {
-        this.index = 61;
+        this.index = 60;
     }
 }
